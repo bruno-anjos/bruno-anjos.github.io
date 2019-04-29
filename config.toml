@@ -10,7 +10,7 @@ hasCJKLanguage = false
 [params]
 	author = "Bruno Anjos"
 	description = "This is my personal dev code blog. Not sure what I'll do with this I'll figure it out along the way."
-	bio = "1st year Student of the NOVA University MSc in Computer Science"
+	bio = "1st year MSc Computer Science Student at NOVA University in Lisbon"
 
 	twitter = "your_twitter_id"
 	facebook = "your_facebook_id"
