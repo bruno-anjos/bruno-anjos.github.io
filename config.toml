@@ -1,10 +1,52 @@
+baseurl = "/"
+languageCode = "zh-cmn-Hant"
+title = "Bingo"
+theme = "hugo-bingo"
+
+disableHugoGeneratorInject = true
+enableEmoji = true
+footnoteReturnLinkContents = "↩"
+hasCJKLanguage = true
+googleAnalytics = "UA-123-45"
+
+[permalinks]
+  post = "/posts/:slug/"
+
+[menu]
+
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts"
+    weight = 20
+
 [params]
-  Subtitle = "Your site's subtitle/tagline"
-  GithubID = "Your Github ID"
-  TwitterID = "Your Twitter ID"
-  AnalyticsID = "Your Google Analytics tracking code"
-  DisqusShortname = "Your Disqus shortname"
-  Summary = true  # takes true or false
-  Content = false  # takes true or false
-  # if both are set to true, summary is shown.
-  # FooterMsg = "Copyright Me 2016. Powered by Hugo."
+
+  [params.avatar]
+    img = "/img/avatar.png"
+
+  [[params.social]]
+    icon = "github"
+    url = "https://github.com/bruno-anjos"
+    weight = 10
+
+#   [[params.social]]
+#     icon = "twitter"
+#     url = "https://twitter.com/example"
+#     weight = 30
+
+#   [[params.social]]
+#     icon = "stackoverflow"
+#     url = "https://stackoverflow.com/story/example"
+#     weight = 40
+
+  [[params.social]]
+    icon = "linkedin"
+    url = "https://www.linkedin.com/in/bruno-vale-anjos/"
+    weight = 20
