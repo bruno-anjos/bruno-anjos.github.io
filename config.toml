@@ -1,78 +1,56 @@
-# Site settings
 baseurl = "https://bruno-anjos.github.io/"
-languageCode = "en"
-title = "Bruno Anjos' Dev Code Blog"
-theme = "hugo-theme-cactus-plus"
-# googleAnalytics = "your_google_analytics_id"
-# Set the value to true if your site include CJK (Chinese, Japanese, and Korean languages) characters
-hasCJKLanguage = false
+title = "Bruno Anjos"
+theme = "pulp"
+canonifyurls = true
+hasCJKLanguage = true
+# pygmentsCodefences = true
+# pygmentsUseClasses = true
+# googleAnalytics = "{your tracking code}"
+
+[taxonomies]
+  series = "series"
 
 [params]
-	author = "Bruno Anjos"
-	description = "This is my personal dev code blog. Not sure what I'll do with this I'll figure it out along the way."
-	bio = "1st year MSc Computer Science Student at NOVA University in Lisbon"
+    author = "Bruno Anjos"
+    avatar = "avatar.png"
+    favicon = "favicon.ico"
+    description = """
+        Please write anything here.
+        Profiles, backgrounds, favorite things etc.
+    """
+    publicationYear = "2019"
+    # listPageDateFormat = "January, 2006" # See https://gohugo.io/functions/format/
+    # singlePageDateFormat = "January 2, 2006"
+    # custom_css = ["/css/custom.css"]
+    # custom_js = ["/js/custom.js"]
 
-	twitter = "your_twitter_id"
-	facebook = "your_facebook_id"
+[outputs]
+    section = ["JSON", "HTML"]
 
-	enableRSS = false
-	enableToc = false
+[[menu.main]]
+    identifier = "blog"
+    # name = "Blog" #If display text link, cancel comment out
+    pre = "<i class='fa fa-book-open fa-lg'></i>" #Choose your favorite font from Font Awesome
+    url = "/blog/"
+    weight = 10
 
-	enableDisqus = false
-	disqusShortname = "your_disqus_short_name"
+# [[menu.main]]
+#     identifier = "twitter"
+#     # name = "Twitter"
+#     pre = "<i class='fab fa-twitter fa-lg'></i>"
+#     url = "https://twitter.com/username"
+#     weight = 20
 
+[[menu.main]]
+    identifier = "github"
+    # name = "GitHub"
+    pre = "<i class='fab fa-github fa-lg'></i>"
+    url = "https://github.com/bruno-anjos"
+    weight = 30
 
-	enableSummary = true
-	# Set the value to true if use description in post front matter replace content summary
-	useDescriptionReplaceSummary = false
-
-
-	enableGoogleAnalytics = false
-	enableBaiduAnalytics = false
-	# Set the value to your baidu analysis code if you want to use baidu analytics
-	baiduAnalytics = 'your_baidu_analysis_code'
-
-	enableTwitterCard = false
-	# The url for twitter card image, default is avatar.png in static/images directory
-	twitterCardImage = ""
-
-	# Add custom assets with their paths relative to the static folder
-	customCSS = []
-	customJS  = []
-
-	# The variables below are optionally too and can be used to
-	# translate or customize each string of the theme.
-
-	# Navigation links
-	home = ""
-	about = ""
-	archive = ""
-	subscribe = ""
-
-	olderPosts = ""
-	newerPosts = ""
-	copyright = ""
-
-	# show latest posts in single page
-	showLatestPosts = false
-	readMore = ""
-
-	# Share
-	enableShare = false
-	tweet = ""
-	share = ""
-
-	# 404 page
-	title404 = "This is still being built! Get out of here."
-	subtitle404 = ""
-
-	# Choose a font for the social icons in the footer. Either "mono-social" or "font-awesome"
-	iconFont = "font-awesome"
-  # The social icons can be styled differently if you use mono as font - circle, rounded, or empty
-  socialIconStyle = ""
-
-
-# Add additional social link entries underneath
-[social]
-	facebook-square = "https://www.facebook.com/bruno.anjos.357/"
-	github-square = "https://www.github.com/bruno-anjos/"
+[[menu.main]]
+    identifier = "email"
+    # name = "Email"
+    pre = "<i class='fa fa-envelope fa-lg'></i>"
+    url = "mailto:b.anjos@campus.fct.unl.pt"
+    weight = 40
