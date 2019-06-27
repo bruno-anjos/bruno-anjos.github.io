@@ -1,17 +1,10 @@
-baseurl = "https://bruno-anjos.github.io"
-languageCode = "en-us"
-theme = "light-hugo"
-
-title = "Bruno Anjos"
-author = "Bruno Anjos"
-copyright = "© Copyright 2019 Bruno Anjos"
-
-[Params]
-  description = "Describe your website"
-  email = "john@example.org"
-  github = "tblyler"
-  twitter = "tonyblyler"
-  linkedin = "johndoe"
-  facebook = "johndoe"
-  youtube = "johndoe"
-  logo = "/img/avatar.png"
+[params]
+  Subtitle = "Your site's subtitle/tagline"
+  GithubID = "Your Github ID"
+  TwitterID = "Your Twitter ID"
+  AnalyticsID = "Your Google Analytics tracking code"
+  DisqusShortname = "Your Disqus shortname"
+  Summary = true  # takes true or false
+  Content = false  # takes true or false
+  # if both are set to true, summary is shown.
+  # FooterMsg = "Copyright Me 2016. Powered by Hugo."
