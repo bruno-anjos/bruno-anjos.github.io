@@ -1,54 +1,46 @@
-baseURL = "https://bruno-anjos.github.io"
-title = "Bruno Anjos"
-themesDir = "themes"
-theme = "m10c"
+baseurl = "https://bruno-anjos.github.io"
+languageCode = "en-us"
+theme = "terminal"
 paginate = 5
 
 [params]
-	author = "Bruno Anjos"
-	description = """Computer Science student, currently in my masters' degree last year.
-	I'm mostly interested in Computer Systems Architecture, Distributed Systems,
-	Computer Networks and Security associated with all these topics."""
-	avatar = "avatar.png"
+  # dir name of your blog content (default is `content/posts`)
+  contentTypeName = "posts"
+  # ["orange", "blue", "red", "green", "pink"]
+  themeColor = "orange"
+  # if you set this to 0, only submenu trigger will be visible
+  showMenuItems = 3
+  # set theme to full screen width
+  fullWidthTheme = false
+  # center theme with default width
+  centerTheme = false
+  # set a custom favicon (default is a `themeColor` square)
+  # favicon = "favicon.ico"
 
-	[[params.social]]
-		name = "github"
-		url = "https://github.com/bruno-anjos"
-	[[params.social]]
-		name = "mail"
-		url = "mailto:bruno.vale.anjos@gmail.com"
-	[[params.social]]
-		name = "linkedin"
-		url = "https://www.linkedin.com/in/bruno-vale-anjos/"
-		
+[languages]
+  [languages.en]
+	title = "Bruno Anjos"
+	subtitle = ""
+	keywords = ""
+	copyright = "© 2019 Bruno Anjos :: Powered by Hugo :: Theme made by panr"
+	menuMore = "Show more"
+	readMore = "Read more"
+	readOtherPosts = "Read other posts"
 
-#   Brown theme
-#   [params.style]
-#    darkestColor = "#463625"
-#    darkColor = "#2a3738"
-#    primaryColor = "#eeee6a"
-#    lightColor = "#96a879"
-#    lightestColor = "#ffffff"
+	[languages.en.params.logo]
+	  logoText = "Bruno Anjos"
+	  logoHomeLink = "/"
 
-# Green theme
-#   [params.style]
-#    darkestColor = "#315659"
-#    darkColor = "#253031"
-#    primaryColor = "#dad865"
-#    lightColor = "#96a879"
-#    lightestColor = "#fff"
-
-#   Red and black theme
-#   [params.style]
-#    darkestColor = "#d35050"
-#    darkColor = "#212121"
-#    primaryColor = "#ffffff"
-#    lightColor = "#a2a2a2"
-#    lightestColor = "#d3d3d3"
-
-[params.style]
-	darkestColor = "#d35050"
-	darkColor = "#212121"
-	lightColor = "#f5e3e0"
-	lightestColor = "#f5f5f5"
-	primaryColor = "#fff"
+	[languages.en.menu]
+		[[languages.en.menu.main]]
+			identifier = "posts"
+			name = "Posts"
+			url = "/posts"
+		[[languages.en.menu.main]]
+			identifier = "about"
+			name = "About"
+			url = "/about"
+		[[languages.en.menu.main]]
+			identifier = "showcase"
+			name = "Theme Showcase"
+			url = "/showcase"
