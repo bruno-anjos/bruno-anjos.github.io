@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Over The Wire - Bandit Walkthrough :: Bruno Anjos</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
+So to connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format bandit&amp;lt;level_number&amp;gt; (without the &amp;lsquo;&amp;lt;&amp;rsquo; &amp;lsquo;&amp;gt;&amp;rsquo;) so for level 0 the username would be bandit0."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://bruno-anjos.github.io/posts/bandit/" />
+
+
+<link rel="stylesheet" href="https://bruno-anjos.github.io/assets/style.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://bruno-anjos.github.io/img/apple-touch-icon-144-precomposed.png">
+
+<link rel="shortcut icon" href="https://bruno-anjos.github.io/img/favicon/orange.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Over The Wire - Bandit Walkthrough :: Bruno Anjos — " />
+<meta name="twitter:description" content="Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
+So to connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format bandit&amp;lt;level_number&amp;gt; (without the &amp;lsquo;&amp;lt;&amp;rsquo; &amp;lsquo;&amp;gt;&amp;rsquo;) so for level 0 the username would be bandit0." />
+<meta name="twitter:site" content="https://bruno-anjos.github.io/" />
+<meta name="twitter:creator" content="Bruno Anjos" />
+<meta name="twitter:image" content="">
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Over The Wire - Bandit Walkthrough :: Bruno Anjos — ">
+<meta property="og:description" content="Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
+So to connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format bandit&amp;lt;level_number&amp;gt; (without the &amp;lsquo;&amp;lt;&amp;rsquo; &amp;lsquo;&amp;gt;&amp;rsquo;) so for level 0 the username would be bandit0." />
+<meta property="og:url" content="https://bruno-anjos.github.io/posts/bandit/" />
+<meta property="og:site_name" content="Over The Wire - Bandit Walkthrough" />
+<meta property="og:image" content="">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2019-06-28 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="">
+
+
+<div class="container full">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Bruno Anjos
+  </div>
+</a>
+
+    </div>
+    <div class="menu-trigger">menu</div>
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/posts">Posts</a></li>
+        
+      
+        
+          <li><a href="/showcase">Theme Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/posts">Posts</a></li>
+      
+    
+      
+        <li><a href="/showcase">Theme Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="https://bruno-anjos.github.io/posts/bandit/">Over The Wire - Bandit Walkthrough</a></h1>
+  <div class="post-meta">
+      
+    <span class="post-date">
+      2019-06-28
+    </span>
+    
+    
+    <span class="post-author">::
+      Bruno Anjos
+    </span>
+    
+  </div>
+
+  
+
+  
+
+  <div class="post-content">
+    
+
+<h1 id="introduction">Introduction</h1>
+
+<p><a href="http://overthewire.org/wargames/">Over The Wire</a> provides multiple challenges focused on different topics of computer systems.
+The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.</p>
+
+<p>So to connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format <strong>bandit&lt;level_number&gt;</strong> (without the &lsquo;&lt;&rsquo; &lsquo;&gt;&rsquo;) so for level 0 the username would be <strong>bandit0</strong>. Then each level also has a password. Usually you find the password for the next level on the current one, this meaning that in level 0 you will find the password for level 1, which you will login with <strong>bandit1</strong> and the password you found.</p>
+
+<p>You can read more about the challenge and how it works <a href="http://overthewire.org/wargames/bandit/">here</a>.</p>
+
+<p>Levels:</p>
+
+<ul>
+<li><a href="#level0">Level 0</a></li>
+<li><a href="#level1">Level 1</a></li>
+</ul>
+
+<h2 id="level-0-http-overthewire-org-wargames-bandit-bandit0-html"><a href="http://overthewire.org/wargames/bandit/bandit0.html">Level 0</a></h2>
+
+<p><a name="level0"></p>
+
+<p>So we need to login as <strong>bandit0</strong> using the password <strong>bandit0</strong> at <strong>bandit.labs.overthewire.org</strong> using SSH. It&rsquo;s also said that the connection should be done to port <strong>2220</strong>.</p>
+
+<p>We can use the <strong>man</strong> command followed by <strong>ssh</strong> to get information on how to use ssh. The <strong>man</strong> command is super useful, but sometimes can present you with more information then you need. A nice alternative is the <strong>tldr</strong> command which you can install through your package manager. It also takes the command that you want to see more information as an argument but it shows you some examples frequently used. So by doing <code>tldr ssh</code> we get one of the lines saying</p>
+
+<pre><code class="language-bash">- Connect to a remote server using a specific port:                    
+  ssh username@remote_host -p 2222
+</code></pre>
+
+<p>which we can change with the parameters we have, resulting in <code>ssh bandit0@bandit.labs.overthewire.org -p 2220</code>. Now we know how to make a basic ssh connection with a username and a port. After we execute the command a password is asked. We insert <strong>bandit0</strong> and finally we have an open ssh connection, which we can see by the prompt <code>bandit0@bandit:~$</code>.</p>
+
+<p>Ok now we can go to the next level.</p>
+
+<h2 id="level-1-http-overthewire-org-wargames-bandit-bandit1-html"><a href="http://overthewire.org/wargames/bandit/bandit1.html">Level 1</a></h2>
+
+<p><a name="level1"></p>
+
+<p>We will use the connection established in <a href="#level0">Level 0</a> to solve this level. They say that the password for the next level is stored in the file called <strong>readme</strong>. To print the content of the file we can use the <code>cat</code> command which takes the file you want to see.</p>
+
+<pre><code class="language-bash">bandit0@bandit:~$ cat readme
+boJ9jbbUNNfktd78OOpsqOltutMc3MY1
+</code></pre>
+
+<p>So now that we have the password we can go to the next level.</p>
+
+  </div>
+  
+
+  
+
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright copyright--user">© 2019 Bruno Anjos :: Powered by Hugo :: Theme made by panr</div>
+    
+  </div>
+</footer>
+
+<script src="https://bruno-anjos.github.io/assets/main.js"></script>
+<script src="https://bruno-anjos.github.io/assets/prism.js"></script>
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

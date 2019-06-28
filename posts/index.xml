@@ -7,19 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© 2019 Bruno Anjos :: Powered by Hugo :: Theme made by panr</copyright>
-    <lastBuildDate>Fri, 25 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://bruno-anjos.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Hello Friend</title>
-      <link>https://bruno-anjos.github.io/posts/hello/</link>
-      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
+      <title>Over The Wire - Bandit Walkthrough</title>
+      <link>https://bruno-anjos.github.io/posts/bandit/</link>
+      <pubDate>Fri, 28 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://bruno-anjos.github.io/posts/hello/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec interdum metus. Aenean rutrum ligula sodales ex auctor, sed tempus dui mollis. Curabitur ipsum dui, aliquet nec commodo at, tristique eget ante. Donec quis dolor nec nunc mollis interdum vel in purus. Sed vitae leo scelerisque, sollicitudin elit sed, congue ante. In augue nisl, vestibulum commodo est a, tristique porttitor est. Proin laoreet iaculis ornare. Nullam ut neque quam.
- Fusce pharetra suscipit orci nec tempor.</description>
+      <guid>https://bruno-anjos.github.io/posts/bandit/</guid>
+      <description>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
+So to connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format bandit&amp;lt;level_number&amp;gt; (without the &amp;lsquo;&amp;lt;&amp;rsquo; &amp;lsquo;&amp;gt;&amp;rsquo;) so for level 0 the username would be bandit0.</description>
     </item>
     
   </channel>
