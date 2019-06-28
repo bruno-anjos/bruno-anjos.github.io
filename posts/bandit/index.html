@@ -165,7 +165,7 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 
 <p>So we need to login as <strong>bandit0</strong> using the password <strong>bandit0</strong> at <strong>bandit.labs.overthewire.org</strong> using SSH. It&rsquo;s also said that the connection should be done to port <strong>2220</strong>.</p>
 
-<p>We can use the <strong>man</strong> command followed by <strong>ssh</strong> to get information on how to use ssh. The <strong>man</strong> command is super useful, but sometimes can present you with more information then you need. A nice alternative is the <strong>tldr</strong> command which you can install through your package manager. It also takes the command that you want to see more information as an argument but it shows you some examples frequently used. So by doing <code>tldr ssh</code> we get one of the lines saying</p>
+<p>We can use the <strong>man</strong> command followed by <strong>ssh</strong> to get information on how to use ssh. The <strong>man</strong> command is super useful, but sometimes can present you with more information then you need. A nice alternative is the <strong>tldr</strong> command which you can install through your package manager (have in mind that you won&rsquo;t be able to use it once you login through ssh since you can&rsquo;t install anything in the bandit machine). It also takes the command that you want to see more information as an argument but it shows you some examples frequently used. So by doing <code>tldr ssh</code> we get one of the lines saying</p>
 
 <pre><code class="language-bash">- Connect to a remote server using a specific port:                    
   ssh username@remote_host -p 2222
@@ -186,6 +186,182 @@ boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 </code></pre>
 
 <p>So now that we have the password we can go to the next level.</p>
+
+<h2 id="level-2-http-overthewire-org-wargames-bandit-bandit2-html"><a href="http://overthewire.org/wargames/bandit/bandit2.html">Level 2</a></h2>
+
+<p><a name="level2"></p>
+
+<p>In this level the password is in a file called <code>-</code>. The problem here is that the character <code>-</code> is used as a special character to represent stdin (<a href="https://unix.stackexchange.com/questions/16357/usage-of-dash-in-place-of-a-filename">more information on this here</a>), so in this case we should be able to see its content if we specify the filename in a path format like</p>
+
+<pre><code class="language-bash">bandit1@bandit:~$ cat ./-
+CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
+</code></pre>
+
+<p>The <code>.</code> means the current directory, so what we are representing is the current directory, which inside has a file named <code>-</code>.</p>
+
+<h2 id="level-3-http-overthewire-org-wargames-bandit-bandit3-html"><a href="http://overthewire.org/wargames/bandit/bandit3.html">Level 3</a></h2>
+
+<p><a name="level3"></p>
+
+<p>So now the file that we want to see is called <code>spaces in this filename</code>. The challenge here is that if we do like before and use the command <strong>cat</strong> followed by the name we get this</p>
+
+<pre><code class="language-bash">bandit2@bandit:~$ cat spaces in this filename 
+cat: spaces: No such file or directory
+cat: in: No such file or directory
+cat: this: No such file or directory
+cat: filename: No such file or directory
+</code></pre>
+
+<p>Wait what???</p>
+
+<p>So the problem here is that as we&rsquo;ve seen before commands take parameters so what we are doing is calling the <strong>cat</strong> command with 4 parameters: <strong>spaces</strong>, <strong>in</strong>, <strong>this</strong> and <strong>filename</strong>. This is not what we want at all. What we want is to print the file named <code>spaces in this filename</code>. So the way to do it is to give it to the command as a whole string by surrounding it with <code>&quot;</code>.</p>
+
+<pre><code class="language-bash">bandit2@bandit:~$ cat &quot;spaces in this filename&quot; 
+UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
+</code></pre>
+
+<p>Onto the next level.</p>
+
+<h2 id="level-4-http-overthewire-org-wargames-bandit-bandit4-html"><a href="http://overthewire.org/wargames/bandit/bandit4.html">Level 4</a></h2>
+
+<p><a name="level4"></p>
+
+<p>Now the file that contains the password is a hidden file and is in the <code>inhere</code> directory. To change directory we use the <strong>cd</strong> command.</p>
+
+<pre><code class="language-bash">bandit3@bandit:~$ cd inhere
+</code></pre>
+
+<p>Now we know that we are in the <code>inhere</code> directory because the bash prompt says it <code>bandit3@bandit:~/inhere$</code>.</p>
+
+<p>If we list the files in the current directory, which we can do by executing the command <code>ls</code> we get a blank listing.</p>
+
+<pre><code class="language-bash">bandit3@bandit:~/inhere$ ls
+bandit3@bandit:~/inhere$ 
+</code></pre>
+
+<p>Ok it makes sense. The challenge said that the file was hidden. You can search a bit about hidden files in UNIX systems and you will eventually find out that by convention the hidden files start with a <code>.</code>. To list hidden files you can do <code>man ls</code> and see that there is a flag that you can pass to list <strong>all</strong> entries, not ignoring those starting with <code>.</code> (to quit <strong>man</strong> simply hit <strong>q</strong>).</p>
+
+<pre><code class="language-bash">bandit3@bandit:~/inhere$ ls -a
+.  ..  .hidden
+</code></pre>
+
+<p>Ok as we can see there is a file named <code>.hidden</code> that should be the one (the other two <code>.</code>, <code>..</code> are the current directory and the parent directory respectively).</p>
+
+<pre><code class="language-bash">bandit3@bandit:~/inhere$ cat .hidden
+pIwrPrtPN36QITSp3EQaw936yaFoFgAB
+</code></pre>
+
+<p>So by using <strong>cat</strong> with the filename we can then get the password for the next level.</p>
+
+<h2 id="level-5-http-overthewire-org-wargames-bandit-bandit5-html"><a href="http://overthewire.org/wargames/bandit/bandit5.html">Level 5</a></h2>
+
+<p><a name="level5"></p>
+
+<p>So now the password is stored in the only human-readable file in the <code>inhere</code> directory. As we&rsquo;ve seen before to change directory we can use the <strong>cd</strong> command. Then we can list the files in the current directory by using ls (i use the <strong>-l</strong> flag just to display it as a vertical listing).</p>
+
+<pre><code class="language-bash">bandit4@bandit:~/inhere$ ls -l
+total 40
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file00
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file01
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file02
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file03
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file04
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file05
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file06
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file07
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file08
+-rw-r----- 1 bandit5 bandit4 33 Oct 16  2018 -file09
+</code></pre>
+
+<p>Ok so we have 10 files. The listing doesn&rsquo;t tells us much about them. On the other hand one of suggested commands <strong>file</strong> can tell us interesting things about each file, maybe know which one is human-readable we hope. So what we can do is calling <strong>file</strong> on all the files in this directory. There are two ways to do this: the bruteforce way and the smart way. The bruteforce way is to run <code>file -fileXX</code> (replacing XX for the file number) for each file in the directory. The smart way is to use the symbol <code>*</code> that matches with every file name, this meaning that using <code>*</code> or every filename separated by spaces is the same.</p>
+
+<pre><code class="language-bash">bandit4@bandit:~/inhere$ file *
+file: Cannot open `ile00' (No such file or directory).
+file: Cannot open `ile01' (No such file or directory).
+file: Cannot open `ile02' (No such file or directory).
+file: Cannot open `ile03' (No such file or directory).
+file: Cannot open `ile04' (No such file or directory).
+file: Cannot open `ile05' (No such file or directory).
+file: Cannot open `ile06' (No such file or directory).
+file: Cannot open `ile07' (No such file or directory).
+file: Cannot open `ile08' (No such file or directory).
+file: Cannot open `ile09' (No such file or directory).
+</code></pre>
+
+<p>&ldquo;Wait&hellip; You said this was the smart way and it didn&rsquo;t work, that doesn&rsquo;t very smart to me.&rdquo; I know, i know just give me a chance. So the problem here is that the files begin by a <code>-</code>, and we&rsquo;ve encountered this problem before. Let&rsquo;s do as we did before by putting the filenames in a path like format, so <code>./*</code>.</p>
+
+<pre><code class="language-bash">bandit4@bandit:~/inhere$ file ./*
+./-file00: data
+./-file01: data
+./-file02: data
+./-file03: data
+./-file04: data
+./-file05: data
+./-file06: data
+./-file07: ASCII text
+./-file08: data
+./-file09: data
+</code></pre>
+
+<p>Ohhh so now it worked, okay. This tells us that the only file that has an <code>ASCII text</code> type is <code>-file07</code>. This is the one.</p>
+
+<p>So we use <strong>cat</strong> no surprise there and we get</p>
+
+<pre><code class="language-bash">bandit4@bandit:~/inhere$ cat ./-file07
+koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+</code></pre>
+
+<p>Done. Next level.</p>
+
+<h2 id="level-6-http-overthewire-org-wargames-bandit-bandit6-html"><a href="http://overthewire.org/wargames/bandit/bandit6.html">Level 6</a></h2>
+
+<p><a name="level6"></p>
+
+<p>So now the password is in a file stored in the <code>inhere</code> directory and has three properties:</p>
+
+<ul>
+<li>human-readable</li>
+<li>1033 bytes in size</li>
+<li>not executable</li>
+</ul>
+
+<p>So lets <strong>cd</strong> onto <code>inhere</code> and the list its content.</p>
+
+<pre><code class="language-bash">bandit5@bandit:~/inhere$ ls -l
+total 80
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere00
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere01
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere02
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere03
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere04
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere05
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere06
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere07
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere08
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere09
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere10
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere11
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere12
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere13
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere14
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere15
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere16
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere17
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere18
+drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere19
+</code></pre>
+
+<p>Ok so here bruteforce might not be worth it since each of those entries is a directory and has multiple files. We can use one of the suggested commands named <strong>find</strong> which, guess what, finds stuff.</p>
+
+<p>So to learn a bit about find you can use <strong>man</strong> and just so you know you can search words in <strong>man</strong> by hitting <strong>/</strong> and then typing the word you want to lookup. We can lookup <code>size</code> and <code>readable</code> in there which will give us 2 flags to use: <code>-size</code> and <code>-readable</code>. <code>-size</code> works with the number of units you want followed by the character that represents the unit. So in our case we want 1033 bytes, so the result will be <code>-size 1033c</code>. The readable flag needs no parameter. The final command is:</p>
+
+<pre><code class="language-bash">bandit5@bandit:~/inhere$ find -size 1033c -readable
+./maybehere07/.file2
+</code></pre>
+
+<p><strong>find</strong> searches by default in your current directory. The result is only one file so we don&rsquo;t need to care about it being executable or not.</p>
+
+<p>Onto the next level.</p>
 
   </div>
   
