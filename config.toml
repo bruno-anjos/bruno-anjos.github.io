@@ -1,52 +1,54 @@
-baseurl = "/"
-languageCode = "zh-cmn-Hant"
-title = "Bingo"
-theme = "hugo-bingo"
-
-disableHugoGeneratorInject = true
-enableEmoji = true
-footnoteReturnLinkContents = "↩"
-hasCJKLanguage = true
-googleAnalytics = "UA-123-45"
-
-[permalinks]
-  post = "/posts/:slug/"
-
-[menu]
-
-  [[menu.main]]
-    identifier = "home"
-    name = "Home"
-    url = "/"
-    weight = 10
-
-  [[menu.main]]
-    identifier = "posts"
-    name = "Posts"
-    url = "/posts"
-    weight = 20
+baseURL = "https://bruno-anjos.github.io"
+title = "Bruno Anjos"
+themesDir = "themes"
+theme = "m10c"
+paginate = 5
 
 [params]
+	author = "Bruno Anjos"
+	description = """Computer Science student, currently in my masters' degree last year.
+	I'm mostly interested in Computer Systems Architecture, Distributed Systems,
+	Computer Networks and Security associated with all these topics."""
+	avatar = "avatar.png"
 
-  [params.avatar]
-    img = "/img/avatar.png"
+	[[params.social]]
+		name = "github"
+		url = "https://github.com/bruno-anjos"
+	[[params.social]]
+		name = "mail"
+		url = "mailto:bruno.vale.anjos@gmail.com"
+	[[params.social]]
+		name = "linkedin"
+		url = "https://www.linkedin.com/in/bruno-vale-anjos/"
+		
 
-  [[params.social]]
-    icon = "github"
-    url = "https://github.com/bruno-anjos"
-    weight = 10
+#   Brown theme
+#   [params.style]
+#    darkestColor = "#463625"
+#    darkColor = "#2a3738"
+#    primaryColor = "#eeee6a"
+#    lightColor = "#96a879"
+#    lightestColor = "#ffffff"
 
-#   [[params.social]]
-#     icon = "twitter"
-#     url = "https://twitter.com/example"
-#     weight = 30
+# Green theme
+#   [params.style]
+#    darkestColor = "#315659"
+#    darkColor = "#253031"
+#    primaryColor = "#dad865"
+#    lightColor = "#96a879"
+#    lightestColor = "#fff"
 
-#   [[params.social]]
-#     icon = "stackoverflow"
-#     url = "https://stackoverflow.com/story/example"
-#     weight = 40
+#   Red and black theme
+#   [params.style]
+#    darkestColor = "#d35050"
+#    darkColor = "#212121"
+#    primaryColor = "#ffffff"
+#    lightColor = "#a2a2a2"
+#    lightestColor = "#d3d3d3"
 
-  [[params.social]]
-    icon = "linkedin"
-    url = "https://www.linkedin.com/in/bruno-vale-anjos/"
-    weight = 20
+[params.style]
+	darkestColor = "#d35050"
+	darkColor = "#212121"
+	lightColor = "#f5e3e0"
+	lightestColor = "#f5f5f5"
+	primaryColor = "#fff"
