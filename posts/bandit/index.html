@@ -366,7 +366,667 @@ drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere19
 
 <p><strong>find</strong> searches by default in your current directory. The result is only one file so we don&rsquo;t need to care about it being executable or not.</p>
 
+<pre><code class="language-bash">bandit5@bandit:~/inhere$ cat ./maybehere07/.file2
+DXjZPULLxYr17uwoI01bNLQbtFemEgo7
+</code></pre>
+
 <p>Onto the next level.</p>
+
+<h2 id="level-7-http-overthewire-org-wargames-bandit-bandit7-html"><a href="http://overthewire.org/wargames/bandit/bandit7.html">Level 7</a></h2>
+
+<p><a name="level7"></p>
+
+<p>In this level the password is stored <strong>somewhere in the server</strong> with a few properties:</p>
+
+<ul>
+<li>owned by user bandit7</li>
+<li>owned by group bandit6</li>
+<li>33 bytes in size</li>
+</ul>
+
+<p><strong>find</strong> should do the job here as well, it&rsquo;s just a matter of finding the flags associated with the functionalities. We already know how to use the <code>-size</code> so that&rsquo;s going to be <code>-size 33c</code>. After digging a bit in the <strong>man</strong>, we can see that <code>-user</code> and <code>-group</code> do what we want.</p>
+
+<pre><code class="language-bash">bandit6@bandit:~$ find -user bandit7 -group bandit6 -size 33c
+bandit6@bandit:~$
+</code></pre>
+
+<p>Wait&hellip; No file matched what we wanted. The trick here is that it says <strong>somewhere in the server</strong> so to search everywhere and not just the current directory we have to give the <code>/</code> directory (which is the root) as a parameter to <strong>find</strong>.</p>
+
+<pre><code class="language-bash">bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c
+find: ‘/run/lvm’: Permission denied
+(...more...)
+find: ‘/var/cache/apt/archives/partial’: Permission denied
+/var/lib/dpkg/info/bandit7.password
+find: ‘/var/lib/apt/lists/partial’: Permission denied
+(...more...)
+find: ‘/boot/lost+found’: Permission denied
+</code></pre>
+
+<p>Well as you can see there are a lot of errors but the file is there. If you want to clean it up you can redirect the error output to <code>/dev/null</code> so the errors don&rsquo;t show up.</p>
+
+<pre><code class="language-bash">bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c 2&gt; /dev/null
+/var/lib/dpkg/info/bandit7.password
+</code></pre>
+
+<p>Ok so we found the file. We just need to use <strong>cat</strong> and we should get the password.</p>
+
+<pre><code class="language-bash">bandit6@bandit:~$ cat $(find / -user bandit7 -group bandit6 -size 33c 2&gt; /dev/null)
+HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
+</code></pre>
+
+<p>Quick note, what i did in the previous command was telling bash that <strong>cat</strong> took the result of another command (<strong>find</strong>) as a parameter, we do this by surrounding it with <code>$()</code>. This tells bash that what&rsquo;s inside is not only text, it&rsquo;s actually a command. So then the resulting output of the <strong>find</strong> command <code>/var/lib/dpkg/info/bandit7.password</code> will be a parameter to <strong>cat</strong>.</p>
+
+<h2 id="level-8-http-overthewire-org-wargames-bandit-bandit8-html"><a href="http://overthewire.org/wargames/bandit/bandit8.html">Level 8</a></h2>
+
+<p><a name="level8"></p>
+
+<p>New challenge. The password is stored in the file <code>data.txt</code> next to the word <code>millionth</code>. Ok so let&rsquo;s see the content of the file.</p>
+
+<pre><code class="language-bash">bandit7@bandit:~$ cat data.txt
+humiliation's   47r0YuNylaQ3k6HqGF5NsPPiGuolDCjn
+malarkey's      0huyJeRwvtJaoyRmJjQFsRnQcYG4gDir
+(...A LOT MORE...)
+chemical        7D5J0CAJMWr2Ryb9uB0kSRuqz7BQPv6X
+shaded  v5MBdtwMnmZ9YlheYVOxBJiOSxp9BeAA
+</code></pre>
+
+<p>We won&rsquo;t be able to find this just by seeing the file&rsquo;s content, we will need some sort of finder, but for a file&rsquo;s content. So once again we will see the suggested commands, and one that fits our needs is <strong>grep</strong>. Now a way we can do this is by using the file&rsquo;s content as the content to look in. On the <strong>man grep</strong> page it says that you can pass the file as a parameter, the other way is that if you don&rsquo;t specify a file <strong>grep</strong> will use the standard input. So the first way of doing this is:</p>
+
+<pre><code class="language-bash">bandit7@bandit:~$ grep millionth data.txt 
+millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+</code></pre>
+
+<p>Easy. Another way that teaches you a few other concepts is doing it like this:</p>
+
+<pre><code class="language-bash">bandit7@bandit:~$ cat data.txt | grep millionth
+millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+</code></pre>
+
+<p>What we are doing here is called pipelining commands. What it does is using the output of the first command as the input of the second one, so <strong>grep</strong> will use the standard input (which will be the output produced by <strong>cat</strong>) to search the term <code>millionth</code>.</p>
+
+<p>Onto the next level.</p>
+
+<h2 id="level-9-http-overthewire-org-wargames-bandit-bandit9-html"><a href="http://overthewire.org/wargames/bandit/bandit9.html">Level 9</a></h2>
+
+<p><a name="level9"></p>
+
+<p>Now the password is still stored in <code>data.txt</code> but now they say is the only line that is unique.
+We will <strong>cat</strong> the file just to see its content</p>
+
+<pre><code class="language-bash">bandit8@bandit:~$ cat data.txt 
+KerqNiDbY0zV2VxnOCmWX5XWxumldlAe
+MsxcvOe3PGrt78wpZG2bBNF5wfXpZhET
+(...more...)
+YzZX7E35vOa6IQ9SRUGdlEpyaiyjvWXE
+DXI6y5CNPU06rVpkoZgnZJBWfkdW131j
+</code></pre>
+
+<p>So once again we won&rsquo;t be able to get the unique line without using a few tools.
+There is a suggested command named <code>uniq</code>, sounds like what we need by checking the <strong>man</strong> page.
+So the way to use the command is by passing the flag <code>-u</code> that tells <code>uniq</code> to only print unique lines.</p>
+
+<pre><code class="language-bash">bandit8@bandit:~$ uniq -u data.txt                    
+KerqNiDbY0zV2VxnOCmWX5XWxumldlAe
+MsxcvOe3PGrt78wpZG2bBNF5wfXpZhET
+(...more...)
+YzZX7E35vOa6IQ9SRUGdlEpyaiyjvWXE
+DXI6y5CNPU06rVpkoZgnZJBWfkdW131j
+</code></pre>
+
+<p>Wait&hellip; It gave us the same. Let&rsquo;s check the <strong>man</strong> page again.</p>
+
+<pre><code class="language-bash">NAME
+       uniq - report or omit repeated lines
+
+SYNOPSIS
+       uniq [OPTION]... [INPUT [OUTPUT]]
+
+DESCRIPTION
+       Filter adjacent matching lines from INPUT (or standard input), writing to OUTPUT (or standard output).
+</code></pre>
+
+<p>Ok then. So it only filters <strong>adjacent matching lines</strong>. So what we could do is sort the lines so that all the repeated lines be adjacent to one another. Guess what, one of the suggested commands is <strong>sort</strong>, that should do it. We look a bit into the <strong>man</strong> page to see how it works and is nothing special, <strong>sort</strong> followed by the file name. Now <strong>sort</strong> writes to the standard output so what we can do is pipelining, check <a href="level8">Level 8</a> for more information on this.</p>
+
+<pre><code class="language-bash">bandit8@bandit:~$ sort data.txt | uniq -u
+UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
+</code></pre>
+
+<p>Ok there we go. We have the password, let&rsquo;s go to the next level.</p>
+
+<h2 id="level-10-http-overthewire-org-wargames-bandit-bandit10-html"><a href="http://overthewire.org/wargames/bandit/bandit10.html">Level 10</a></h2>
+
+<p><a name="level10"></p>
+
+<p>Now the password is stored in the file <code>data.txt</code> and is one of the few human-readable strings, beginning with several <code>=</code> characters. Now we already know what a few of the suggested commands do, so we know they&rsquo;re not quite what we want. Let&rsquo;s check out <strong>strings</strong>.</p>
+
+<pre><code class="language-bash">NAME
+       strings - print the strings of printable characters in files.
+</code></pre>
+
+<p>Ok. We can try combining <strong>strings</strong> with <strong>grep</strong> in order to get only the strings that have a <code>=</code>.</p>
+
+<pre><code class="language-bash">bandit9@bandit:~$ strings data.txt | grep =
+2========== the
+========== password
+&gt;t=     yP
+rV~dHm=
+========== isa
+=FQ?P\U
+=       F[
+pb=x
+J;m=
+=)$=
+========== truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
+iv8!=
+</code></pre>
+
+<p>Ok we can assume the password is the penultimate line, minus the <code>=</code>s of course.</p>
+
+<h2 id="level-11-http-overthewire-org-wargames-bandit-bandit11-html"><a href="http://overthewire.org/wargames/bandit/bandit11.html">Level 11</a></h2>
+
+<p><a name="level11"></p>
+
+<p>Now the password is still stored in <code>data.txt</code> but encoded with base64. There is a suggested command named <code>base64</code> that might be useful.</p>
+
+<pre><code class="language-bash">NAME
+       base64 - base64 encode/decode data and print to standard output
+</code></pre>
+
+<p>Ok, it can decode base64 so that should do it. To decode we use the <code>-d</code> flag.</p>
+
+<pre><code class="language-bash">bandit10@bandit:~$ base64 -d data.txt 
+The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
+</code></pre>
+
+<p><em>DJ Khaled Voice:</em> Another one</p>
+
+<h2 id="level-12-http-overthewire-org-wargames-bandit-bandit12-html"><a href="http://overthewire.org/wargames/bandit/bandit12.html">Level 12</a></h2>
+
+<p><a name="level12"></p>
+
+<p>The password is stored in the file <code>data.txt</code>, but all lowercase and uppercase letters have been rotated 13 positions. This is called ROT13 (you can google it to get some more information on this). It&rsquo;s a ceasar&rsquo;s cipher with the <strong>n</strong> equal to 13 (you can google this as well). So by checking out the suggested commands there are a few that we already know that are not suitable for this. One of the new ones is <strong>tr</strong>. Let&rsquo;s check the <strong>man</strong> page.</p>
+
+<pre><code class="language-bash">NAME
+       tr - translate or delete characters
+</code></pre>
+
+<p>Ok. So it translates characters. I guess that&rsquo;s what we kind of want. We want to translate &lsquo;a&rsquo; to 13 positions ahead. So a quick google of <code>tr ROT13</code> would land us on the <a href="https://en.wikipedia.org/wiki/ROT13">Wikipedia page</a>. In the page there is an implementation of ROT13 using <strong>tr</strong>. We can kind of reverse engineer it and get what we want. This is the way to encode <code>tr 'A-Za-z' 'N-ZA-Mn-za-m'</code>, so to decode it should be the other way around right? <code>tr 'N-ZA-Mn-za-m' 'A-Za-z'</code></p>
+
+<p>Well let&rsquo;s try it. <strong>tr</strong> uses the standard input, so we will pipeline it using <strong>cat</strong>.</p>
+
+<pre><code class="language-bash">bandit11@bandit:~$ cat data.txt | tr 'N-ZA-Mn-za-m' 'A-Za-z'
+The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
+</code></pre>
+
+<p>Perfect. Next level.</p>
+
+<h2 id="level-13-http-overthewire-org-wargames-bandit-bandit13-html"><a href="http://overthewire.org/wargames/bandit/bandit13.html">Level 13</a></h2>
+
+<p><a name="level13"></p>
+
+<p>Let&rsquo;s see the challenge description,</p>
+
+<blockquote>
+<p>The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)</p>
+</blockquote>
+
+<p>Ok understood. Let&rsquo;s follow the useful tips.</p>
+
+<pre><code class="language-bash">bandit12@bandit:~$ mkdir /tmp/dirforfiles
+</code></pre>
+
+<p>Now we have a directory to work with our files. Let&rsquo;s copy our file in there first</p>
+
+<pre><code class="language-bash">bandit12@bandit:~$ cp data.txt /tmp/dirforfiles
+</code></pre>
+
+<p>Done. Let&rsquo;s change our current directory to the one we created.</p>
+
+<pre><code class="language-bash">bandit12@bandit:~$ cd /tmp/dirforfiles
+bandit12@bandit:/tmp/dirforfiles$ 
+</code></pre>
+
+<p>So they said that the file was a hexdump let&rsquo;s check <strong>xxd</strong>&rsquo;s <strong>man</strong> page.</p>
+
+<pre><code class="language-bash">NAME
+       xxd - make a hexdump or do the reverse.
+</code></pre>
+
+<p>Ok what we want is to reverse it back to it&rsquo;s original state. We use the <code>-r</code> flag to do this.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ xxd -r data.txt 
+�▒▒h��6��@4▒bi���h▒91AY&amp;SY���������ϟ���������������׽��9��
+    �mF�h�h44
+▒��B��,0��   ��4@�����@2▒C@h�� �
+�ɋ�^-K�����}�\,�▒ǿ�}E�F�_!r�U�g?E�i��9x��TB@�lȲ���BF.hM�SC4�V�F��R�Br&quot;�&lt;(Hت$    $���KBs��%l▒~�_�▒ݿ����g�zM�w�#P&quot;2@������
+
+��\��WQO4�p�i�����S�#&amp;��/�#��[j▒�&lt;D�uԐ^_�H.�-��wAt
+                                                  �[��UP�G�CP��&amp;:�2�*�)�\�������H�
+�\�7��w&lt;bandit12@bandit:/tmp/dirforfiles$
+</code></pre>
+
+<p>Ok. I think i broke it&hellip; So what happened was that <strong>xxd</strong> reverted it back to a binary but wrote the result on the standard output. Let&rsquo;s redirect it to a file.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ xxd -r data.txt &gt; original
+bandit12@bandit:/tmp/dirforfiles$ 
+</code></pre>
+
+<p>Ok. It worked. Let&rsquo;s check what we are dealing with by using the <strong>file</strong> command to check some more information on the file we just created.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file original 
+original: gzip compressed data, was &quot;data2.bin&quot;, last modified: Tue Oct 16 12:00:23 2018, max compression, from Unix
+</code></pre>
+
+<p>So it&rsquo;s a gzip file, let&rsquo;s learn how to decompress it by checking <strong>man gzip</strong>. So there is a flag <code>-d</code> that is used to decompress, let&rsquo;s do it.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ gzip -d original
+gzip: original: unknown suffix -- ignored
+</code></pre>
+
+<p>Hmmm&hellip; Weird. The suffix is what goes at the end of the filename i guess&hellip; OH RIGHT the file extension. This file has no extension and <strong>gzip</strong> doesn&rsquo;t like it. Let&rsquo;s give it a proper name.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ mv original original.gz
+</code></pre>
+
+<p>Ok now let&rsquo;s try it again.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ gzip -d original.gz 
+bandit12@bandit:/tmp/dirforfiles$ 
+</code></pre>
+
+<p>Ok no error. It worked i assume. Now we can list the dir to see what we have.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ ls -la
+total 1896
+drwxr-sr-x     2 bandit12 root    4096 Jun 29 16:12 .
+drwxrws-wt 54536 root     root 1925120 Jun 29 16:14 ..
+-rw-r-----     1 bandit12 root    2581 Jun 29 16:04 data.txt
+-rw-r--r--     1 bandit12 root     572 Jun 29 16:09 original
+</code></pre>
+
+<p>Ok so the file named <code>original</code> is the result of the decompression. Let&rsquo;s analyze it again with the <strong>file</strong> command.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file original 
+original: bzip2 compressed data, block size = 900k
+</code></pre>
+
+<p>So now it&rsquo;s compressed with <strong>bzip2</strong>. TO THE <strong>MAN</strong> PAGE!</p>
+
+<p>Once again the <code>-d</code> flag does it.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ bzip2 -d original
+bzip2: Can't guess original name for original -- using original.out
+</code></pre>
+
+<p>Hm&hellip; I guess it worked. <strong>bzip2</strong> isn&rsquo;t as picky as <strong>gzip</strong> with the whole file extension thing. It just warned us that it couldn&rsquo;t guess the original name so it just used that one. That&rsquo;s ok for us. Let&rsquo;s use <strong>file</strong> again.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file original.out
+original.out: gzip compressed data, was &quot;data4.bin&quot;, last modified: Tue Oct 16 12:00:23 2018, max compression, from Unix
+</code></pre>
+
+<p>Ohhh back to gzip. I know this one. We have to change the file extension before decompressing it.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ mv original.out original.gz
+</code></pre>
+
+<p>Now decompress it.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ gzip -d original.gz 
+bandit12@bandit:/tmp/dirforfiles$ ls -la
+total 1912
+drwxr-sr-x     2 bandit12 root    4096 Jun 29 16:21 .
+drwxrws-wt 54538 root     root 1925120 Jun 29 16:21 ..
+-rw-r-----     1 bandit12 root    2581 Jun 29 16:04 data.txt
+-rw-r--r--     1 bandit12 root   20480 Jun 29 16:09 original
+</code></pre>
+
+<p>I&rsquo;d say it worked. Let&rsquo;s <strong>file</strong> it again.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file original 
+original: POSIX tar archive (GNU)
+</code></pre>
+
+<p>Ohhhh that&rsquo;s a new one. Let&rsquo;s check the <strong>man tar</strong> page. To be honest i never know how to use <strong>tar</strong> and <strong>tar</strong> is really powerful (a smart way to say that it has way too many flags and information to read the man page), so let&rsquo;s ask google. I came across <a href="https://www.cyberciti.biz/faq/tar-extract-linux/">this</a>, it&rsquo;s way easier than the <strong>man</strong> page (be smart).</p>
+
+<p>Let&rsquo;s decompress it then.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ tar -xvf original
+data5.bin
+</code></pre>
+
+<p>That must mean it worked.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ ls -la
+total 1924
+drwxr-sr-x     2 bandit12 root    4096 Jun 29 16:26 .
+drwxrws-wt 54542 root     root 1925120 Jun 29 16:26 ..
+-rw-r--r--     1 bandit12 root   10240 Oct 16  2018 data5.bin
+-rw-r-----     1 bandit12 root    2581 Jun 29 16:04 data.txt
+-rw-r--r--     1 bandit12 root   20480 Jun 29 16:09 original
+</code></pre>
+
+<p>Ok now we have a data5.bin file. Let&rsquo;s <strong>file</strong> it. This is starting to get BORING, but we must persist.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file data5.bin 
+data5.bin: POSIX tar archive (GNU)
+</code></pre>
+
+<p>We got <strong>tar</strong> again. Decompress it.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ tar -xvf data5.bin
+data6.bin
+</code></pre>
+
+<p>By now you should know the steps&hellip;</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file data6.bin 
+data6.bin: bzip2 compressed data, block size = 900k
+</code></pre>
+
+<p>Good old <strong>bzip2</strong>. Don&rsquo;t stop now, it will be over soon&hellip;</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ bzip2 -d data6.bin
+bzip2: Can't guess original name for data6.bin -- using data6.bin.out
+</code></pre>
+
+<p>The names are starting to get kind of awful, if you want you can change it.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file data6.bin.out 
+data6.bin.out: POSIX tar archive (GNU)
+</code></pre>
+
+<p>We got <strong>tar</strong> again.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ tar -xvf data6.bin.out
+data8.bin
+</code></pre>
+
+<p><strong>file</strong> it.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file data8.bin 
+data8.bin: gzip compressed data, was &quot;data9.bin&quot;, last modified: Tue Oct 16 12:00:23 2018, max compression, from Unix
+</code></pre>
+
+<p>OH MY GOD!! JUST MAKE IT STOP!!! Oh and don&rsquo;t forget <strong>gzip</strong> is the tricky one with the file extension (you&rsquo;re welcome).</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ mv data8.bin data8.gz
+bandit12@bandit:/tmp/dirforfiles$ gzip -d data8.gz 
+bandit12@bandit:/tmp/dirforfiles$ 
+</code></pre>
+
+<p>It worked. Let&rsquo;s see what we have in the folder.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ ls -la
+total 1940
+drwxr-sr-x     2 bandit12 root    4096 Jun 29 16:33 .
+drwxrws-wt 54547 root     root 1925120 Jun 29 16:34 ..
+-rw-r--r--     1 bandit12 root   10240 Oct 16  2018 data5.bin
+-rw-r--r--     1 bandit12 root   10240 Oct 16  2018 data6.bin.out
+-rw-r--r--     1 bandit12 root      49 Oct 16  2018 data8
+-rw-r-----     1 bandit12 root    2581 Jun 29 16:04 data.txt
+-rw-r--r--     1 bandit12 root   20480 Jun 29 16:09 original
+</code></pre>
+
+<p>If you&rsquo;re not sure what is what by now i can&rsquo;t blame you, but we know that the ones with <code>.bin</code> and <code>.bin.out</code> are intermediate files. The one we want is <code>data8</code>.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ file data8
+data8: ASCII text
+</code></pre>
+
+<p>Finally! This is probably the original file.</p>
+
+<pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ cat data8
+The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
+</code></pre>
+
+<p>It&rsquo;s over. I need a break&hellip;</p>
+
+<h2 id="level-14-http-overthewire-org-wargames-bandit-bandit14-html"><a href="http://overthewire.org/wargames/bandit/bandit14.html">Level 14</a></h2>
+
+<p><a name="level14"></p>
+
+<p>So new level, new challenge. The password is stored in a file but can only be read by the <strong>bandit14</strong> (we are <strong>bandit13</strong>). They give us a SSH key to login to next level though. If whe check the <strong>man</strong> page we learn that we can use the <code>-i</code> flag to use a private key to login. Let&rsquo;s try it.</p>
+
+<pre><code class="language-bash">bandit13@bandit:~$ ssh -i sshkey.private bandit14@localhost
+(...connection established text...)
+bandit14@bandit:~$ 
+</code></pre>
+
+<p>Ok we got a prompt as <strong>bandit14</strong>. Have in mind that you&rsquo;re 2 levels deep in ssh connections. Now we can <strong>cat</strong> the password file mentioned previously.</p>
+
+<pre><code class="language-bash">bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
+4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+</code></pre>
+
+<p>Onto the next one.</p>
+
+<h2 id="level-15-http-overthewire-org-wargames-bandit-bandit15-html"><a href="http://overthewire.org/wargames/bandit/bandit15.html">Level 15</a></h2>
+
+<p><a name="level15"></p>
+
+<p>We can get the password for the next user if we submit the current one toport <strong>30000</strong>. We can use <strong>nc</strong> (netcat) to make simple TCP and UDP connections let&rsquo;s try it. <strong>nc</strong> takes a <strong>host</strong> and a <strong>port</strong> to connect to. Let&rsquo;s try it then.</p>
+
+<pre><code class="language-bash">bandit14@bandit:~$ nc localhost 30000
+</code></pre>
+
+<p>Ok now we can write the password.</p>
+
+<pre><code class="language-bash">bandit14@bandit:~$ nc localhost 30000
+4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+Correct!
+BfMYroe26WYalil77FoDi9qh59eK5xNr
+</code></pre>
+
+<p>Next please.</p>
+
+<h2 id="level-16-http-overthewire-org-wargames-bandit-bandit16-html"><a href="http://overthewire.org/wargames/bandit/bandit16.html">Level 16</a></h2>
+
+<p><a name="level16"></p>
+
+<p>This challenge has a few important notes so i&rsquo;ll just paste it here</p>
+
+<blockquote>
+<p>The password for the next level can be retrieved by submitting the password of the current level to port <strong>30001</strong> on localhost using <strong>SSL encryption</strong>.</p>
+
+<p>Helpful note: Getting “HEARTBEATING” and “Read R BLOCK”? Use -ign_eof and read the “CONNECTED COMMANDS” section in the manpage. Next to ‘R’ and ‘Q’, the ‘B’ command also works in this version of that command…</p>
+</blockquote>
+
+<p>So we have a suggested command named openssl and our port is using ssl encryption. Let&rsquo;s check the <strong>man</strong> page.</p>
+
+<p>In the <strong>man</strong> page there is a field named <strong>s_client</strong> which says that implements a generic SSL/TLS client. That should do it. Let&rsquo;s check the <strong>man s_client</strong> page. Ok we can use the <code>-connect</code> flag to insert the address and the port. Let&rsquo;s do it.</p>
+
+<pre><code class="language-bash">bandit15@bandit:~$ openssl s_client -connect localhost:30001
+(...bunch of information...)
+
+</code></pre>
+
+<p>Now we can type our current password to get the new one.</p>
+
+<pre><code class="language-bash">bandit15@bandit:~$ openssl s_client -connect localhost:30001
+(...bunch of information...)
+BfMYroe26WYalil77FoDi9qh59eK5xNr
+Correct!
+cluFn7wTiGryunymYOu4RcffSxQluehd
+
+closed
+</code></pre>
+
+<p>Ok we got it. Next one.</p>
+
+<h2 id="level-17-http-overthewire-org-wargames-bandit-bandit17-html"><a href="http://overthewire.org/wargames/bandit/bandit17.html">Level 17</a></h2>
+
+<p><a name="level17"></p>
+
+<p>Now they give us a range of ports to which we have to submit the current password. Let&rsquo;s not bruteforce it. We can use <strong>nmap</strong> to give us some information on the ports. Check the <strong>man</strong> page. We can use the <code>-p</code> flag to scan port ranges.</p>
+
+<pre><code class="language-bash">bandit16@bandit:~$ nmap localhost -p31000-32000
+
+Starting Nmap 7.40 ( https://nmap.org ) at 2019-06-29 17:49 CEST
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00021s latency).
+Not shown: 999 closed ports
+PORT      STATE SERVICE
+31518/tcp open  unknown
+31790/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 0.08 seconds
+</code></pre>
+
+<p>So we have 2 ports open. Now we can do a service scan in both ports and see the results. To do a service scan we use the <code>-sV</code> flag.</p>
+
+<pre><code class="language-bash">bandit16@bandit:~$ nmap localhost -p T:31518,31790 -sV
+
+Starting Nmap 7.40 ( https://nmap.org ) at 2019-06-29 17:52 CEST
+Stats: 0:01:18 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan
+Service scan Timing: About 50.00% done; ETC: 17:54 (0:01:18 remaining)
+Stats: 0:01:23 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan
+Service scan Timing: About 50.00% done; ETC: 17:54 (0:01:23 remaining)
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00013s latency).
+PORT      STATE SERVICE     VERSION
+31518/tcp open  ssl/echo
+31790/tcp open  ssl/unknown
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port31790-TCP:V=7.40%T=SSL%I=7%D=6/29%Time=5D17893D%P=x86_64-pc-linux-g
+SF:nu%r(GenericLines,31,&quot;Wrong!\x20Please\x20enter\x20the\x20correct\x20cu
+SF:rrent\x20password\n&quot;)%r(GetRequest,31,&quot;Wrong!\x20Please\x20enter\x20the
+SF:\x20correct\x20current\x20password\n&quot;)%r(HTTPOptions,31,&quot;Wrong!\x20Plea
+SF:se\x20enter\x20the\x20correct\x20current\x20password\n&quot;)%r(RTSPRequest,
+SF:31,&quot;Wrong!\x20Please\x20enter\x20the\x20correct\x20current\x20password\
+SF:n&quot;)%r(Help,31,&quot;Wrong!\x20Please\x20enter\x20the\x20correct\x20current\x
+SF:20password\n&quot;)%r(SSLSessionReq,31,&quot;Wrong!\x20Please\x20enter\x20the\x20
+SF:correct\x20current\x20password\n&quot;)%r(TLSSessionReq,31,&quot;Wrong!\x20Please
+SF:\x20enter\x20the\x20correct\x20current\x20password\n&quot;)%r(Kerberos,31,&quot;W
+SF:rong!\x20Please\x20enter\x20the\x20correct\x20current\x20password\n&quot;)%r
+SF:(FourOhFourRequest,31,&quot;Wrong!\x20Please\x20enter\x20the\x20correct\x20c
+SF:urrent\x20password\n&quot;)%r(LPDString,31,&quot;Wrong!\x20Please\x20enter\x20the
+SF:\x20correct\x20current\x20password\n&quot;)%r(LDAPSearchReq,31,&quot;Wrong!\x20Pl
+SF:ease\x20enter\x20the\x20correct\x20current\x20password\n&quot;)%r(SIPOptions
+SF:,31,&quot;Wrong!\x20Please\x20enter\x20the\x20correct\x20current\x20password
+SF:\n&quot;);
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 88.36 seconds
+</code></pre>
+
+<p>(This scan might take a bit)</p>
+
+<p>Ok so both of them speak SSL, but one of them is an <code>echo</code> service as we can see. This was an overkill since we could&rsquo;ve just tried both, but now you know how to do it properly (imagine if you had 300 ports). The port we want is <strong>31790</strong>, lets submit the password using <strong>openssl s_client</strong>.</p>
+
+<pre><code class="language-bash">bandit16@bandit:~$ openssl s_client -connect localhost:31790
+(...bunch of ssl information...)
+cluFn7wTiGryunymYOu4RcffSxQluehd
+Correct!
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
++TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----
+
+closed
+</code></pre>
+
+<p>Now we have an ssh key we can copy it to our own computer to a file and use it to connect like we did in <a href="#level14">Level 14</a>.</p>
+
+<pre><code class="language-bash">myuser@myuser:~$ echo &quot;-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
++TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----&quot; &gt; level17_priv
+
+myuser@myuser:~$ ssh bandit17@bandit.labs.overthewire.org -p 2220 -i level17_priv
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0664 for 'level17_priv' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key &quot;level17_priv&quot;: bad permissions
+bandit17@bandit.labs.overthewire.org's password:
+</code></pre>
+
+<p>Hmmm&hellip; It makes sense we shouldn&rsquo;t just have a private key laying around unprotected let&rsquo;s change its permissions (you can google how permissions in linux work).</p>
+
+<pre><code class="language-bash">myuser@myuser:~$ sudo chmod 600 level17_priv
+myuser@myuser:~$ ssh bandit17@bandit.labs.overthewire.org -p 2220 -i level17_priv
+(...connection established info...)
+bandit17@bandit:~$ 
+</code></pre>
+
+<p>Success! Just in case we should go get this level&rsquo;s password so we don&rsquo;t need the private key to login. The passwords are located in <code>/etc/bandit_pass/</code>.</p>
+
+<pre><code class="language-bash">bandit17@bandit:~$ cat /etc/bandit_pass/bandit17
+xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn
+</code></pre>
+
+<p>Now we can go to the next one.</p>
+
+<h2 id="level-17-http-overthewire-org-wargames-bandit-bandit17-html-1"><a href="http://overthewire.org/wargames/bandit/bandit17.html">Level 17</a></h2>
+
+<p><a name="level17"></p>
+
+<p>So now the password for the next level is the only line different between <strong>passwords.old</strong> and <strong>passwords.new</strong>. Let&rsquo;s check the <strong>diff</strong> command.</p>
+
+<pre><code class="language-bash">NAME
+       diff - compare files line by line
+</code></pre>
+
+<p>This should do it.</p>
+
+<pre><code class="language-bash">bandit17@bandit:~$ diff passwords.old passwords.new 
+42c42
+&lt; hlbSBPAWJmL6WFDb06gpTx1pPButblOA
+---
+&gt; kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
+</code></pre>
+
+<p>So our password should be the one on the bottom since that&rsquo;s the new one. Next one.</p>
 
   </div>
   
