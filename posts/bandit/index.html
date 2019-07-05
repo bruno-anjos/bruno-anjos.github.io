@@ -173,6 +173,14 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 <li><a href="#level15">Level 15</a></li>
 <li><a href="#level16">Level 16</a></li>
 <li><a href="#level17">Level 17</a></li>
+<li><a href="#level18">Level 18</a></li>
+<li><a href="#level19">Level 19</a></li>
+<li><a href="#level20">Level 20</a></li>
+<li><a href="#level21">Level 21</a></li>
+<li><a href="#level22">Level 22</a></li>
+<li><a href="#level23">Level 23</a></li>
+<li><a href="#level24">Level 24</a></li>
+<li><a href="#level25">Level 25</a></li>
 </ul>
 
 <h2 id="level-0-http-overthewire-org-wargames-bandit-bandit0-html"><a href="http://overthewire.org/wargames/bandit/bandit0.html">Level 0</a></h2>
@@ -187,7 +195,7 @@ The one which we will solve here is Bandit. This is focused on SSH communication
   ssh username@remote_host -p 2222
 </code></pre>
 
-<p>which we can change with the parameters we have, resulting in <code>ssh bandit0@bandit.labs.overthewire.org -p 2220</code>. Now we know how to make a basic ssh connection with a username and a port. After we execute the command a password is asked. We insert <strong>bandit0</strong> and finally we have an open ssh connection, which we can see by the prompt <code>bandit0@bandit:~$</code>.</p>
+<p>which we can change with the arguments we have, resulting in <code>ssh bandit0@bandit.labs.overthewire.org -p 2220</code>. Now we know how to make a basic ssh connection with a username and a port. After we execute the command a password is asked. We insert <strong>bandit0</strong> and finally we have an open ssh connection, which we can see by the prompt <code>bandit0@bandit:~$</code>.</p>
 
 <p>Ok now we can go to the next level.</p>
 
@@ -230,7 +238,7 @@ cat: filename: No such file or directory
 
 <p>Wait what???</p>
 
-<p>So the problem here is that as we&rsquo;ve seen before commands take parameters so what we are doing is calling the <strong>cat</strong> command with 4 parameters: <strong>spaces</strong>, <strong>in</strong>, <strong>this</strong> and <strong>filename</strong>. This is not what we want at all. What we want is to print the file named <code>spaces in this filename</code>. So the way to do it is to give it to the command as a whole string by surrounding it with <code>&quot;</code>.</p>
+<p>So the problem here is that as we&rsquo;ve seen before commands take arguments so what we are doing is calling the <strong>cat</strong> command with 4 arguments: <strong>spaces</strong>, <strong>in</strong>, <strong>this</strong> and <strong>filename</strong>. This is not what we want at all. What we want is to print the file named <code>spaces in this filename</code>. So the way to do it is to give it to the command as a whole string by surrounding it with <code>&quot;</code>.</p>
 
 <pre><code class="language-bash">bandit2@bandit:~$ cat &quot;spaces in this filename&quot; 
 UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
@@ -369,7 +377,7 @@ drwxr-x--- 2 root bandit5 4096 Oct 16  2018 maybehere19
 
 <p>Ok so here bruteforce might not be worth it since each of those entries is a directory and has multiple files. We can use one of the suggested commands named <strong>find</strong> which, guess what, finds stuff.</p>
 
-<p>So to learn a bit about find you can use <strong>man</strong> and just so you know you can search words in <strong>man</strong> by hitting <strong>/</strong> and then typing the word you want to lookup. We can lookup <code>size</code> and <code>readable</code> in there which will give us 2 flags to use: <code>-size</code> and <code>-readable</code>. <code>-size</code> works with the number of units you want followed by the character that represents the unit. So in our case we want 1033 bytes, so the result will be <code>-size 1033c</code>. The readable flag needs no parameter. The final command is:</p>
+<p>So to learn a bit about find you can use <strong>man</strong> and just so you know you can search words in <strong>man</strong> by hitting <strong>/</strong> and then typing the word you want to lookup. We can lookup <code>size</code> and <code>readable</code> in there which will give us 2 flags to use: <code>-size</code> and <code>-readable</code>. <code>-size</code> works with the number of units you want followed by the character that represents the unit. So in our case we want 1033 bytes, so the result will be <code>-size 1033c</code>. The readable flag needs no argument. The final command is:</p>
 
 <pre><code class="language-bash">bandit5@bandit:~/inhere$ find -size 1033c -readable
 ./maybehere07/.file2
@@ -401,7 +409,7 @@ DXjZPULLxYr17uwoI01bNLQbtFemEgo7
 bandit6@bandit:~$
 </code></pre>
 
-<p>Wait&hellip; No file matched what we wanted. The trick here is that it says <strong>somewhere in the server</strong> so to search everywhere and not just the current directory we have to give the <code>/</code> directory (which is the root) as a parameter to <strong>find</strong>.</p>
+<p>Wait&hellip; No file matched what we wanted. The trick here is that it says <strong>somewhere in the server</strong> so to search everywhere and not just the current directory we have to give the <code>/</code> directory (which is the root) as an argument to <strong>find</strong>.</p>
 
 <pre><code class="language-bash">bandit6@bandit:~$ find / -user bandit7 -group bandit6 -size 33c
 find: ‘/run/lvm’: Permission denied
@@ -425,7 +433,7 @@ find: ‘/boot/lost+found’: Permission denied
 HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
 </code></pre>
 
-<p>Quick note, what i did in the previous command was telling bash that <strong>cat</strong> took the result of another command (<strong>find</strong>) as a parameter, we do this by surrounding it with <code>$()</code>. This tells bash that what&rsquo;s inside is not only text, it&rsquo;s actually a command. So then the resulting output of the <strong>find</strong> command <code>/var/lib/dpkg/info/bandit7.password</code> will be a parameter to <strong>cat</strong>.</p>
+<p>Quick note, what i did in the previous command was telling bash that <strong>cat</strong> took the result of another command (<strong>find</strong>) as an argument, we do this by surrounding it with <code>$()</code>. This tells bash that what&rsquo;s inside is not only text, it&rsquo;s actually a command. So then the resulting output of the <strong>find</strong> command <code>/var/lib/dpkg/info/bandit7.password</code> will be an argument to <strong>cat</strong>.</p>
 
 <h2 id="level-8-http-overthewire-org-wargames-bandit-bandit8-html"><a href="http://overthewire.org/wargames/bandit/bandit8.html">Level 8</a></h2>
 
@@ -441,7 +449,7 @@ chemical        7D5J0CAJMWr2Ryb9uB0kSRuqz7BQPv6X
 shaded  v5MBdtwMnmZ9YlheYVOxBJiOSxp9BeAA
 </code></pre>
 
-<p>We won&rsquo;t be able to find this just by seeing the file&rsquo;s content, we will need some sort of finder, but for a file&rsquo;s content. So once again we will see the suggested commands, and one that fits our needs is <strong>grep</strong>. Now a way we can do this is by using the file&rsquo;s content as the content to look in. On the <strong>man grep</strong> page it says that you can pass the file as a parameter, the other way is that if you don&rsquo;t specify a file <strong>grep</strong> will use the standard input. So the first way of doing this is:</p>
+<p>We won&rsquo;t be able to find this just by seeing the file&rsquo;s content, we will need some sort of finder, but for a file&rsquo;s content. So once again we will see the suggested commands, and one that fits our needs is <strong>grep</strong>. Now a way we can do this is by using the file&rsquo;s content as the content to look in. On the <strong>man grep</strong> page it says that you can pass the file as an argument, the other way is that if you don&rsquo;t specify a file <strong>grep</strong> will use the standard input. So the first way of doing this is:</p>
 
 <pre><code class="language-bash">bandit7@bandit:~$ grep millionth data.txt 
 millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV
@@ -616,7 +624,7 @@ bandit12@bandit:/tmp/dirforfiles$
 �\�7��w&lt;bandit12@bandit:/tmp/dirforfiles$
 </code></pre>
 
-<p>Ok. I think i broke it&hellip; So what happened was that <strong>xxd</strong> reverted it back to a binary but wrote the result on the standard output. Let&rsquo;s redirect it to a file.</p>
+<p>Ok. I think i broke it&hellip; So what happened was that <strong>xxd</strong> reversed it back to a binary but wrote the result to the standard output. Let&rsquo;s redirect it to a file.</p>
 
 <pre><code class="language-bash">bandit12@bandit:/tmp/dirforfiles$ xxd -r data.txt &gt; original
 bandit12@bandit:/tmp/dirforfiles$ 
@@ -1018,9 +1026,9 @@ xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn
 
 <p>Now we can go to the next one.</p>
 
-<h2 id="level-17-http-overthewire-org-wargames-bandit-bandit17-html-1"><a href="http://overthewire.org/wargames/bandit/bandit17.html">Level 17</a></h2>
+<h2 id="level-18-http-overthewire-org-wargames-bandit-bandit18-html"><a href="http://overthewire.org/wargames/bandit/bandit18.html">Level 18</a></h2>
 
-<p><a name="level17"></p>
+<p><a name="level18"></p>
 
 <p>So now the password for the next level is the only line different between <strong>passwords.old</strong> and <strong>passwords.new</strong>. Let&rsquo;s check the <strong>diff</strong> command.</p>
 
@@ -1038,6 +1046,329 @@ xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn
 </code></pre>
 
 <p>So our password should be the one on the bottom since that&rsquo;s the new one. Next one.</p>
+
+<h2 id="level-19-http-overthewire-org-wargames-bandit-bandit19-html"><a href="http://overthewire.org/wargames/bandit/bandit19.html">Level 19</a></h2>
+
+<p><a name="level19"></p>
+
+<p>Now the problem is that once we login we are automatically kicked out</p>
+
+<pre><code class="language-bash">myuser@myuser:~$ ssh bandit18@bandit.labs.overthewire.org -p 2220
+(...connection established info...)
+Byebye !
+Connection to bandit.labs.overthewire.org closed.
+myuser@myuser:~$ 
+</code></pre>
+
+<p>Hm&hellip; Ok, so what about if we try to run a command through ssh. Instead of opening a connection and get a prompt, just run a command. Well let&rsquo;s check the <strong>man ssh</strong> command</p>
+
+<pre><code class="language-bash">SYNOPSIS
+     ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface] [-b bind_address] [-c cipher_spec] [-D [bind_address:]port] [-E log_file] [-e escape_char]
+         [-F configfile] [-I pkcs11] [-i identity_file] [-J destination] [-L address] [-l login_name] [-m mac_spec] [-O ctl_cmd] [-o option]
+         [-p port] [-Q query_option] [-R address] [-S ctl_path] [-W host:port] [-w local_tun[:remote_tun]] destination [command]
+</code></pre>
+
+<p>Well as we can see the last argument of the command is a command so let&rsquo;s try it</p>
+
+<pre><code class="language-bash">myuser@myuser:~$ ssh bandit18@bandit.labs.overthewire.org -p 2220 'cat readme'
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit18@bandit.labs.overthewire.org's password: 
+IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
+myuser@myuser:~$ 
+</code></pre>
+
+<p>So we got kicked out but we were still able to run the command which gave us the password. NICE! Next one.</p>
+
+<h2 id="level-20-http-overthewire-org-wargames-bandit-bandit20-html"><a href="http://overthewire.org/wargames/bandit/bandit20.html">Level 20</a></h2>
+
+<p><a name="level20"></p>
+
+<p>Let&rsquo;s check the challenge description:</p>
+
+<blockquote>
+<p>To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.</p>
+</blockquote>
+
+<p>Let&rsquo;s execute it without arguments then.</p>
+
+<pre><code class="language-bash">bandit19@bandit:~$ ./bandit20-do 
+Run a command as another user.
+  Example: ./bandit20-do id
+</code></pre>
+
+<p>We can see which user we are currently running the command by running <strong>whoami</strong></p>
+
+<pre><code class="language-bash">bandit19@bandit:~$ whoami
+bandit19
+bandit19@bandit:~$ ./bandit20-do whoami
+bandit20
+</code></pre>
+
+<p>So this runs a command as <strong>bandit20</strong>. It should immediately pop to your mind the idea of just using <strong>cat</strong> to print the password as the next user.</p>
+
+<pre><code class="language-bash">bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
+GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+</code></pre>
+
+<p>So we ran <strong>cat</strong> as <strong>bandit20</strong> and gave it the file we wanted to print as an argument. This should be easy by now.</p>
+
+<h2 id="level-21-http-overthewire-org-wargames-bandit-bandit21-html"><a href="http://overthewire.org/wargames/bandit/bandit21.html">Level 21</a></h2>
+
+<p><a name="level21"></p>
+
+<p>This challenge is really well detailed in the description so i&rsquo;ll just paste it here</p>
+
+<blockquote>
+<p>There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).</p>
+</blockquote>
+
+<p>So we need to run a server on a port that sends the password everytime someone connects to it. So we will need 2 terminals running because the server will hold on to one of them. We can use <strong>screen</strong>. We just need to execute <strong>screen</strong> which will get us into another empty terminal. To detach the current screen just hit <strong>Ctrl+a d</strong>. Then to resume just execute <strong>screen -r</strong> (RTFM on this one). We will also put a job into background by hitting <strong>Ctrl+z</strong> and then running <strong>fg</strong> to bring it to the foreground.</p>
+
+<pre><code class="language-bash">bandit20@bandit:~$ screen
+(...enters a new screen session...)
+bandit20@bandit:~$ nc -l -p 30005
+(...listening...)
+</code></pre>
+
+<p>Now we detach the screen session and run <code>./suconnection 30005</code>.</p>
+
+<pre><code class="language-bash">bandit20@bandit:~$ ./suconnect 30005
+(...waiting...)
+</code></pre>
+
+<p>Let&rsquo;s go back to our netcat server and send the old password. Hit <strong>Ctrl+z</strong> to send <code>suconnect</code> to the background and then run <strong>screen -r</strong> to resume the screen session.</p>
+
+<pre><code class="language-bash">bandit20@bandit:~$ nc -l -p 30005
+GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+(...waiting...)
+</code></pre>
+
+<p>Ok now finally let&rsquo;s resume our <code>suconnect</code> by exiting screen and running <strong>fg</strong>.</p>
+
+<pre><code class="language-bash">bandit20@bandit:~$ fg
+./suconnect 30005
+Read: GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+Password matches, sending next password
+bandit20@bandit:~$ 
+</code></pre>
+
+<p>It worked!! Now we just need to go back to the netcat server to get the password received.</p>
+
+<pre><code class="language-bash">bandit20@bandit:~$ screen -r
+(...switched to screen session...)
+bandit20@bandit:~$ nc -l -p 30005
+GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
+bandit20@bandit:~$ 
+</code></pre>
+
+<p>There we go. DONE! This was interesting! Next one.</p>
+
+<h2 id="level-22-http-overthewire-org-wargames-bandit-bandit22-html"><a href="http://overthewire.org/wargames/bandit/bandit22.html">Level 22</a></h2>
+
+<p><a name="level22"></p>
+
+<p>A program is running periodically using <strong>cron</strong>. Let&rsquo;s look into <code>/etc/cron.d/</code>.</p>
+
+<pre><code class="language-bash">bandit21@bandit:~$ ls -la /etc/cron.d
+total 24
+drwxr-xr-x  2 root root 4096 Oct 16  2018 .
+drwxr-xr-x 88 root root 4096 Oct 16  2018 ..
+-rw-r--r--  1 root root  120 Oct 16  2018 cronjob_bandit22
+-rw-r--r--  1 root root  122 Oct 16  2018 cronjob_bandit23
+-rw-r--r--  1 root root  120 Oct 16  2018 cronjob_bandit24
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+</code></pre>
+
+<p>The one that interests us for now is <code>cronjob_bandit22</code>. <strong>cat</strong> it.</p>
+
+<pre><code class="language-bash">bandit21@bandit:~$ cd /etc/cron.d
+bandit21@bandit:/etc/cron.d$ cat cronjob_bandit22
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &amp;&gt; /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &amp;&gt; /dev/null
+</code></pre>
+
+<p>So we may not understand this fully, but let&rsquo;s check that file&rsquo;s content.</p>
+
+<pre><code class="language-bash">bandit21@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit22.sh 
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 &gt; /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+</code></pre>
+
+<p>Ok this we can understand. So it&rsquo;s printing out the password for the next level to that file. Let&rsquo;s see if we can <strong>cat</strong> that file.</p>
+
+<pre><code class="language-bash">bandit21@bandit:/etc/cron.d$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+</code></pre>
+
+<p>We got it! Next level.</p>
+
+<h2 id="level-23-http-overthewire-org-wargames-bandit-bandit23-html"><a href="http://overthewire.org/wargames/bandit/bandit23.html">Level 23</a></h2>
+
+<p><a name="level23"></p>
+
+<p>This one is pretty much like the previous one but it&rsquo;s a different <strong>cron</strong> job running.</p>
+
+<pre><code class="language-bash">bandit22@bandit:~$ cat /etc/cron.d/cronjob_bandit23
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &amp;&gt; /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &amp;&gt; /dev/null
+</code></pre>
+
+<p>So the cronjob is being ran as if it was by user <strong>bandit23</strong>. Let&rsquo;s analyze the file mentioned in here.</p>
+
+<pre><code class="language-bash">bandit22@bandit:~$ cat /usr/bin/cronjob_bandit23.sh 
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo &quot;Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget&quot;
+
+cat /etc/bandit_pass/$myname &gt; /tmp/$mytarget
+</code></pre>
+
+<p>So it prints the password to a directory whose name is generated by the command after <code>mytarget</code>. If we execute the command it should give us the name. We just have to replace <code>$myname</code> with <strong>bandit22</strong>, since that would be the output of running <strong>whoami</strong> as we&rsquo;ve mentioned previously.</p>
+
+<pre><code class="language-bash">bandit22@bandit:~$ echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+8ca319486bfbbc3663ea0fbe81326349
+</code></pre>
+
+<p>Now if we <strong>cat</strong> this file we should get the password.</p>
+
+<pre><code class="language-bash">bandit22@bandit:~$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
+</code></pre>
+
+<p>Done. Onto the next one.</p>
+
+<h2 id="level-24-http-overthewire-org-wargames-bandit-bandit24-html"><a href="http://overthewire.org/wargames/bandit/bandit24.html">Level 24</a></h2>
+
+<p><a name="level24"></p>
+
+<p>Let&rsquo;s see this challenge description since they have a few importante notes:</p>
+
+<blockquote>
+<p>A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.</p>
+
+<p>NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!</p>
+
+<p>NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…</p>
+</blockquote>
+
+<p>So let&rsquo;s first go to <code>/etc/crond.d/</code> and check this level&rsquo;s file.</p>
+
+<pre><code class="language-bash">bandit23@bandit:/etc/cron.d$ cat cronjob_bandit24
+@reboot bandit24 /usr/bin/cronjob_bandit24.sh &amp;&gt; /dev/null
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &amp;&gt; /dev/null
+</code></pre>
+
+<p><strong>cat</strong> the file mentioned in here</p>
+
+<pre><code class="language-bash">bandit23@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit24.sh
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname
+echo &quot;Executing and deleting all scripts in /var/spool/$myname:&quot;
+for i in * .*;
+do
+    if [ &quot;$i&quot; != &quot;.&quot; -a &quot;$i&quot; != &quot;..&quot; ];
+    then
+        echo &quot;Handling $i&quot;
+        timeout -s 9 60 ./$i
+        rm -f ./$i
+    fi
+done
+</code></pre>
+
+<p>Once again this <strong>cron</strong> job is being ran as another user in this case <strong>bandit24</strong>. So <code>myname</code> will contain <code>bandit24</code>, leading us to the <code>/var/spool/bandit24</code> directory. The message printed by <strong>echo</strong> tells us that it will execute and delete all scripts in here, so our idea would be to create a script that will <strong>cat</strong> the password file into another file that we create. This very simple to write in a <strong>bash</strong> script, let&rsquo;s do it</p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+mkdir /tmp/dirforcron
+cat /etc/bandit_pass/bandit24 &gt; /tmp/dirforcron/pass
+chmod 777 /tmp/dirforcron/pass
+</code></pre>
+
+<p>We will create this file in <code>/tmp/dirfortest/</code> and name it <code>script.sh</code>.
+So what this do is creating a new directory to work in, cat the password file into a file in that directory and then changing the permissions to make it accessible to everyone. Now when we put this file in <code>/var/spool/bandit24</code> we have to be sure that the user who will run it has enough permissions to do so. We can do this by doing</p>
+
+<pre><code class="language-bash">bandit23@bandit:/var/spool/bandit24$ chmod 777 /tmp/dirfortest/script.sh
+</code></pre>
+
+<p>Now that we gave it all the permissions possible we just need to copy it to <code>/var/spool/bandit24</code> and wait for it to be ran.</p>
+
+<pre><code class="language-bash">bandit23@bandit:/var/spool/bandit24$ cat /tmp/dirforcron/pass
+cat: /tmp/dirforcron/pass: No such file or directory
+bandit23@bandit:/var/spool/bandit24$ cat /tmp/dirforcron/pass
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+</code></pre>
+
+<p>Success!!! Let&rsquo;s go onto the next one.</p>
+
+<h2 id="level-25-http-overthewire-org-wargames-bandit-bandit25-html"><a href="http://overthewire.org/wargames/bandit/bandit25.html">Level 25</a></h2>
+
+<p><a name="level25"></p>
+
+<blockquote>
+<p>A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.</p>
+</blockquote>
+
+<p>First let&rsquo;s try to connect and see what it prints. We will use netcat to connect as before.</p>
+
+<pre><code class="language-bash">bandit24@bandit:~$ nc localhost 30002
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+(...jibberish...)
+Wrong! Please enter the correct current password. Try again.
+^C
+</code></pre>
+
+<p>So it expects the password and the pin code in a line separated by a space. You can use your preferred scripting language to try and bruteforce this. I&rsquo;ll use bash since it doesn&rsquo;t depend on anything being preinstalled in the system (besides bash of course).</p>
+
+<pre><code class="language-bash">#!/bin/bash
+rm input1.txt
+rm input2.txt
+rm output.txt
+
+touch output.txt
+touch input.txt
+for i in {0000..5000}
+do
+        echo &quot;UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i&quot; &gt;&gt; input1.txt
+done
+
+for i in {5001..9999}
+do
+        echo &quot;UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i&quot; &gt;&gt; input2.txt
+done
+
+echo &quot;input created will start nc connection&quot;
+
+cat input1.txt | nc localhost 30002 &gt;&gt; output.txt
+cat input2.txt | nc localhost 30002 &gt;&gt; output.txt
+
+cat output.txt | grep -v Wrong
+</code></pre>
+
+<p>So what this does is it creates 2 input files with all the combinations. I do this because when i tried to do it all in once the connection tended to timeout. After creating the input i pipe it to a <strong>nc</strong> connection and write the result to a file. Finally, i pipe the content of the file to <strong>grep</strong> (the <code>-v</code> flag is to do invert macthing, so the lines that don&rsquo;t contain &ldquo;Wrong&rdquo;) and the correct answer should be there.</p>
+
+<pre><code class="language-bash">bandit24@bandit:/tmp/testbash$ bash script.sh 
+rm: cannot remove 'input1.txt': No such file or directory
+rm: cannot remove 'input2.txt': No such file or directory
+input created will start nc connection
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+Timeout. Exiting.
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+Correct!
+The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+
+Exiting.
+</code></pre>
+
+<p>Next one.</p>
 
   </div>
   
