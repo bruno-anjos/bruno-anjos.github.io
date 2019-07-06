@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bruno Anjos</title>
-    <link>http://bruno-anjos.github.io/</link>
+    <link>https://bruno-anjos.github.io/</link>
     <description>Recent content on Bruno Anjos</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Fri, 05 Jul 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://bruno-anjos.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://bruno-anjos.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Contacts</title>
-      <link>http://bruno-anjos.github.io/contact/</link>
+      <link>https://bruno-anjos.github.io/contact/</link>
       <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://bruno-anjos.github.io/contact/</guid>
+      <guid>https://bruno-anjos.github.io/contact/</guid>
       <description>Email: bruno.vale.anjos@gmail.com
 Github: https://github.com/bruno-anjos
 LinkedIn: https://www.linkedin.com/in/bruno-vale-anjos</description>
@@ -24,20 +24,20 @@ LinkedIn: https://www.linkedin.com/in/bruno-vale-anjos</description>
     
     <item>
       <title>Hi there</title>
-      <link>http://bruno-anjos.github.io/about/</link>
+      <link>https://bruno-anjos.github.io/about/</link>
       <pubDate>Fri, 28 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://bruno-anjos.github.io/about/</guid>
+      <guid>https://bruno-anjos.github.io/about/</guid>
       <description>My name is Bruno Anjos i&amp;rsquo;m 22 and i&amp;rsquo;m a Computer Science student currently in my masters&amp;rsquo; degree final year. I&amp;rsquo;m mostly interested in Computer Systems Architecture, Distributed Systems, Computer Networks and Security associated with all these topics.
 Feel free to hit me up.</description>
     </item>
     
     <item>
       <title>Over The Wire - Bandit Walkthrough</title>
-      <link>http://bruno-anjos.github.io/posts/bandit/</link>
+      <link>https://bruno-anjos.github.io/posts/bandit/</link>
       <pubDate>Fri, 28 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://bruno-anjos.github.io/posts/bandit/</guid>
+      <guid>https://bruno-anjos.github.io/posts/bandit/</guid>
       <description>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
 So to connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format bandit&amp;lt;level_number&amp;gt; (without the &amp;lsquo;&amp;lt;&amp;rsquo; &amp;lsquo;&amp;gt;&amp;rsquo;) so for level 0 the username would be bandit0.</description>
     </item>
