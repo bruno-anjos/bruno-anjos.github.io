@@ -134,6 +134,10 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 <li><a href="#level28">Level 28</a></li>
 <li><a href="#level29">Level 29</a></li>
 <li><a href="#level30">Level 30</a></li>
+<li><a href="#level31">Level 31</a></li>
+<li><a href="#level32">Level 32</a></li>
+<li><a href="#level33">Level 33</a></li>
+<li><a href="#level34">Level 34</a></li>
 </ul>
 
 <h2 id="level-0-http-overthewire-org-wargames-bandit-bandit0-html"><a href="http://overthewire.org/wargames/bandit/bandit0.html">Level 0</a></h2>
@@ -1399,7 +1403,227 @@ drwxr-sr-x <span class="m">3</span> bandit29 root <span class="m">4096</span> Ju
 drwxr-sr-x <span class="m">2</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:31 code
 drwxr-sr-x <span class="m">8</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:31 .git
 -rw-r--r-- <span class="m">1</span> bandit29 root  <span class="m">134</span> Jul  <span class="m">6</span> <span class="m">14</span>:31 README.md</code></pre></div>
-<p>We have a new folder let&rsquo;s see the content.</p>
+<p>Let&rsquo;s first check <code>README.md</code> to be sure it has nothing new.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ cat README.md 
+<span class="c1"># Bandit Notes</span>
+Some notes <span class="k">for</span> bandit30 of bandit.
+
+<span class="c1">## credentials</span>
+
+- username: bandit30
+- password: 5b90576bedb2cc04c86a9e924ce42faf</code></pre></div>
+<p>This should do it. Good job.</p>
+
+<h2 id="level-31-http-overthewire-org-wargames-bandit-bandit31-html"><a href="http://overthewire.org/wargames/bandit/bandit31.html">Level 31</a></h2>
+
+<p><a name="level31"></a></p>
+
+<p>This challenge is still related to <strong>git</strong>. So we&rsquo;ll just follow the same steps as before, create the directory and clone the repo in there.</p>
+<div class="highlight"><pre class="chroma">bandit30@bandit:~$ mkdir /tmp/gitfolder4
+bandit30@bandit:~$ cd /tmp/gitfolder4
+bandit30@bandit:/tmp/gitfolder4$ git clone ssh://bandit30-git@localhost/home/bandit30-git/repo
+Cloning into &#39;repo&#39;...
+Could not create directory &#39;/home/bandit30/.ssh&#39;.
+The authenticity of host &#39;localhost (127.0.0.1)&#39; can&#39;t be established.
+ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/bandit30/.ssh/known_hosts).
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit30-git@localhost&#39;s password: 
+remote: Counting objects: 4, done.
+remote: Total 4 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (4/4), done.</pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit30@bandit:/tmp/gitfolder4$ ls -la
+total <span class="m">1952</span>
+drwxr-sr-x     <span class="m">3</span> bandit30 root    <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">19</span>:12 .
+drwxrws-wt <span class="m">57253</span> root     root <span class="m">1986560</span> Jul  <span class="m">6</span> <span class="m">19</span>:14 ..
+drwxr-sr-x     <span class="m">3</span> bandit30 root    <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">19</span>:12 repo
+bandit30@bandit:/tmp/gitfolder4$ <span class="nb">cd</span> repo
+bandit30@bandit:/tmp/gitfolder4/repo$ ls -la
+total <span class="m">16</span>
+drwxr-sr-x <span class="m">3</span> bandit30 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">19</span>:12 .
+drwxr-sr-x <span class="m">3</span> bandit30 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">19</span>:12 ..
+drwxr-sr-x <span class="m">8</span> bandit30 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">19</span>:12 .git
+-rw-r--r-- <span class="m">1</span> bandit30 root   <span class="m">30</span> Jul  <span class="m">6</span> <span class="m">19</span>:12 README.md
+bandit30@bandit:/tmp/gitfolder4/repo$ cat README.md 
+just an epmty file... muahaha</code></pre></div>
+<p>This was me inspecting the files and folders in the repo. There is nothing interesting, so let&rsquo;s check <strong>git</strong>.</p>
+<div class="highlight"><pre class="chroma">bandit30@bandit:/tmp/gitfolder4/repo$ git show-branch --all
+* [master] initial commit of README.md
+ ! [origin/HEAD] initial commit of README.md
+  ! [origin/master] initial commit of README.md
+---
+*++ [master] initial commit of README.md</pre></div>
+<p>No special hidden branches.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit30@bandit:/tmp/gitfolder4/repo$ git log
+commit 3aa4c239f729b07deb99a52f125893e162daac9e
+Author: Ben Dover &lt;noone@overthewire.org&gt;
+Date:   Tue Oct <span class="m">16</span> <span class="m">14</span>:00:44 <span class="m">2018</span> +0200
+
+    initial commit of README.md</code></pre></div>
+<p>Only one commit, nothing interesting&hellip; Let&rsquo;s check the tags then.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit30@bandit:/tmp/gitfolder4/repo/.git$ git tag
+secret</code></pre></div>
+<p>OK this seems interesting! A tag called <code>secret</code>. We can see the tag message by doing <code>git show secret</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit30@bandit:/tmp/gitfolder4/repo$ git show secret
+47e603bb428404d265f59c42920d81e5</code></pre></div>
+<p>We got the password. Next one!</p>
+
+<h2 id="level-32-http-overthewire-org-wargames-bandit-bandit32-html"><a href="http://overthewire.org/wargames/bandit/bandit32.html">Level 32</a></h2>
+
+<p><a name="level32"></a></p>
+
+<p>Once gain this challenge uses git.</p>
+<div class="highlight"><pre class="chroma">bandit31@bandit:~$ ls -la
+total 24
+drwxr-xr-x  2 root root 4096 Oct 16  2018 .
+drwxr-xr-x 41 root root 4096 Oct 16  2018 ..
+-rw-r--r--  1 root root  220 May 15  2017 .bash_logout
+-rw-r--r--  1 root root 3526 May 15  2017 .bashrc
+-rwxr-xr-x  1 root root   59 Oct 16  2018 .gitconfig
+-rw-r--r--  1 root root  675 May 15  2017 .profile
+bandit31@bandit:~$ mkdir /tmp/gitfolder5
+bandit31@bandit:~$ cd /tmp/gitfolder5
+bandit31@bandit:/tmp/gitfolder5$ git clone ssh://bandit31-git@localhost/home/bandit31-git/repo
+Cloning into &#39;repo&#39;...
+Could not create directory &#39;/home/bandit31/.ssh&#39;.
+The authenticity of host &#39;localhost (127.0.0.1)&#39; can&#39;t be established.
+ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/bandit31/.ssh/known_hosts).
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit31-git@localhost&#39;s password: 
+remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (4/4), done.</pre></div>
+<p>Let&rsquo;s inspect the repo.</p>
+<div class="highlight"><pre class="chroma">bandit31@bandit:/tmp/gitfolder5$ ls -la
+total 1952
+drwxr-sr-x     3 bandit31 root    4096 Jul  6 19:37 .
+drwxrws-wt 57264 root     root 1986560 Jul  6 19:38 ..
+drwxr-sr-x     3 bandit31 root    4096 Jul  6 19:37 repo
+bandit31@bandit:/tmp/gitfolder5$ cd repo/
+bandit31@bandit:/tmp/gitfolder5/repo$ ls -la
+total 20
+drwxr-sr-x 3 bandit31 root 4096 Jul  6 19:37 .
+drwxr-sr-x 3 bandit31 root 4096 Jul  6 19:37 ..
+drwxr-sr-x 8 bandit31 root 4096 Jul  6 19:37 .git
+-rw-r--r-- 1 bandit31 root    6 Jul  6 19:37 .gitignore
+-rw-r--r-- 1 bandit31 root  147 Jul  6 19:37 README.md
+bandit31@bandit:/tmp/gitfolder5/repo$ cat README.md 
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: &#39;May I come in?&#39;
+    Branch: master</pre></div>
+<p>So the <code>README.md</code> mentions a <code>key.txt</code> file, and that we should push a file to the repo. Let&rsquo;s do it then.</p>
+<div class="highlight"><pre class="chroma">bandit31@bandit:/tmp/gitfolder5/repo$ vi key.txt 
+bandit31@bandit:/tmp/gitfolder5/repo$ git add .
+bandit31@bandit:/tmp/gitfolder5/repo$ git commit -a
+On branch master
+Your branch is up-to-date with &#39;origin/master&#39;.
+nothing to commit, working tree clean</pre></div>
+<p>Well we couldn&rsquo;t push since it says we are up to date. Maybe it&rsquo;s the gitignore. Let&rsquo;s see it.</p>
+<div class="highlight"><pre class="chroma">bandit31@bandit:/tmp/gitfolder5/repo$ cat .gitignore 
+*.txt</pre></div>
+<p>So as i suspected <strong>git</strong> is ignoring all the files with the <code>txt</code> extension, so <code>key.txt</code> would be ignored. We can for the file to be added anyways by using the <code>-f</code> flag.</p>
+<div class="highlight"><pre class="chroma">bandit31@bandit:/tmp/gitfolder5/repo$ git add key.txt -f
+bandit31@bandit:/tmp/gitfolder5/repo$ git commit -a
+Unable to create directory /home/bandit31/.nano: Permission denied
+It is required for saving/loading search history or cursor positions.
+
+Press Enter to continue
+
+[master e67c6e5] Added key.txt file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 key.txt</pre></div>
+<p>Now we only need to push the file.</p>
+<div class="highlight"><pre class="chroma">bandit31@bandit:/tmp/gitfolder5/repo$ git push
+Could not create directory &#39;/home/bandit31/.ssh&#39;.
+The authenticity of host &#39;localhost (127.0.0.1)&#39; can&#39;t be established.
+ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/bandit31/.ssh/known_hosts).
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit31-git@localhost&#39;s password: 
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 326 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+remote: ### Attempting to validate files... ####
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+remote: Well done! Here is the password for the next level:
+remote: 56a9bf19c63d650ce78e6ec0354ee45e
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+To ssh://localhost/home/bandit31-git/repo
+ ! [remote rejected] master -&gt; master (pre-receive hook declined)
+error: failed to push some refs to &#39;ssh://bandit31-git@localhost/home/bandit31-git/repo&#39;</pre></div>
+<p>We got the password! Good job.</p>
+
+<h2 id="level-33-http-overthewire-org-wargames-bandit-bandit33-html"><a href="http://overthewire.org/wargames/bandit/bandit33.html">Level 33</a></h2>
+
+<p><a name="level33"></a></p>
+
+<blockquote>
+<p>After all this git stuff its time for another escape. Good luck!</p>
+</blockquote>
+
+<p>Enough of <strong>git</strong> then. Now we have to escape.</p>
+<div class="highlight"><pre class="chroma">WELCOME TO THE UPPERCASE SHELL
+&gt;&gt;</pre></div>
+<p>So now we are stuck inside of a uppercase shell. Any command that we run is ran in upper case.</p>
+<div class="highlight"><pre class="chroma">&gt;&gt; ls
+sh: 1: LS: not found
+&gt;&gt; &#34;ls&#34;
+sh: 1: LS: not found</pre></div>
+<p>Not even as a string.</p>
+
+<p>Well i had to google this one because this wasn&rsquo;t really that easy. So it happens that the <code>$0</code> variable runs a shell, so that should be enough.</p>
+<div class="highlight"><pre class="chroma">&gt;&gt; $0
+$ </pre></div>
+<p>We got a shell. Now it should be easy to just see the file content.</p>
+<div class="highlight"><pre class="chroma">$ ls -la
+total 28
+drwxr-xr-x  2 root     root     4096 Oct 16  2018 .
+drwxr-xr-x 41 root     root     4096 Oct 16  2018 ..
+-rw-r--r--  1 root     root      220 May 15  2017 .bash_logout
+-rw-r--r--  1 root     root     3526 May 15  2017 .bashrc
+-rw-r--r--  1 root     root      675 May 15  2017 .profile
+-rwsr-x---  1 bandit33 bandit32 7556 Oct 16  2018 uppershell
+$ cat /etc/bandit_pass/bandit33
+c9c3199ddf4121b10cf581a98d51caee</pre></div>
+<p>Done! Next one!</p>
+
+<h2 id="level-34-http-overthewire-org-wargames-bandit-bandit34-html"><a href="http://overthewire.org/wargames/bandit/bandit34.html">Level 34</a></h2>
+
+<p><a name="level34"></a></p>
+<div class="highlight"><pre class="chroma">bandit33@bandit:~$ ls -la
+total 24
+drwxr-xr-x  2 root     root     4096 Oct 16  2018 .
+drwxr-xr-x 41 root     root     4096 Oct 16  2018 ..
+-rw-r--r--  1 root     root      220 May 15  2017 .bash_logout
+-rw-r--r--  1 root     root     3526 May 15  2017 .bashrc
+-rw-r--r--  1 root     root      675 May 15  2017 .profile
+-rw-------  1 bandit33 bandit33  430 Oct 16  2018 README.txt
+bandit33@bandit:~$ cat README.txt 
+Congratulations on solving the last level of this game!
+
+At this moment, there are no more levels to play in this game. However, we are constantly working
+on new levels and will most likely expand this game with more levels soon.
+Keep an eye out for an announcement on our usual communication channels!
+In the meantime, you could play some of our other wargames.
+
+If you have an idea for an awesome new level, please let us know!</pre></div>
+<p>We did it! We finished all the levels! At the moment (July 6th, 2019) there are no more challenges. So bye bye and thanks for checking out this walkthrough.</p>
 
   </article>
 
