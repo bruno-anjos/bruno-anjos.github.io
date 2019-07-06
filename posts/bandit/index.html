@@ -129,6 +129,11 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 <li><a href="#level23">Level 23</a></li>
 <li><a href="#level24">Level 24</a></li>
 <li><a href="#level25">Level 25</a></li>
+<li><a href="#level26">Level 26</a></li>
+<li><a href="#level27">Level 27</a></li>
+<li><a href="#level28">Level 28</a></li>
+<li><a href="#level29">Level 29</a></li>
+<li><a href="#level30">Level 30</a></li>
 </ul>
 
 <h2 id="level-0-http-overthewire-org-wargames-bandit-bandit0-html"><a href="http://overthewire.org/wargames/bandit/bandit0.html">Level 0</a></h2>
@@ -794,7 +799,7 @@ myuser@myuser:~$ </code></pre></div>
 <p>Let&rsquo;s check the challenge description:</p>
 
 <blockquote>
-<p>To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.</p>
+<p>To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), asetuidfter you have used the setuid binary.</p>
 </blockquote>
 
 <p>Let&rsquo;s execute it without arguments then.</p>
@@ -1004,6 +1009,397 @@ The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 
 Exiting.</pre></div>
 <p>Next one.</p>
+
+<h2 id="level-26-http-overthewire-org-wargames-bandit-bandit26-html"><a href="http://overthewire.org/wargames/bandit/bandit26.html">Level 26</a></h2>
+
+<p><a name="level26"></a></p>
+
+<p>So the challenge now says,</p>
+
+<blockquote>
+<p>Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.</p>
+</blockquote>
+
+<p>Let&rsquo;s inspect our current directory</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit25@bandit:~$ ls -la
+total <span class="m">32</span>
+drwxr-xr-x  <span class="m">2</span> root     root     <span class="m">4096</span> May <span class="m">26</span> <span class="m">18</span>:23 .
+drwxr-xr-x <span class="m">41</span> root     root     <span class="m">4096</span> Oct <span class="m">16</span>  <span class="m">2018</span> ..
+-rw-r-----  <span class="m">1</span> bandit25 bandit25   <span class="m">33</span> May <span class="m">26</span> <span class="m">18</span>:23 .bandit24.password
+-r--------  <span class="m">1</span> bandit25 bandit25 <span class="m">1679</span> Oct <span class="m">16</span>  <span class="m">2018</span> bandit26.sshkey
+-rw-r--r--  <span class="m">1</span> root     root      <span class="m">220</span> May <span class="m">15</span>  <span class="m">2017</span> .bash_logout
+-rw-r--r--  <span class="m">1</span> root     root     <span class="m">3526</span> May <span class="m">15</span>  <span class="m">2017</span> .bashrc
+-rw-r-----  <span class="m">1</span> bandit25 bandit25    <span class="m">4</span> May <span class="m">26</span> <span class="m">18</span>:23 .pin
+-rw-r--r--  <span class="m">1</span> root     root      <span class="m">675</span> May <span class="m">15</span>  <span class="m">2017</span> .profile</code></pre></div>
+<p>So we have a ssh key which i assume will be enough to log us in. Let&rsquo;s try it. I downloaded the key to my personal machine, <strong>set the right permissions</strong> and then tried to login.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ ssh bandit26@bandit.labs.overthewire.org -p <span class="m">2220</span> -i ~/Desktop/bandit26.sshkey
+<span class="o">(</span>...connection established...<span class="o">)</span>
+Connection to bandit.labs.overthewire.org closed.
+myuser@myuser:~$</code></pre></div>
+<p>Hmmm&hellip; So it closed the connection immediately. Let&rsquo;s try to run a command through <strong>ssh</strong> instead of establishing the connection (like in <a href="#level19">level 19</a>), more specifically, try to understand what shell user <strong>bandit26</strong> is running. We can do this by checking the content of the <code>$SHELL</code> variable.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ ssh bandit26@bandit.labs.overthewire.org -p <span class="m">2220</span> -i ~/Desktop/bandit26.sshkey <span class="s1">&#39;echo $SHELL&#39;</span>
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+<span class="o">(</span>...hangs...<span class="o">)</span>
+^C
+myuser@myuser:~$</code></pre></div>
+<p>Well that didn&rsquo;t work. The connection just hanged. Let&rsquo;s go back to <strong>bandit25</strong> and check the content of the <code>/etc/passwd</code> file, since this stores information of the system users.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit25@bandit:~$ cat /etc/passwd
+<span class="o">(</span>...other users...<span class="o">)</span>
+bandit25:x:11025:11025:bandit level <span class="m">25</span>:/home/bandit25:/bin/bash
+bandit26:x:11026:11026:bandit level <span class="m">26</span>:/home/bandit26:/usr/bin/showtext
+bandit27:x:11027:11027:bandit level <span class="m">27</span>:/home/bandit27:/bin/bash
+<span class="o">(</span>...other users...<span class="o">)</span></code></pre></div>
+<p>OK we got something. So <strong>bandit26</strong> is running <code>/usr/bin/showtext</code> as its default shell. Let&rsquo;s investigate that file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit25@bandit:~$ cat /usr/bin/showtext
+<span class="cp">#!/bin/sh
+</span><span class="cp"></span>
+<span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span>linux
+
+more ~/text.txt
+<span class="nb">exit</span> <span class="m">0</span></code></pre></div>
+<p>So what this does is pretty much use <code>more</code> on file. <code>more</code> works like <code>less</code> which in sum are commands that help you viewing a file&rsquo;s content that doesn&rsquo;t fit on screen. So let&rsquo;s do that, make the terminal as tiny as we can.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">--More--<span class="o">(</span><span class="m">16</span>%<span class="o">)</span></code></pre></div>
+<p>Ok so we got <code>more</code> running. Now i have no idea what to do. Let&rsquo;s check the <strong>man more</strong> page.
+So from there we can see that there is an option that opens <code>vim</code> at the current line (vim is a terminal text editor).</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="p">|</span> <span class="p">|</span>                   <span class="p">|</span> <span class="o">(</span>_<span class="o">)</span> <span class="p">|</span> <span class="p">|</span>__ <span class="se">\ </span>/ /
+ <span class="p">|</span> <span class="p">|</span>__   __ _ _ __   __<span class="p">|</span> <span class="p">|</span>_<span class="p">|</span> <span class="p">|</span>_   <span class="o">)</span> / /_
+ <span class="p">|</span> <span class="s1">&#39;_ \ / _` | &#39;</span>_ <span class="se">\ </span>/ _<span class="sb">`</span> <span class="p">|</span> <span class="p">|</span> __<span class="p">|</span> / / <span class="err">&#39;</span>_ <span class="se">\
+</span><span class="se"></span> <span class="p">|</span> <span class="p">|</span>_<span class="o">)</span> <span class="p">|</span> <span class="o">(</span>_<span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="o">(</span>_<span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span>_ / /<span class="p">|</span> <span class="o">(</span>_<span class="o">)</span> <span class="p">|</span>
+ <span class="p">|</span>_.__/ <span class="se">\_</span>_,_<span class="p">|</span>_<span class="p">|</span> <span class="p">|</span>_<span class="p">|</span><span class="se">\_</span>_,_<span class="p">|</span>_<span class="p">|</span><span class="se">\_</span>_<span class="p">|</span>____<span class="se">\_</span>__/
+~                                                                                      
+~                                                                                      </code></pre></div>
+<p>Now we have it opened in <code>vim</code> as user <strong>bandit26</strong>. From vim we can get a shell via the <code>:shell</code> command. To do that just hit <strong>Esc</strong> and then type <code>:shell</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">  _                     _ _ _   ___   __
+ <span class="p">|</span> <span class="p">|</span>                   <span class="p">|</span> <span class="o">(</span>_<span class="o">)</span> <span class="p">|</span> <span class="p">|</span>__ <span class="se">\ </span>/ /
+:shell</code></pre></div>
+<p>Now hit enter.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">  _                     _ _ _   ___   __  
+ <span class="p">|</span> <span class="p">|</span>                   <span class="p">|</span> <span class="o">(</span>_<span class="o">)</span> <span class="p">|</span> <span class="p">|</span>__ <span class="se">\ </span>/ /  
+--More--<span class="o">(</span><span class="m">33</span>%<span class="o">)</span></code></pre></div>
+<p>Wait&hellip; What? So that got us back to <code>more</code>&hellip; Oh right the shell was set to run <code>more</code> so we just need to change the <code>:shell</code> command in <code>vim</code>. We can do this by typing in command mode <code>:set shell=/bin/bash</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"> <span class="p">|</span>_.__/ <span class="se">\_</span>_,_<span class="p">|</span>_<span class="p">|</span> <span class="p">|</span>_<span class="p">|</span><span class="se">\_</span>_,_<span class="p">|</span>_<span class="p">|</span><span class="se">\_</span>_<span class="p">|</span>____<span class="se">\_</span>__/
+~                                                                                      
+:set <span class="nv">shell</span><span class="o">=</span>/bin/bash</code></pre></div>
+<p>And now run the <code>:shell</code> command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ </code></pre></div>
+<p>WE GOT A SHELL!!! Next challenge then.</p>
+
+<h2 id="level-27-http-overthewire-org-wargames-bandit-bandit27-html"><a href="http://overthewire.org/wargames/bandit/bandit27.html">Level 27</a></h2>
+
+<p><a name="level27"></a></p>
+
+<p>We will be using the shell established from the previous level. Let&rsquo;s check the current directory.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ ls -la
+total <span class="m">36</span>
+drwxr-xr-x  <span class="m">3</span> root     root     <span class="m">4096</span> Oct <span class="m">16</span>  <span class="m">2018</span> .
+drwxr-xr-x <span class="m">41</span> root     root     <span class="m">4096</span> Oct <span class="m">16</span>  <span class="m">2018</span> ..
+-rwsr-x---  <span class="m">1</span> bandit27 bandit26 <span class="m">7296</span> Oct <span class="m">16</span>  <span class="m">2018</span> bandit27-do
+-rw-r--r--  <span class="m">1</span> root     root      <span class="m">220</span> May <span class="m">15</span>  <span class="m">2017</span> .bash_logout
+-rw-r--r--  <span class="m">1</span> root     root     <span class="m">3526</span> May <span class="m">15</span>  <span class="m">2017</span> .bashrc
+-rw-r--r--  <span class="m">1</span> root     root      <span class="m">675</span> May <span class="m">15</span>  <span class="m">2017</span> .profile
+drwxr-xr-x  <span class="m">2</span> root     root     <span class="m">4096</span> Oct <span class="m">16</span>  <span class="m">2018</span> .ssh
+-rw-r-----  <span class="m">1</span> bandit26 bandit26  <span class="m">258</span> Oct <span class="m">16</span>  <span class="m">2018</span> text.txt</code></pre></div>
+<p>This brings us back to <a href="#level20">level 20</a> where we had a setuid binary. This is easy then, let&rsquo;s just <strong>cat</strong> the password file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
+3ba3118a22e93127a4ed485be72ef5ea</code></pre></div>
+<p>Good job! Next.</p>
+
+<h2 id="level-28-http-overthewire-org-wargames-bandit-bandit28-html"><a href="http://overthewire.org/wargames/bandit/bandit28.html">Level 28</a></h2>
+
+<p><a name="level28"></a></p>
+
+<p>In this challenge we will have to work with <strong>git</strong> if you know nothing about it you should google it and read a few cheatsheets.</p>
+
+<blockquote>
+<p>There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. The password for the user bandit27-git is the same as for the user bandit27.</p>
+
+<p>Clone the repository and find the password for the next level.</p>
+</blockquote>
+
+<p>So i&rsquo;ll first create a directory to clone the repository to, and then clone it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit27@bandit:~$ mkdir /tmp/gitfolder
+bandit27@bandit:~$ <span class="nb">cd</span> /tmp/gitfolder
+bandit27@bandit:/tmp/gitfolder$ git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
+Cloning into <span class="s1">&#39;repo&#39;</span>...
+Could not create directory <span class="s1">&#39;/home/bandit27/.ssh&#39;</span>.
+The authenticity of host <span class="s1">&#39;localhost (127.0.0.1)&#39;</span> can<span class="s1">&#39;t be established.
+</span><span class="s1">ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+</span><span class="s1">Are you sure you want to continue connecting (yes/no)? yes
+</span><span class="s1">Failed to add the host to the list of known hosts (/home/bandit27/.ssh/known_hosts).
+</span><span class="s1">This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+</span><span class="s1">
+</span><span class="s1">bandit27-git@localhost&#39;</span>s password: 
+remote: Counting objects: <span class="m">3</span>, <span class="k">done</span>.
+remote: Compressing objects: <span class="m">100</span>% <span class="o">(</span><span class="m">2</span>/2<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">3</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>
+Receiving objects: <span class="m">100</span>% <span class="o">(</span><span class="m">3</span>/3<span class="o">)</span>, <span class="k">done</span>.
+bandit27@bandit:~$</code></pre></div>
+<p>Done. Let&rsquo;s inspect the repo we&rsquo;ve just cloned.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit27@bandit:/tmp/gitfolder$ ls -la
+total <span class="m">1952</span>
+drwxr-sr-x     <span class="m">3</span> bandit27 root    <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:46 .
+drwxrws-wt <span class="m">57125</span> root     root <span class="m">1986560</span> Jul  <span class="m">6</span> <span class="m">13</span>:47 ..
+drwxr-sr-x     <span class="m">3</span> bandit27 root    <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:47 repo
+bandit27@bandit:/tmp/gitfolder$ <span class="nb">cd</span> repo/
+bandit27@bandit:/tmp/gitfolder/repo$ ls -la
+total <span class="m">16</span>
+drwxr-sr-x <span class="m">3</span> bandit27 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:47 .
+drwxr-sr-x <span class="m">3</span> bandit27 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:46 ..
+drwxr-sr-x <span class="m">8</span> bandit27 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:47 .git
+-rw-r--r-- <span class="m">1</span> bandit27 root   <span class="m">68</span> Jul  <span class="m">6</span> <span class="m">13</span>:47 README</code></pre></div>
+<p>Let&rsquo;s check that <code>README</code> file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit27@bandit:/tmp/gitfolder/repo$ cat README 
+The password to the next level is: 0ef186ac70e04ea33b4c1853d2526fa2</code></pre></div>
+<p>Done.## <a href="http://overthewire.org/wargames/bandit/bandit29.html">Level 29</a>
+<a name="level29"></a></p>
+
+<h2 id="level-29-http-overthewire-org-wargames-bandit-bandit29-html"><a href="http://overthewire.org/wargames/bandit/bandit29.html">Level 29</a></h2>
+
+<p><a name="level29"></a></p>
+
+<p>Once again in this challenge we will have to work with git,</p>
+
+<blockquote>
+<p>There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.</p>
+
+<p>Clone the repository and find the password for the next level.</p>
+</blockquote>
+
+<p>So let&rsquo;s clone it again and see the repo content.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit28@bandit:~$ mkdir /tmp/gitfolder2
+bandit28@bandit:~$ <span class="nb">cd</span> /tmp/gitfolder2
+bandit28@bandit:/tmp/gitfolder2$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
+Cloning into <span class="s1">&#39;repo&#39;</span>...
+Could not create directory <span class="s1">&#39;/home/bandit28/.ssh&#39;</span>.
+The authenticity of host <span class="s1">&#39;localhost (127.0.0.1)&#39;</span> can<span class="s1">&#39;t be established.
+</span><span class="s1">ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+</span><span class="s1">Are you sure you want to continue connecting (yes/no)? yes
+</span><span class="s1">Failed to add the host to the list of known hosts (/home/bandit28/.ssh/known_hosts).
+</span><span class="s1">This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+</span><span class="s1">
+</span><span class="s1">bandit28-git@localhost&#39;</span>s password: 
+remote: Counting objects: <span class="m">9</span>, <span class="k">done</span>.
+remote: Compressing objects: <span class="m">100</span>% <span class="o">(</span><span class="m">6</span>/6<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">9</span> <span class="o">(</span>delta <span class="m">2</span><span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>
+Receiving objects: <span class="m">100</span>% <span class="o">(</span><span class="m">9</span>/9<span class="o">)</span>, <span class="k">done</span>.
+Resolving deltas: <span class="m">100</span>% <span class="o">(</span><span class="m">2</span>/2<span class="o">)</span>, <span class="k">done</span>.</code></pre></div>
+<p>Inspect the repo.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/gitfolder2$ <span class="nb">cd</span> repo/
+bandit28@bandit:/tmp/gitfolder2/repo$ ls -la
+total <span class="m">16</span>
+drwxr-sr-x <span class="m">3</span> bandit28 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:51 .
+drwxr-sr-x <span class="m">3</span> bandit28 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:51 ..
+drwxr-sr-x <span class="m">8</span> bandit28 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:51 .git
+-rw-r--r-- <span class="m">1</span> bandit28 root  <span class="m">111</span> Jul  <span class="m">6</span> <span class="m">13</span>:51 README.md
+bandit28@bandit:/tmp/gitfolder2/repo$ cat README.md 
+<span class="c1"># Bandit Notes</span>
+Some notes <span class="k">for</span> level29 of bandit.
+
+<span class="c1">## credentials</span>
+
+- username: bandit29
+- password: xxxxxxxxxx</code></pre></div>
+<p>I saw a <code>README.md</code> file so i used <strong>cat</strong> to see it&rsquo;s content and there was nothing there. Let&rsquo;s inspect the commits made by doing <code>git log</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/gitfolder2/repo$ git log
+commit 073c27c130e6ee407e12faad1dd3848a110c4f95
+Author: Morla Porla &lt;morla@overthewire.org&gt;
+Date:   Tue Oct <span class="m">16</span> <span class="m">14</span>:00:39 <span class="m">2018</span> +0200
+
+    fix info leak
+
+commit 186a1038cc54d1358d42d468cdc8e3cc28a93fcb
+Author: Morla Porla &lt;morla@overthewire.org&gt;
+Date:   Tue Oct <span class="m">16</span> <span class="m">14</span>:00:39 <span class="m">2018</span> +0200
+
+    add missing data
+
+commit b67405defc6ef44210c53345fc953e6a21338cc7
+Author: Ben Dover &lt;noone@overthewire.org&gt;
+Date:   Tue Oct <span class="m">16</span> <span class="m">14</span>:00:39 <span class="m">2018</span> +0200
+
+    initial commit of README.md</code></pre></div>
+<p>Hmm&hellip; So the password used to be there but unfortunately someone was smart enough to remove it. We can go back to that commit by doing <code>git checkout</code> followed by the commit id. Let&rsquo;s do it then.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/gitfolder2/repo$ git checkout 186a1038cc54d1358d42d468cdc8e3cc28a93fcb
+Note: checking out <span class="s1">&#39;186a1038cc54d1358d42d468cdc8e3cc28a93fcb&#39;</span>.
+
+You are in <span class="s1">&#39;detached HEAD&#39;</span> state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+<span class="k">do</span> so <span class="o">(</span>now or later<span class="o">)</span> by using -b with the checkout <span class="nb">command</span> again. Example:
+
+  git checkout -b &lt;new-branch-name&gt;
+
+HEAD is now at 186a103... add missing data</code></pre></div>
+<p>Let&rsquo;s see what was the state of the repo in this commit.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/gitfolder2/repo$ ls -la
+total <span class="m">16</span>
+drwxr-sr-x <span class="m">3</span> bandit28 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:55 .
+drwxr-sr-x <span class="m">3</span> bandit28 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:51 ..
+drwxr-sr-x <span class="m">8</span> bandit28 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">13</span>:55 .git
+-rw-r--r-- <span class="m">1</span> bandit28 root  <span class="m">133</span> Jul  <span class="m">6</span> <span class="m">13</span>:55 README.md</code></pre></div>
+<p>Still has the <code>README.md</code> file. By reading the commit messages we thought that there should be an information leak in this commit. Let&rsquo;s print the file&rsquo;s content.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/gitfolder2/repo$ cat README.md 
+<span class="c1"># Bandit Notes</span>
+Some notes <span class="k">for</span> level29 of bandit.
+
+<span class="c1">## credentials</span>
+
+- username: bandit29
+- password: bbc96594b4e001778eee9975372716b2</code></pre></div>
+<p>We got the password. Good job! Onto the next one.</p>
+
+<h2 id="level-30-http-overthewire-org-wargames-bandit-bandit30-html"><a href="http://overthewire.org/wargames/bandit/bandit30.html">Level 30</a></h2>
+
+<p><a name="level30"></a></p>
+
+<p>Same thing as before. We have a repo we need to clone it to a folder.</p>
+<div class="highlight"><pre class="chroma">bandit29@bandit:~$ mkdir /tmp/gitfolder3
+bandit29@bandit:~$ cd /tmp/gitfolder3
+bandit29@bandit:/tmp/gitfolder3$ git clone ssh://bandit29-git@localhost/home/bandit29-git/repo
+Cloning into &#39;repo&#39;...
+Could not create directory &#39;/home/bandit29/.ssh&#39;.
+The authenticity of host &#39;localhost (127.0.0.1)&#39; can&#39;t be established.
+ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/bandit29/.ssh/known_hosts).
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit29-git@localhost&#39;s password: 
+remote: Counting objects: 16, done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 16 (delta 2), reused 0 (delta 0)
+Receiving objects: 100% (16/16), done.
+Resolving deltas: 100% (2/2), done.
+bandit29@bandit:/tmp/gitfolder3$ ls -la
+total 1952
+drwxr-sr-x     3 bandit29 root    4096 Jul  6 14:02 .
+drwxrws-wt 57133 root     root 1986560 Jul  6 14:02 ..
+drwxr-sr-x     3 bandit29 root    4096 Jul  6 14:02 repo
+bandit29@bandit:/tmp/gitfolder3$ cd repo/
+bandit29@bandit:/tmp/gitfolder3/repo$ ls -al
+total 16
+drwxr-sr-x 3 bandit29 root 4096 Jul  6 14:02 .
+drwxr-sr-x 3 bandit29 root 4096 Jul  6 14:02 ..
+drwxr-sr-x 8 bandit29 root 4096 Jul  6 14:02 .git
+-rw-r--r-- 1 bandit29 root  131 Jul  6 14:02 README.md</pre></div>
+<p>Once again let&rsquo;s see <code>README.md</code>&rsquo;s content.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ cat README.md 
+<span class="c1"># Bandit Notes</span>
+Some notes <span class="k">for</span> bandit30 of bandit.
+
+<span class="c1">## credentials</span>
+
+- username: bandit30
+- password: &lt;no passwords in production!&gt;</code></pre></div>
+<p>We&rsquo;ve been through this before. Let&rsquo;s check the previous commits.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ git log
+commit 84abedc104bbc0c65cb9eb74eb1d3057753e70f8
+Author: Ben Dover &lt;noone@overthewire.org&gt;
+Date:   Tue Oct <span class="m">16</span> <span class="m">14</span>:00:41 <span class="m">2018</span> +0200
+
+    fix username
+
+commit 9b19e7d8c1aadf4edcc5b15ba8107329ad6c5650
+Author: Ben Dover &lt;noone@overthewire.org&gt;
+Date:   Tue Oct <span class="m">16</span> <span class="m">14</span>:00:41 <span class="m">2018</span> +0200
+
+    initial commit of README.md</code></pre></div>
+<p>We can check if that first commit has anything interesting.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ git checkout 9b19e7d8c1aadf4edcc5b15ba8107329ad6c5650
+Note: checking out <span class="s1">&#39;9b19e7d8c1aadf4edcc5b15ba8107329ad6c5650&#39;</span>.
+
+You are in <span class="s1">&#39;detached HEAD&#39;</span> state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+<span class="k">do</span> so <span class="o">(</span>now or later<span class="o">)</span> by using -b with the checkout <span class="nb">command</span> again. Example:
+
+  git checkout -b &lt;new-branch-name&gt;
+
+HEAD is now at 9b19e7d... initial commit of README.md</code></pre></div>
+<p>Now let&rsquo;s check the file&rsquo;s content again.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ cat README.md 
+<span class="c1"># Bandit Notes</span>
+Some notes <span class="k">for</span> bandit30 of bandit.
+
+<span class="c1">## credentials</span>
+
+- username: bandit29
+- password: &lt;no passwords in production!&gt;</code></pre></div>
+<p>Hm&hellip; Still nothing. Let&rsquo;s go back to our most recent commit by doing <code>git pull</code> and the repo link.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ git pull ssh://bandit29-git@localhost/home/bandit29-git/repo
+Could not create directory <span class="s1">&#39;/home/bandit29/.ssh&#39;</span>.
+The authenticity of host <span class="s1">&#39;localhost (127.0.0.1)&#39;</span> can<span class="s1">&#39;t be established.
+</span><span class="s1">ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+</span><span class="s1">Are you sure you want to continue connecting (yes/no)? yes
+</span><span class="s1">Failed to add the host to the list of known hosts (/home/bandit29/.ssh/known_hosts).
+</span><span class="s1">This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+</span><span class="s1">
+</span><span class="s1">bandit29-git@localhost&#39;</span>s password: 
+From ssh://localhost/home/bandit29-git/repo
+ * branch            HEAD       -&gt; FETCH_HEAD
+Updating 9b19e7d..84abedc
+Fast-forward
+ README.md <span class="p">|</span> <span class="m">2</span> +-
+ <span class="m">1</span> file changed, <span class="m">1</span> insertion<span class="o">(</span>+<span class="o">)</span>, <span class="m">1</span> deletion<span class="o">(</span>-<span class="o">)</span></code></pre></div>
+<p>We can see what branches exist by doing <code>git branch</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ git branch
+* <span class="o">(</span>HEAD detached from 9b19e7d<span class="o">)</span>
+  master</code></pre></div>
+<p>We have 2 branches. Let&rsquo;s switch to the <code>master</code> branch since our checkouts may have messed with some changes.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ git checkout master
+Switched to branch <span class="s1">&#39;master&#39;</span>
+Your branch is up-to-date with <span class="s1">&#39;origin/master&#39;</span>.
+bandit29@bandit:/tmp/gitfolder3/repo$ git branch
+* master</code></pre></div>
+<p>Hm&hellip; I guess we can see if there are any other branches that don&rsquo;t show up here.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ git show-branch --all
+! <span class="o">[</span>dev<span class="o">]</span> add data needed <span class="k">for</span> development
+ * <span class="o">[</span>master<span class="o">]</span> fix username
+  ! <span class="o">[</span>origin/HEAD<span class="o">]</span> fix username
+   ! <span class="o">[</span>origin/dev<span class="o">]</span> add data needed <span class="k">for</span> development
+    ! <span class="o">[</span>origin/master<span class="o">]</span> fix username
+     ! <span class="o">[</span>origin/sploits-dev<span class="o">]</span> add some silly exploit, just <span class="k">for</span> shit and giggles
+------
+     + <span class="o">[</span>origin/sploits-dev<span class="o">]</span> add some silly exploit, just <span class="k">for</span> shit and giggles
++  +   <span class="o">[</span>dev<span class="o">]</span> add data needed <span class="k">for</span> development
++  +   <span class="o">[</span>dev^<span class="o">]</span> add gif2ascii
++*++++ <span class="o">[</span>master<span class="o">]</span> fix username</code></pre></div>
+<p>Ok we have some other branches like <code>dev</code> and <code>sploits-dev</code>. Since i like exploits let&rsquo;s check that one first.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ git checkout sploits-dev 
+Branch sploits-dev <span class="nb">set</span> up to track remote branch sploits-dev from origin.
+Switched to a new branch <span class="s1">&#39;sploits-dev&#39;</span>
+bandit29@bandit:/tmp/gitfolder3/repo$ ls -la
+total <span class="m">20</span>
+drwxr-sr-x <span class="m">4</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:27 .
+drwxr-sr-x <span class="m">3</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:02 ..
+drwxr-sr-x <span class="m">2</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:27 exploits
+drwxr-sr-x <span class="m">8</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:27 .git
+-rw-r--r-- <span class="m">1</span> bandit29 root  <span class="m">131</span> Jul  <span class="m">6</span> <span class="m">14</span>:25 README.md</code></pre></div>
+<p>That folder seems interesting.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ <span class="nb">cd</span> exploits/
+bandit29@bandit:/tmp/gitfolder3/repo/exploits$ ls -la
+total <span class="m">12</span>
+drwxr-sr-x <span class="m">2</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:27 .
+drwxr-sr-x <span class="m">4</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:27 ..
+-rw-r--r-- <span class="m">1</span> bandit29 root    <span class="m">1</span> Jul  <span class="m">6</span> <span class="m">14</span>:27 horde5.md</code></pre></div>
+<p>We HAVE to print that file&rsquo;s content.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo/exploits$ cat horde5.md </code></pre></div>
+<p>Oh&hellip; It&rsquo;s empty. Let&rsquo;s check the other branch then.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit29@bandit:/tmp/gitfolder3/repo$ git checkout dev
+Switched to branch <span class="s1">&#39;dev&#39;</span>
+Your branch is up-to-date with <span class="s1">&#39;origin/dev&#39;</span>.
+bandit29@bandit:/tmp/gitfolder3/repo$ ls -la
+total <span class="m">20</span>
+drwxr-sr-x <span class="m">4</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:31 .
+drwxr-sr-x <span class="m">3</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:02 ..
+drwxr-sr-x <span class="m">2</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:31 code
+drwxr-sr-x <span class="m">8</span> bandit29 root <span class="m">4096</span> Jul  <span class="m">6</span> <span class="m">14</span>:31 .git
+-rw-r--r-- <span class="m">1</span> bandit29 root  <span class="m">134</span> Jul  <span class="m">6</span> <span class="m">14</span>:31 README.md</code></pre></div>
+<p>We have a new folder let&rsquo;s see the content.</p>
 
   </article>
 
