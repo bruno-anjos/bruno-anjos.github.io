@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Bruno Anjos">
+    <meta name="description" content="https://bruno-anjos.github.io">
+    <meta name="keywords" content="developer,personal,coder,hugo,blog">
+    
+    <meta property="og:site_name" content="Bruno Anjos">
+    <meta property="og:title" content="
+  Over The Wire - Krypton Walkthrough - Bruno Anjos
+">
+    <meta property="og:description" content="This is a walkthrough of the Krypton challenge provided by Over The Wire.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bruno-anjos.github.io/posts/krypton/">
+    <meta property="og:image" content="https://bruno-anjos.github.io">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://bruno-anjos.github.io/posts/krypton/">
+    <meta name="twitter:image" content="https://bruno-anjos.github.io">
+
+    <base href="https://bruno-anjos.github.io/posts/krypton/">
+    <title>
+  Over The Wire - Krypton Walkthrough - Bruno Anjos
+</title>
+
+    <link rel="canonical" href="https://bruno-anjos.github.io/posts/krypton/">
+    
+    <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
+    <link rel="stylesheet" href="https://bruno-anjos.github.io/css/normalize.min.css">
+    <link rel="stylesheet" href="https://bruno-anjos.github.io/css/style.min.css">
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://bruno-anjos.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://bruno-anjos.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+      <link rel="alternate" href="https://bruno-anjos.github.io/index.xml" type="application/rss+xml" title="Bruno Anjos">
+      <link href="https://bruno-anjos.github.io/index.xml" rel="feed" type="application/rss+xml" title="Bruno Anjos" />
+    
+
+    <meta name="generator" content="Hugo 0.55.6" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">Bruno Anjos</a>
+    <input type="checkbox" id="menu-control"/>
+    <label class="menu-mobile  float-right " for="menu-control">
+      <span class="btn-mobile  float-right ">&#9776;</span>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://bruno-anjos.github.io/posts">Posts</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://bruno-anjos.github.io/about">About</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://bruno-anjos.github.io/contact">Contact me</a>
+            </li>
+          
+        
+        
+      </ul>
+    </label>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+  <article>
+    <header>
+      <h1 class="title">Over The Wire - Krypton Walkthrough</h1>
+      <h2 class="date">July 7, 2019</h2>
+
+      
+    </header>
+
+    
+
+<h1 id="introduction">Introduction</h1>
+
+<p><a href="http://overthewire.org/wargames/">Over The Wire</a> provides multiple challenges focused on different topics of computer systems.
+The one which we will solve here is Krypton. This is challenge is focused on cryptography.</p>
+
+<p>You can read more about the challenge and how it works <a href="http://overthewire.org/wargames/krypton/">here</a>.</p>
+
+<p>Levels:</p>
+
+<ul>
+<li><a href="#level0">Level 0</a></li>
+<li><a href="#level1">Level 1</a></li>
+<li><a href="#level2">Level 2</a></li>
+<li><a href="#level3">Level 3</a></li>
+<li><a href="#level4">Level 4</a></li>
+<li><a href="#level5">Level 5</a></li>
+<li><a href="#level6">Level 6</a></li>
+</ul>
+
+<h2 id="level-0-http-overthewire-org-wargames-krypton-krypton0-html"><a href="http://overthewire.org/wargames/krypton/krypton0.html">Level 0</a></h2>
+
+<p><a name="level0"></a></p>
+
+<p>The password is a base64 encoded string. We can use the <strong>base64</strong> command. Let&rsquo;s check the manual.</p>
+<div class="highlight"><pre class="chroma">NAME
+       base64 - base64 encode/decode data and print to standard output
+
+SYNOPSIS
+       base64 [OPTION]... [FILE]
+
+DESCRIPTION
+       Base64 encode or decode FILE, or standard input, to standard output.
+
+       With no FILE, or when FILE is -, read standard input.
+
+       Mandatory arguments to long options are mandatory for short options too.
+
+       -d, --decode
+              decode data</pre></div>
+<p>This is exactly what we want. We wneed to use the <code>-d</code> flag to decode, and we will pipeline the string with the <strong>echo</strong> command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">echo</span> <span class="s2">&#34;S1JZUFRPTklTR1JFQVQ=&#34;</span> <span class="p">|</span> base64 -d                                                         KRYPTONISGREAT%
+&gt;</code></pre></div>
+<p>The <code>%</code> does not make part of the string from what i understand. This password allows us to connect to <code>krypton.labs.overthewire.org</code> as <code>krypton1</code> on port <code>2222</code>. From now on the files that we need for the challenges will be in the <code>/krypton/</code> directory.</p>
+
+<h2 id="level-1-http-overthewire-org-wargames-krypton-krypton1-html"><a href="http://overthewire.org/wargames/krypton/krypton1.html">Level 1</a></h2>
+
+<p><a name="level1"></a></p>
+
+<p>As we&rsquo;ve mentioned before all the challenges from now on will be in the <code>/krypton/</code> directory so if we go there and list the files we get this.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton1@krypton:/krypton$ ls -la
+total <span class="m">32</span>
+drwxr-xr-x  <span class="m">8</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:21 .
+drwxr-xr-x <span class="m">92</span> root root <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">14</span>:54 ..
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton1
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton2
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton3
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton4
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton5
+drwxr-xr-x  <span class="m">3</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:21 krypton6</code></pre></div>
+<p>We are currently in <a href="#level1">Level 1</a> so let&rsquo;s change to the correct folder and list its content.</p>
+<div class="highlight"><pre class="chroma">krypton1@krypton:/krypton$ cd krypton1
+krypton1@krypton:/krypton/krypton1$ ls -la
+total 16
+drwxr-xr-x 2 root     root     4096 Jul  1 04:20 .
+drwxr-xr-x 8 root     root     4096 Jul  1 04:21 ..
+-rw-r----- 1 krypton1 krypton1  882 Jul  1 04:20 README
+-rw-r----- 1 krypton1 krypton1   26 Jul  1 04:20 krypton2</pre></div>
+<p>We should check out the README to get more insight on this challenge.</p>
+
+<blockquote>
+<p>Welcome to Krypton!</p>
+
+<p>This game is intended to give hands on experience with cryptography and cryptanalysis.  The levels progress from classic ciphers, to modern, easy to harder. Although there are excellent public tools, like cryptool,to perform the simple analysis, we strongly encourage you to try and do these without them for now.  We will use them in later excercises.</p>
+
+<p>** Please try these levels without cryptool first **</p>
+
+<p>The first level is easy.  The password for level 2 is in the file &lsquo;krypton2&rsquo;.  It is &lsquo;encrypted&rsquo; using a simple rotation called ROT13. It is also in non-standard ciphertext format.  When using alpha characters for cipher text it is normal to group the letters into 5 letter clusters, regardless of word boundaries.  This helps obfuscate any patterns.</p>
+
+<p>This file has kept the plain text word boundaries and carried them to the cipher text.</p>
+
+<p>Enjoy!</p>
+</blockquote>
+
+<p>ROT13 should be easy. We&rsquo;ve messed with this previously in <a href="https://bruno-anjos.github.io/posts/bandit/">Bandit</a> using the <strong>tr</strong> command. There is a simple example in the wiki page of ROT13 with an implementation of ROT13 using the <strong>tr</strong> command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton1@krypton:/krypton/krypton1$ cat krypton2 <span class="p">|</span> tr <span class="s1">&#39;N-ZA-Mn-za-m&#39;</span> <span class="s1">&#39;A-Za-z&#39;</span>
+LEVEL TWO PASSWORD ROTTEN</code></pre></div>
+<p>We switched the letter patterns since the example is to encode and we want to <strong>decode</strong>. We have the password for the next level, let&rsquo;s go.</p>
+
+<h2 id="level-2-http-overthewire-org-wargames-krypton-krypton2-html"><a href="http://overthewire.org/wargames/krypton/krypton2.html">Level 2</a></h2>
+
+<p><a name="level2"></a></p>
+
+<p>From now on i&rsquo;ll just change the to the challenge directory and <strong>cat</strong> the README.md without pasting it here explicitly.</p>
+
+<blockquote>
+<p>Krypton 2</p>
+
+<p>ROT13 is a simple substitution cipher.</p>
+
+<p>Substitution ciphers are a simple replacement algorithm.  In this example of a substitution cipher, we will explore a &lsquo;monoalphebetic&rsquo; cipher. Monoalphebetic means, literally, &ldquo;one alphabet&rdquo; and you will see why.</p>
+
+<p>This level contains an old form of cipher called a &lsquo;Caesar Cipher&rsquo;.A Caesar cipher shifts the alphabet by a set number.  For example:
+plain:  a b c d e f g h i j k &hellip;
+cipher: G H I J K L M N O P Q &hellip;</p>
+
+<p>In this example, the letter &lsquo;a&rsquo; in plaintext is replaced by a &lsquo;G&rsquo; in the ciphertext so, for example, the plaintext &lsquo;bad&rsquo; becomes &lsquo;HGJ&rsquo; in ciphertext.</p>
+
+<p>The password for level 3 is in the file krypton3.  It is in 5 letter group ciphertext.  It is encrypted with a Caesar Cipher.  Without any further information, this cipher text may be difficult to break.  You do not have direct access to the key, however you do have access to a program that will encrypt anything you wish to give it using the key. If you think logically, this is completely easy.</p>
+
+<p>One shot can solve it!</p>
+
+<p>Have fun.</p>
+
+<p>Additional Information:</p>
+
+<p>The <code>encrypt</code> binary will look for the keyfile in your current working directory. Therefore, it might be best to create a working direcory in /tmp and in there a link to the keyfile. As the <code>encrypt</code> binary runs setuid <code>krypton3</code>, you also need to give <code>krypton3</code> access to your working directory.</p>
+
+<p>Here is an example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@melinda:~$ mktemp -d
+/tmp/tmp.Wf2OnCpCDQ
+krypton2@melinda:~$ <span class="nb">cd</span> /tmp/tmp.Wf2OnCpCDQ
+krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ln -s /krypton/krypton2/keyfile.dat
+krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ls
+keyfile.dat
+krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ chmod <span class="m">777</span> .
+krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ /krypton/krypton2/encrypt /etc/issue
+krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ls
+ciphertext  keyfile.dat</code></pre></div></blockquote>
+
+<p>So we have to figure out what&rsquo;s the rotation in this case. We should be able to do that by just encrypting the letter <code>a</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ ./encrypt 
+
+ usage: encrypt foo  - where foo is the file containing the plaintext</code></pre></div>
+<p>We need to create a file. Let&rsquo;s create a temporary directory and a file containing just the letter <code>a</code> then.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ mkdir /tmp/tempfolder
+krypton2@krypton:/krypton/krypton2$ vi /tmp/tempfolder/testFile
+krypton2@krypton:/krypton/krypton2$ cat /tmp/tempfolder/testFile 
+a</code></pre></div>
+<p>We also need to link the <code>keyfile.dat</code> to our temporary directory and then give permissions so the binary can run.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ <span class="nb">cd</span> /tmp/tempfolder
+krypton2@krypton:/tmp/tempfolder$ ln -s /krypton/krypton2/keyfile.dat
+krypton2@krypton:/tmp/tempfolder$ chmod <span class="m">777</span> .
+krypton2@krypton:/tmp/tempfolder$ ls -la
+total <span class="m">12</span>
+drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">15</span>:30 .
+drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">15</span>:32 ..
+lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> <span class="m">15</span>:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
+-rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> <span class="m">15</span>:27 testFile</code></pre></div>
+<p>Now we just need to run the binary on the file we&rsquo;ve just created.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ /krypton/krypton2/encrypt testFile 
+krypton2@krypton:/tmp/tempfolder$ ls -la
+total <span class="m">16</span>
+drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">15</span>:33 .
+drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">15</span>:33 ..
+-rw-rw-r-- <span class="m">1</span> krypton3 krypton2    <span class="m">1</span> Jul  <span class="m">7</span> <span class="m">15</span>:33 ciphertext
+lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> <span class="m">15</span>:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
+-rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> <span class="m">15</span>:27 testFile</code></pre></div>
+<p>Let&rsquo;s check the resulting <code>ciphertext</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext 
+M</code></pre></div>
+<p>So that tells us that it&rsquo;s rotating from <code>a</code> to <code>M</code>. So to decode we just have to do the other way around. Let&rsquo;s modify our previous <strong>tr</strong> command with the rotation we want.</p>
+
+<p>We had <code>tr 'N-ZA-Mn-za-m' 'A-Za-z'</code> now what we want is to rotate from <code>M</code> to <code>a</code>. You should end up with <code>tr 'M-Za-lm-zA-L' 'a-zA-Z'</code>.</p>
+
+<p>Let&rsquo;s try it on our file to see if we get our <code>a</code> back.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext <span class="p">|</span> tr <span class="s1">&#39;M-Za-lm-zA-L&#39;</span> <span class="s1">&#39;a-zA-Z&#39;</span>
+a</code></pre></div>
+<p>We got <code>a</code> so this should be able to decrypt our initial <code>krypton3</code> file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ <span class="nb">cd</span> /krypton/krypton2/
+krypton2@krypton:/krypton/krypton2$ cat krypton3 <span class="p">|</span> tr <span class="s1">&#39;M-Za-lm-zA-L&#39;</span> <span class="s1">&#39;a-zA-Z&#39;</span>
+caeSaRiSeaSY</code></pre></div>
+<p>We got it. Next one.</p>
+
+<h2 id="level-3-http-overthewire-org-wargames-krypton-krypton3-html"><a href="http://overthewire.org/wargames/krypton/krypton3.html">Level 3</a></h2>
+
+<p><a name="level3"></a></p>
+
+  </article>
+
+  <br/>
+
+  
+  
+</section>
+
+      </div>
+      
+    </main>
+
+    
+
+  <script src="https://bruno-anjos.github.io/js/app.js"></script>
+  
+  </body>
+</html>
