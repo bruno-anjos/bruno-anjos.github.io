@@ -224,11 +224,11 @@ ciphertext  keyfile.dat</code></pre></div></blockquote>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ ./encrypt 
 
  usage: encrypt foo  - where foo is the file containing the plaintext</code></pre></div>
-<p>We need to create a file. Let&rsquo;s create a temporary directory and a file containing just the letter <code>a</code> then.</p>
+<p>We need to create a file. Let&rsquo;s create a temporary directory and a file containing just the letters <code>aA</code> then.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ mkdir /tmp/tempfolder
 krypton2@krypton:/krypton/krypton2$ vi /tmp/tempfolder/testFile
 krypton2@krypton:/krypton/krypton2$ cat /tmp/tempfolder/testFile 
-a</code></pre></div>
+aA</code></pre></div>
 <p>We also need to link the <code>keyfile.dat</code> to our temporary directory and then give permissions so the binary can run.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ <span class="nb">cd</span> /tmp/tempfolder
 krypton2@krypton:/tmp/tempfolder$ ln -s /krypton/krypton2/keyfile.dat
@@ -250,23 +250,113 @@ lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span
 -rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> <span class="m">15</span>:27 testFile</code></pre></div>
 <p>Let&rsquo;s check the resulting <code>ciphertext</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext 
-M</code></pre></div>
-<p>So that tells us that it&rsquo;s rotating from <code>a</code> to <code>M</code>. So to decode we just have to do the other way around. Let&rsquo;s modify our previous <strong>tr</strong> command with the rotation we want.</p>
+MM</code></pre></div>
+<p>So that tells us that it&rsquo;s rotating from <code>aA</code> to <code>MM</code>. So to decode we just have to do the other way around. Let&rsquo;s modify our previous <strong>tr</strong> command with the rotation we want.</p>
 
-<p>We had <code>tr 'N-ZA-Mn-za-m' 'A-Za-z'</code> now what we want is to rotate from <code>M</code> to <code>a</code>. You should end up with <code>tr 'M-Za-lm-zA-L' 'a-zA-Z'</code>.</p>
+<p>We had <code>tr 'N-ZA-Mn-za-m' 'A-Za-z'</code> now what we want is to rotate from <code>M</code> to <code>A</code>. You should end up with <code>tr 'M-ZA-L' 'A-Z'</code>.</p>
 
-<p>Let&rsquo;s try it on our file to see if we get our <code>a</code> back.</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext <span class="p">|</span> tr <span class="s1">&#39;M-Za-lm-zA-L&#39;</span> <span class="s1">&#39;a-zA-Z&#39;</span>
-a</code></pre></div>
-<p>We got <code>a</code> so this should be able to decrypt our initial <code>krypton3</code> file.</p>
+<p>Let&rsquo;s try it on our file to see if we get our <code>AA</code> back. As we&rsquo;ve seen before the encryption rotates any letter to uppercase no matter what case it was originally.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
+AA</code></pre></div>
+<p>We got <code>AA</code> so this should be able to decrypt our initial <code>krypton3</code> file.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ <span class="nb">cd</span> /krypton/krypton2/
-krypton2@krypton:/krypton/krypton2$ cat krypton3 <span class="p">|</span> tr <span class="s1">&#39;M-Za-lm-zA-L&#39;</span> <span class="s1">&#39;a-zA-Z&#39;</span>
-caeSaRiSeaSY</code></pre></div>
+krypton2@krypton:/krypton/krypton2$ cat krypton3 <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
+CAESARISEASY</code></pre></div>
 <p>We got it. Next one.</p>
 
 <h2 id="level-3-http-overthewire-org-wargames-krypton-krypton3-html"><a href="http://overthewire.org/wargames/krypton/krypton3.html">Level 3</a></h2>
 
 <p><a name="level3"></a></p>
+
+<p>As always first check the <code>README.md</code>,</p>
+
+<blockquote>
+<p>Well done.  You&rsquo;ve moved past an easy substitution cipher.</p>
+
+<p>Hopefully you just encrypted the alphabet a plaintext
+to fully expose the key in one swoop.</p>
+
+<p>The main weakness of a simple substitution cipher is
+repeated use of a simple key.  In the previous exercise
+you were able to introduce arbitrary plaintext to expose
+the key.  In this example, the cipher mechanism is not
+available to you, the attacker.</p>
+
+<p>However, you have been lucky.  You have intercepted more
+than one message.  The password to the next level is found
+in the file &lsquo;krypton4&rsquo;.  You have also found 3 other files.
+(found1, found2, found3)</p>
+
+<p>You know the following important details:</p>
+
+<ul>
+<li>The message plaintexts are in English (*** very important)</li>
+<li>They were produced from the same key (*** even better!)</li>
+</ul>
+
+<p>Enjoy.</p>
+</blockquote>
+
+<p>In this case we don&rsquo;t have access to the encryption method. I know for a fact that these types of ciphers are weak to attacks based on frequency analysis, this meaning that for example in the english language the most common letter is <code>e</code> so in the text that we have, the letter that appears the most times, SHOULD be the result of rotating <code>e</code>. And from that point we can calculate the key. Let&rsquo;s find a website that does frequency analysis of text. I found this one <a href="https://www.dcode.fr/frequency-analysis">https://www.dcode.fr/frequency-analysis</a>.</p>
+
+<p>After pasting all of the <code>found*</code> files content we get this output on the website:</p>
+
+<figure>
+    <img src="/freq_analysis.png"/> 
+</figure>
+
+
+<p>So now we know that the most common letter in the text is <code>S</code> so we could assume that to decode we need to perform this rotation <code>tr 'S-ZA-R' 'E-ZA-D'</code>.</p>
+
+<p>Let&rsquo;s try it then,</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton3@krypton:/krypton/krypton3$ cat krypton4 <span class="p">|</span> tr <span class="s1">&#39;S-ZA-R&#39;</span> <span class="s1">&#39;E-ZA-D&#39;</span>
+WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE</code></pre></div>
+<p>Hmmm&hellip; Doesn&rsquo;t seem like it&rsquo;s correct.</p>
+
+<p>After reading the <code>README.md</code> again i understand what i did wrong&hellip; I was assuming that this was a rotation cipher again. It&rsquo;s not it&rsquo;s substitution. So what we actually have to do is replace the most common letter in the analysis by the most common letter in the english alphabet, and so on.</p>
+
+<p>We can use a quick python script. I got this english frequency, &ldquo;EARIOTNSLCUDPMHGBFYWKVXZJQ&rdquo;, from <a href="https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language">here</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">real_freq</span> <span class="o">=</span> <span class="s2">&#34;EARIOTNSLCUDPMHGBFYWKVXZJQ&#34;</span>
+<span class="n">cipher_freq</span> <span class="o">=</span> <span class="s2">&#34;SQJUBNCGDZVWMYTXKELAFIOHRP&#34;</span>
+<span class="n">cipher_text</span> <span class="o">=</span> <span class="s2">&#34;KSVVW BGSJD SVSIS VXBMN YQUUK BNWCU ANMJS&#34;</span>
+<span class="n">real_text</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+
+<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">cipher_text</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">real_freq</span><span class="p">:</span>
+        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">letter</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">real_freq</span><span class="p">[</span><span class="n">cipher_freq</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span>
+
+<span class="k">print</span> <span class="n">real_text</span></code></pre></div>
+<p>This should do it.</p>
+
+<p>Spoiler alert that doesn&rsquo;t do it. In fact the frequency analysis goes deeper than this since some letters have a wrong correspondence, so you would have to do analysis of bigrams and trigrams. I started making a more advanced script but then i found a good website that does it.</p>
+
+<p><a href="https://www.guballa.de/substitution-solver">https://www.guballa.de/substitution-solver</a></p>
+
+<figure>
+    <img src="/freq_analysis_2.png"/> 
+</figure>
+
+
+<p>As you can see the text makes sense even though it&rsquo;s broken into 5 characters. This should do it as our correct decryption key. We just need to change a few things in our script.</p>
+
+<p><strong>NOTE:</strong> I worked on my own computer instead of in the normal ssh connection.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">real_alphabet</span> <span class="o">=</span> <span class="s2">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span>
+<span class="n">cipher_alphabet</span> <span class="o">=</span> <span class="s2">&#34;QAZWSXEDCRFVTGBYHNUJMIKOLP&#34;</span>
+<span class="n">cipher_text</span> <span class="o">=</span> <span class="s2">&#34;KSVVW BGSJD SVSIS VXBMN YQUUK BNWCU ANMJS&#34;</span>
+<span class="n">real_text</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+
+<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">cipher_text</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">real_alphabet</span><span class="p">:</span>
+        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">letter</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">real_alphabet</span><span class="p">[</span><span class="n">cipher_alphabet</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span>
+
+<span class="k">print</span> <span class="n">real_text</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&gt; python ~/Desktop/krypton3/simple_crack.py
+WELLD ONETH ELEVE LFOUR PASSW ORDIS BRUTE
+&gt;   </code></pre></div>
+<p>We got the password! This would be much harder if we hadn&rsquo;t find that online tool. Next one!</p>
 
   </article>
 
