@@ -358,6 +358,52 @@ WELLD ONETH ELEVE LFOUR PASSW ORDIS BRUTE
 &gt;   </code></pre></div>
 <p>We got the password! This would be much harder if we hadn&rsquo;t find that online tool. Next one!</p>
 
+<h2 id="level-4-http-overthewire-org-wargames-krypton-krypton4-html"><a href="http://overthewire.org/wargames/krypton/krypton4.html">Level 4</a></h2>
+
+<p><a name="level4"></a></p>
+
+<p>So now we have a vigenere cipher. This kind of cipher is the result of adding the plaintext with a key, so now a character doesn&rsquo;t have a direct correspondence since it depends which character of the key was added. If you search online you will eventually understand that we can just apply the same logic as before but you have to use modulus.</p>
+
+<p>We can use <a href="https://www.dcode.fr/vigenere-cipher">this</a>, to decode and do the analysis for us.</p>
+
+<p>As we can see here, there are multiple possible keys, but the one that makes sense and transforms our cipher text into readable text is the first one.</p>
+
+<figure>
+    <img src="/vigenere_analysis.png"/> 
+</figure>
+
+
+<p>In this case our key is <code>FREKEY</code></p>
+
+<p>So when we decrypt our encrypted text we get the following</p>
+
+<figure>
+    <img src="/vigenere_analysis_2.png"/> 
+</figure>
+
+
+<p>Without the spaces of course.</p>
+
+<h2 id="level-5-http-overthewire-org-wargames-krypton-krypton5-html"><a href="http://overthewire.org/wargames/krypton/krypton5.html">Level 5</a></h2>
+
+<p><a name="level5"></a></p>
+
+<p>Once again we can use the website previously mentioned.</p>
+
+<figure>
+    <img src="/krypton5.png"/> 
+</figure>
+
+
+<p>They suggest <code>KEYZTBGTH</code> as the key. This seems random, but if we look closer there&rsquo;s <code>KEY</code> and then ends in <code>GTH</code> it seems like <code>KEYLENGTH</code> we should try to decrypt using <code>KEYLENGTH</code> as the key.</p>
+
+<figure>
+    <img src="/krypton5_2.png"/> 
+</figure>
+
+
+<p>Ok we got the word <code>RANDOM</code> it can&rsquo;t be coincidence. After trying to connect, you can see that the password is right.</p>
+
   </article>
 
   <br/>
