@@ -146,7 +146,7 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 
 <h2 id="level-0-http-overthewire-org-wargames-bandit-bandit0-html"><a href="http://overthewire.org/wargames/bandit/bandit0.html">Level 0</a></h2>
 
-<p><a name="level0"></a></p>
+<p><a name="Level-0"></a></p>
 
 <p>So we need to login as <strong>bandit0</strong> using the password <strong>bandit0</strong> at <strong>bandit.labs.overthewire.org</strong> using SSH. It&rsquo;s also said that the connection should be done to port <strong>2220</strong>.</p>
 
@@ -159,16 +159,16 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 
 <h2 id="level-1-http-overthewire-org-wargames-bandit-bandit1-html"><a href="http://overthewire.org/wargames/bandit/bandit1.html">Level 1</a></h2>
 
-<p><a name="level1"></a></p>
+<p><a name="Level-1"></a></p>
 
-<p>We will use the connection established in <a href="#level0">Level 0</a> to solve this level. They say that the password for the next level is stored in the file called <strong>readme</strong>. To print the content of the file we can use the <code>cat</code> command which takes the file you want to see.</p>
+<p>We will use the connection established in <a href="#Level-0">Level 0</a> to solve this level. They say that the password for the next level is stored in the file called <strong>readme</strong>. To print the content of the file we can use the <code>cat</code> command which takes the file you want to see.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit0@bandit:~$ cat readme
 boJ9jbbUNNfktd78OOpsqOltutMc3MY1</code></pre></div>
 <p>So now that we have the password we can go to the next level.</p>
 
 <h2 id="level-2-http-overthewire-org-wargames-bandit-bandit2-html"><a href="http://overthewire.org/wargames/bandit/bandit2.html">Level 2</a></h2>
 
-<p><a name="level2"></a></p>
+<p><a name="Level-2"></a></p>
 
 <p>In this level the password is in a file called <code>-</code>. The problem here is that the character <code>-</code> is used as a special character to represent stdin (<a href="https://unix.stackexchange.com/questions/16357/usage-of-dash-in-place-of-a-filename">more information on this here</a>), so in this case we should be able to see its content if we specify the filename in a path format like</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit1@bandit:~$ cat ./-
@@ -177,7 +177,7 @@ CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9</code></pre></div>
 
 <h2 id="level-3-http-overthewire-org-wargames-bandit-bandit3-html"><a href="http://overthewire.org/wargames/bandit/bandit3.html">Level 3</a></h2>
 
-<p><a name="level3"></a></p>
+<p><a name="Level-3"></a></p>
 
 <p>So now the file that we want to see is called <code>spaces in this filename</code>. The challenge here is that if we do like before and use the command <strong>cat</strong> followed by the name we get this</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit2@bandit:~$ cat spaces in this filename 
@@ -194,7 +194,7 @@ UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK</code></pre></div>
 
 <h2 id="level-4-http-overthewire-org-wargames-bandit-bandit4-html"><a href="http://overthewire.org/wargames/bandit/bandit4.html">Level 4</a></h2>
 
-<p><a name="level4"></a></p>
+<p><a name="Level-4"></a></p>
 
 <p>Now the file that contains the password is a hidden file and is in the <code>inhere</code> directory. To change directory we use the <strong>cd</strong> command.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit3@bandit:~$ <span class="nb">cd</span> inhere</code></pre></div>
@@ -213,7 +213,7 @@ pIwrPrtPN36QITSp3EQaw936yaFoFgAB</code></pre></div>
 
 <h2 id="level-5-http-overthewire-org-wargames-bandit-bandit5-html"><a href="http://overthewire.org/wargames/bandit/bandit5.html">Level 5</a></h2>
 
-<p><a name="level5"></a></p>
+<p><a name="Level-5"></a></p>
 
 <p>So now the password is stored in the only human-readable file in the <code>inhere</code> directory. As we&rsquo;ve seen before to change directory we can use the <strong>cd</strong> command. Then we can list the files in the current directory by using ls (i use the <strong>-l</strong> flag just to display it as a vertical listing).</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ ls -l
@@ -261,7 +261,7 @@ koReBOKuIDDepwhWk7jZC0RTdopnAYKh</code></pre></div>
 
 <h2 id="level-6-http-overthewire-org-wargames-bandit-bandit6-html"><a href="http://overthewire.org/wargames/bandit/bandit6.html">Level 6</a></h2>
 
-<p><a name="level6"></a></p>
+<p><a name="Level-6"></a></p>
 
 <p>So now the password is in a file stored in the <code>inhere</code> directory and has three properties:</p>
 
@@ -306,7 +306,7 @@ DXjZPULLxYr17uwoI01bNLQbtFemEgo7</code></pre></div>
 
 <h2 id="level-7-http-overthewire-org-wargames-bandit-bandit7-html"><a href="http://overthewire.org/wargames/bandit/bandit7.html">Level 7</a></h2>
 
-<p><a name="level7"></a></p>
+<p><a name="Level-7"></a></p>
 
 <p>In this level the password is stored <strong>somewhere in the server</strong> with a few properties:</p>
 
@@ -338,7 +338,7 @@ HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs</code></pre></div>
 
 <h2 id="level-8-http-overthewire-org-wargames-bandit-bandit8-html"><a href="http://overthewire.org/wargames/bandit/bandit8.html">Level 8</a></h2>
 
-<p><a name="level8"></a></p>
+<p><a name="Level-8"></a></p>
 
 <p>New challenge. The password is stored in the file <code>data.txt</code> next to the word <code>millionth</code>. Ok so let&rsquo;s see the content of the file.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit7@bandit:~$ cat data.txt
@@ -359,7 +359,7 @@ millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV</code></pre></div>
 
 <h2 id="level-9-http-overthewire-org-wargames-bandit-bandit9-html"><a href="http://overthewire.org/wargames/bandit/bandit9.html">Level 9</a></h2>
 
-<p><a name="level9"></a></p>
+<p><a name="Level-9"></a></p>
 
 <p>Now the password is still stored in <code>data.txt</code> but now they say is the only line that is unique.
 We will <strong>cat</strong> the file just to see its content</p>
@@ -387,14 +387,14 @@ SYNOPSIS
 
 DESCRIPTION
        Filter adjacent matching lines from INPUT <span class="o">(</span>or standard input<span class="o">)</span>, writing to OUTPUT <span class="o">(</span>or standard output<span class="o">)</span>.</code></pre></div>
-<p>Ok then. So it only filters <strong>adjacent matching lines</strong>. So what we could do is sort the lines so that all the repeated lines be adjacent to one another. Guess what, one of the suggested commands is <strong>sort</strong>, that should do it. We look a bit into the <strong>man</strong> page to see how it works and is nothing special, <strong>sort</strong> followed by the file name. Now <strong>sort</strong> writes to the standard output so what we can do is pipelining, check <a href="level8">Level 8</a> for more information on this.</p>
+<p>Ok then. So it only filters <strong>adjacent matching lines</strong>. So what we could do is sort the lines so that all the repeated lines be adjacent to one another. Guess what, one of the suggested commands is <strong>sort</strong>, that should do it. We look a bit into the <strong>man</strong> page to see how it works and is nothing special, <strong>sort</strong> followed by the file name. Now <strong>sort</strong> writes to the standard output so what we can do is pipelining, check <a href="#Level-8">Level 8</a> for more information on this.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit8@bandit:~$ sort data.txt <span class="p">|</span> uniq -u
 UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR</code></pre></div>
 <p>Ok there we go. We have the password, let&rsquo;s go to the next level.</p>
 
 <h2 id="level-10-http-overthewire-org-wargames-bandit-bandit10-html"><a href="http://overthewire.org/wargames/bandit/bandit10.html">Level 10</a></h2>
 
-<p><a name="level10"></a></p>
+<p><a name="Level-10"></a></p>
 
 <p>Now the password is stored in the file <code>data.txt</code> and is one of the few human-readable strings, beginning with several <code>=</code> characters. Now we already know what a few of the suggested commands do, so we know they&rsquo;re not quite what we want. Let&rsquo;s check out <strong>strings</strong>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME
@@ -417,7 +417,7 @@ iv8!<span class="o">=</span></code></pre></div>
 
 <h2 id="level-11-http-overthewire-org-wargames-bandit-bandit11-html"><a href="http://overthewire.org/wargames/bandit/bandit11.html">Level 11</a></h2>
 
-<p><a name="level11"></a></p>
+<p><a name="Level-11"></a></p>
 
 <p>Now the password is still stored in <code>data.txt</code> but encoded with base64. There is a suggested command named <code>base64</code> that might be useful.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME
@@ -429,7 +429,7 @@ The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR</code></pre></div>
 
 <h2 id="level-12-http-overthewire-org-wargames-bandit-bandit12-html"><a href="http://overthewire.org/wargames/bandit/bandit12.html">Level 12</a></h2>
 
-<p><a name="level12"></a></p>
+<p><a name="Level-12"></a></p>
 
 <p>The password is stored in the file <code>data.txt</code>, but all lowercase and uppercase letters have been rotated 13 positions. This is called ROT13 (you can google it to get some more information on this). It&rsquo;s a ceasar&rsquo;s cipher with the <strong>n</strong> equal to 13 (you can google this as well). So by checking out the suggested commands there are a few that we already know that are not suitable for this. One of the new ones is <strong>tr</strong>. Let&rsquo;s check the <strong>man</strong> page.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME
@@ -443,7 +443,7 @@ The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu</code></pre></div>
 
 <h2 id="level-13-http-overthewire-org-wargames-bandit-bandit13-html"><a href="http://overthewire.org/wargames/bandit/bandit13.html">Level 13</a></h2>
 
-<p><a name="level13"></a></p>
+<p><a name="Level-13"></a></p>
 
 <p>Let&rsquo;s see the challenge description,</p>
 
@@ -574,7 +574,7 @@ The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL</code></pre></div>
 
 <h2 id="level-14-http-overthewire-org-wargames-bandit-bandit14-html"><a href="http://overthewire.org/wargames/bandit/bandit14.html">Level 14</a></h2>
 
-<p><a name="level14"></a></p>
+<p><a name="Level-14"></a></p>
 
 <p>So new level, new challenge. The password is stored in a file but can only be read by the <strong>bandit14</strong> (we are <strong>bandit13</strong>). They give us a SSH key to login to next level though. If whe check the <strong>man</strong> page we learn that we can use the <code>-i</code> flag to use a private key to login. Let&rsquo;s try it.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit13@bandit:~$ ssh -i sshkey.private bandit14@localhost
@@ -587,7 +587,7 @@ bandit14@bandit:~$ </code></pre></div>
 
 <h2 id="level-15-http-overthewire-org-wargames-bandit-bandit15-html"><a href="http://overthewire.org/wargames/bandit/bandit15.html">Level 15</a></h2>
 
-<p><a name="level15"></a></p>
+<p><a name="Level-15"></a></p>
 
 <p>We can get the password for the next user if we submit the current one to port <strong>30000</strong>. We can use <strong>nc</strong> (netcat) to make simple TCP and UDP connections let&rsquo;s try it. <strong>nc</strong> takes a <strong>host</strong> and a <strong>port</strong> to connect to. Let&rsquo;s try it then.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit14@bandit:~$ nc localhost <span class="m">30000</span></code></pre></div>
@@ -600,7 +600,7 @@ BfMYroe26WYalil77FoDi9qh59eK5xNr</code></pre></div>
 
 <h2 id="level-16-http-overthewire-org-wargames-bandit-bandit16-html"><a href="http://overthewire.org/wargames/bandit/bandit16.html">Level 16</a></h2>
 
-<p><a name="level16"></a></p>
+<p><a name="Level-16"></a></p>
 
 <p>This challenge has a few important notes so i&rsquo;ll just paste it here</p>
 
@@ -627,7 +627,7 @@ closed</code></pre></div>
 
 <h2 id="level-17-http-overthewire-org-wargames-bandit-bandit17-html"><a href="http://overthewire.org/wargames/bandit/bandit17.html">Level 17</a></h2>
 
-<p><a name="level17"></a></p>
+<p><a name="Level-17"></a></p>
 
 <p>Now they give us a range of ports to which we have to submit the current password. Let&rsquo;s not bruteforce it. We can use <strong>nmap</strong> to give us some information on the ports. Check the <strong>man</strong> page. We can use the <code>-p</code> flag to scan port ranges.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit16@bandit:~$ nmap localhost -p31000-32000
@@ -711,7 +711,7 @@ vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY<span class="o">=</span>
 -----END RSA PRIVATE KEY-----
 
 closed</code></pre></div>
-<p>Now we have an ssh key we can copy it to our own computer to a file and use it to connect like we did in <a href="#level14">Level 14</a>.</p>
+<p>Now we have an ssh key we can copy it to our own computer to a file and use it to connect like we did in <a href="#Level-14">Level 14</a>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ <span class="nb">echo</span> <span class="s2">&#34;-----BEGIN RSA PRIVATE KEY-----
 </span><span class="s2">MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
 </span><span class="s2">imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
@@ -763,7 +763,7 @@ xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn</code></pre></div>
 
 <h2 id="level-18-http-overthewire-org-wargames-bandit-bandit18-html"><a href="http://overthewire.org/wargames/bandit/bandit18.html">Level 18</a></h2>
 
-<p><a name="level18"></a></p>
+<p><a name="Level-18"></a></p>
 
 <p>So now the password for the next level is the only line different between <strong>passwords.old</strong> and <strong>passwords.new</strong>. Let&rsquo;s check the <strong>diff</strong> command.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME
@@ -778,7 +778,7 @@ xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn</code></pre></div>
 
 <h2 id="level-19-http-overthewire-org-wargames-bandit-bandit19-html"><a href="http://overthewire.org/wargames/bandit/bandit19.html">Level 19</a></h2>
 
-<p><a name="level19"></a></p>
+<p><a name="Level-19"></a></p>
 
 <p>Now the problem is that once we login we are automatically kicked out</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ ssh bandit18@bandit.labs.overthewire.org -p <span class="m">2220</span>
@@ -802,7 +802,7 @@ myuser@myuser:~$ </code></pre></div>
 
 <h2 id="level-20-http-overthewire-org-wargames-bandit-bandit20-html"><a href="http://overthewire.org/wargames/bandit/bandit20.html">Level 20</a></h2>
 
-<p><a name="level20"></a></p>
+<p><a name="Level-20"></a></p>
 
 <p>Let&rsquo;s check the challenge description:</p>
 
@@ -826,7 +826,7 @@ GbKksEFF4yrVs6il55v6gwY5aVje5f0j</code></pre></div>
 
 <h2 id="level-21-http-overthewire-org-wargames-bandit-bandit21-html"><a href="http://overthewire.org/wargames/bandit/bandit21.html">Level 21</a></h2>
 
-<p><a name="level21"></a></p>
+<p><a name="Level-21"></a></p>
 
 <p>This challenge is really well detailed in the description so i&rsquo;ll just paste it here</p>
 
@@ -863,7 +863,7 @@ bandit20@bandit:~$ </code></pre></div>
 
 <h2 id="level-22-http-overthewire-org-wargames-bandit-bandit22-html"><a href="http://overthewire.org/wargames/bandit/bandit22.html">Level 22</a></h2>
 
-<p><a name="level22"></a></p>
+<p><a name="Level-22"></a></p>
 
 <p>A program is running periodically using <strong>cron</strong>. Let&rsquo;s look into <code>/etc/cron.d/</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit21@bandit:~$ ls -la /etc/cron.d
@@ -891,7 +891,7 @@ Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI</code></pre></div>
 
 <h2 id="level-23-http-overthewire-org-wargames-bandit-bandit23-html"><a href="http://overthewire.org/wargames/bandit/bandit23.html">Level 23</a></h2>
 
-<p><a name="level23"></a></p>
+<p><a name="Level-23"></a></p>
 
 <p>This one is pretty much like the previous one but it&rsquo;s a different <strong>cron</strong> job running.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit22@bandit:~$ cat /etc/cron.d/cronjob_bandit23
@@ -917,7 +917,7 @@ jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n</code></pre></div>
 
 <h2 id="level-24-http-overthewire-org-wargames-bandit-bandit24-html"><a href="http://overthewire.org/wargames/bandit/bandit24.html">Level 24</a></h2>
 
-<p><a name="level24"></a></p>
+<p><a name="Level-24"></a></p>
 
 <p>Let&rsquo;s see this challenge description since they have a few importante notes:</p>
 
@@ -968,7 +968,7 @@ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ</code></pre></div>
 
 <h2 id="level-25-http-overthewire-org-wargames-bandit-bandit25-html"><a href="http://overthewire.org/wargames/bandit/bandit25.html">Level 25</a></h2>
 
-<p><a name="level25"></a></p>
+<p><a name="Level-25"></a></p>
 
 <blockquote>
 <p>A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.</p>
@@ -1020,7 +1020,7 @@ Exiting.</pre></div>
 
 <h2 id="level-26-http-overthewire-org-wargames-bandit-bandit26-html"><a href="http://overthewire.org/wargames/bandit/bandit26.html">Level 26</a></h2>
 
-<p><a name="level26"></a></p>
+<p><a name="Level-26"></a></p>
 
 <p>So the challenge now says,</p>
 
@@ -1044,7 +1044,7 @@ drwxr-xr-x <span class="m">41</span> root     root     <span class="m">4096</spa
 <span class="o">(</span>...connection established...<span class="o">)</span>
 Connection to bandit.labs.overthewire.org closed.
 myuser@myuser:~$</code></pre></div>
-<p>Hmmm&hellip; So it closed the connection immediately. Let&rsquo;s try to run a command through <strong>ssh</strong> instead of establishing the connection (like in <a href="#level19">level 19</a>), more specifically, try to understand what shell user <strong>bandit26</strong> is running. We can do this by checking the content of the <code>$SHELL</code> variable.</p>
+<p>Hmmm&hellip; So it closed the connection immediately. Let&rsquo;s try to run a command through <strong>ssh</strong> instead of establishing the connection (like in <a href="#Level-19">level 19</a>), more specifically, try to understand what shell user <strong>bandit26</strong> is running. We can do this by checking the content of the <code>$SHELL</code> variable.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ ssh bandit26@bandit.labs.overthewire.org -p <span class="m">2220</span> -i ~/Desktop/bandit26.sshkey <span class="s1">&#39;echo $SHELL&#39;</span>
 This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
 <span class="o">(</span>...hangs...<span class="o">)</span>
@@ -1094,7 +1094,7 @@ So from there we can see that there is an option that opens <code>vim</code> at 
 
 <h2 id="level-27-http-overthewire-org-wargames-bandit-bandit27-html"><a href="http://overthewire.org/wargames/bandit/bandit27.html">Level 27</a></h2>
 
-<p><a name="level27"></a></p>
+<p><a name="Level-27"></a></p>
 
 <p>We will be using the shell established from the previous level. Let&rsquo;s check the current directory.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ ls -la
@@ -1107,14 +1107,14 @@ drwxr-xr-x <span class="m">41</span> root     root     <span class="m">4096</spa
 -rw-r--r--  <span class="m">1</span> root     root      <span class="m">675</span> May <span class="m">15</span>  <span class="m">2017</span> .profile
 drwxr-xr-x  <span class="m">2</span> root     root     <span class="m">4096</span> Oct <span class="m">16</span>  <span class="m">2018</span> .ssh
 -rw-r-----  <span class="m">1</span> bandit26 bandit26  <span class="m">258</span> Oct <span class="m">16</span>  <span class="m">2018</span> text.txt</code></pre></div>
-<p>This brings us back to <a href="#level20">level 20</a> where we had a setuid binary. This is easy then, let&rsquo;s just <strong>cat</strong> the password file.</p>
+<p>This brings us back to <a href="#Level-20">level 20</a> where we had a setuid binary. This is easy then, let&rsquo;s just <strong>cat</strong> the password file.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
 3ba3118a22e93127a4ed485be72ef5ea</code></pre></div>
 <p>Good job! Next.</p>
 
 <h2 id="level-28-http-overthewire-org-wargames-bandit-bandit28-html"><a href="http://overthewire.org/wargames/bandit/bandit28.html">Level 28</a></h2>
 
-<p><a name="level28"></a></p>
+<p><a name="Level-28"></a></p>
 
 <p>In this challenge we will have to work with <strong>git</strong> if you know nothing about it you should google it and read a few cheatsheets.</p>
 
@@ -1158,12 +1158,11 @@ drwxr-sr-x <span class="m">8</span> bandit27 root <span class="m">4096</span> Ju
 <p>Let&rsquo;s check that <code>README</code> file.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit27@bandit:/tmp/gitfolder/repo$ cat README 
 The password to the next level is: 0ef186ac70e04ea33b4c1853d2526fa2</code></pre></div>
-<p>Done.## <a href="http://overthewire.org/wargames/bandit/bandit29.html">Level 29</a>
-<a name="level29"></a></p>
+<p>Done.</p>
 
 <h2 id="level-29-http-overthewire-org-wargames-bandit-bandit29-html"><a href="http://overthewire.org/wargames/bandit/bandit29.html">Level 29</a></h2>
 
-<p><a name="level29"></a></p>
+<p><a name="Level-29"></a></p>
 
 <p>Once again in this challenge we will have to work with git,</p>
 
@@ -1260,7 +1259,7 @@ Some notes <span class="k">for</span> level29 of bandit.
 
 <h2 id="level-30-http-overthewire-org-wargames-bandit-bandit30-html"><a href="http://overthewire.org/wargames/bandit/bandit30.html">Level 30</a></h2>
 
-<p><a name="level30"></a></p>
+<p><a name="Level-30"></a></p>
 
 <p>Same thing as before. We have a repo we need to clone it to a folder.</p>
 <div class="highlight"><pre class="chroma">bandit29@bandit:~$ mkdir /tmp/gitfolder3
@@ -1420,7 +1419,7 @@ Some notes <span class="k">for</span> bandit30 of bandit.
 
 <h2 id="level-31-http-overthewire-org-wargames-bandit-bandit31-html"><a href="http://overthewire.org/wargames/bandit/bandit31.html">Level 31</a></h2>
 
-<p><a name="level31"></a></p>
+<p><a name="Level-31"></a></p>
 
 <p>This challenge is still related to <strong>git</strong>. So we&rsquo;ll just follow the same steps as before, create the directory and clone the repo in there.</p>
 <div class="highlight"><pre class="chroma">bandit30@bandit:~$ mkdir /tmp/gitfolder4
@@ -1475,7 +1474,7 @@ secret</code></pre></div>
 
 <h2 id="level-32-http-overthewire-org-wargames-bandit-bandit32-html"><a href="http://overthewire.org/wargames/bandit/bandit32.html">Level 32</a></h2>
 
-<p><a name="level32"></a></p>
+<p><a name="Level-32"></a></p>
 
 <p>Once gain this challenge uses git.</p>
 <div class="highlight"><pre class="chroma">bandit31@bandit:~$ ls -la
@@ -1575,7 +1574,7 @@ error: failed to push some refs to &#39;ssh://bandit31-git@localhost/home/bandit
 
 <h2 id="level-33-http-overthewire-org-wargames-bandit-bandit33-html"><a href="http://overthewire.org/wargames/bandit/bandit33.html">Level 33</a></h2>
 
-<p><a name="level33"></a></p>
+<p><a name="Level-33"></a></p>
 
 <blockquote>
 <p>After all this git stuff its time for another escape. Good luck!</p>
@@ -1609,7 +1608,7 @@ c9c3199ddf4121b10cf581a98d51caee</pre></div>
 
 <h2 id="level-34-http-overthewire-org-wargames-bandit-bandit34-html"><a href="http://overthewire.org/wargames/bandit/bandit34.html">Level 34</a></h2>
 
-<p><a name="level34"></a></p>
+<p><a name="Level-34"></a></p>
 <div class="highlight"><pre class="chroma">bandit33@bandit:~$ ls -la
 total 24
 drwxr-xr-x  2 root     root     4096 Oct 16  2018 .
