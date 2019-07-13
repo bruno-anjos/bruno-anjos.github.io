@@ -27,7 +27,7 @@ The password is a base64 encoded string. We can use the base64 command.</descrip
     <item>
       <title>Over The Wire - Bandit Walkthrough</title>
       <link>https://bruno-anjos.github.io/posts/bandit/</link>
-      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 06 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://bruno-anjos.github.io/posts/bandit/</guid>
       <description>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
