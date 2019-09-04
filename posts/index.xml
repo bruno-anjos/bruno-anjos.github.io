@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Bruno Anjos</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Sep 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://bruno-anjos.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>rugenere - Vigenère Cipher tool written in Rust</title>
+      <link>https://bruno-anjos.github.io/posts/rugenere/</link>
+      <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://bruno-anjos.github.io/posts/rugenere/</guid>
+      <description>I had extra time, and really wanted to get into rust development, so i challenged myself to start a new project. One of my friends was in the exact same position and decided to do a simple Caesar&amp;rsquo;s cipher tool. He suggested that i do one for the Vigenère cipher since both of these ciphers are used Over The Wire challenges. In fact Krypton has challenges that use both of these ciphers, you can check my walkthrough of this challenge here.</description>
+    </item>
     
     <item>
       <title>Over The Wire - Krypton Walkthrough</title>
