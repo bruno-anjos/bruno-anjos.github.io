@@ -103,44 +103,44 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 <p>Levels:</p>
 
 <ul>
-<li><a href="#Introduction">Introduction</a>
+<li><a href="#introduction">Introduction</a>
 
 <ul>
-<li><a href="#Level-0">Level 0</a></li>
-<li><a href="#Level-1">Level 1</a></li>
-<li><a href="#Level-2">Level 2</a></li>
-<li><a href="#Level-3">Level 3</a></li>
-<li><a href="#Level-4">Level 4</a></li>
-<li><a href="#Level-5">Level 5</a></li>
-<li><a href="#Level-6">Level 6</a></li>
-<li><a href="#Level-7">Level 7</a></li>
-<li><a href="#Level-8">Level 8</a></li>
-<li><a href="#Level-9">Level 9</a></li>
-<li><a href="#Level-10">Level 10</a></li>
-<li><a href="#Level-11">Level 11</a></li>
-<li><a href="#Level-12">Level 12</a></li>
-<li><a href="#Level-13">Level 13</a></li>
-<li><a href="#Level-14">Level 14</a></li>
-<li><a href="#Level-15">Level 15</a></li>
-<li><a href="#Level-16">Level 16</a></li>
-<li><a href="#Level-17">Level 17</a></li>
-<li><a href="#Level-18">Level 18</a></li>
-<li><a href="#Level-19">Level 19</a></li>
-<li><a href="#Level-20">Level 20</a></li>
-<li><a href="#Level-21">Level 21</a></li>
-<li><a href="#Level-22">Level 22</a></li>
-<li><a href="#Level-23">Level 23</a></li>
-<li><a href="#Level-24">Level 24</a></li>
-<li><a href="#Level-25">Level 25</a></li>
-<li><a href="#Level-26">Level 26</a></li>
-<li><a href="#Level-27">Level 27</a></li>
-<li><a href="#Level-28">Level 28</a></li>
-<li><a href="#Level-29">Level 29</a></li>
-<li><a href="#Level-30">Level 30</a></li>
-<li><a href="#Level-31">Level 31</a></li>
-<li><a href="#Level-32">Level 32</a></li>
-<li><a href="#Level-33">Level 33</a></li>
-<li><a href="#Level-34">Level 34</a></li>
+<li><a href="#level-0">Level 0</a></li>
+<li><a href="#level-1">Level 1</a></li>
+<li><a href="#level-2">Level 2</a></li>
+<li><a href="#level-3">Level 3</a></li>
+<li><a href="#level-4">Level 4</a></li>
+<li><a href="#level-5">Level 5</a></li>
+<li><a href="#level-6">Level 6</a></li>
+<li><a href="#level-7">Level 7</a></li>
+<li><a href="#level-8">Level 8</a></li>
+<li><a href="#level-9">Level 9</a></li>
+<li><a href="#level-10">Level 10</a></li>
+<li><a href="#level-11">Level 11</a></li>
+<li><a href="#level-12">Level 12</a></li>
+<li><a href="#level-13">Level 13</a></li>
+<li><a href="#level-14">Level 14</a></li>
+<li><a href="#level-15">Level 15</a></li>
+<li><a href="#level-16">Level 16</a></li>
+<li><a href="#level-17">Level 17</a></li>
+<li><a href="#level-18">Level 18</a></li>
+<li><a href="#level-19">Level 19</a></li>
+<li><a href="#level-20">Level 20</a></li>
+<li><a href="#level-21">Level 21</a></li>
+<li><a href="#level-22">Level 22</a></li>
+<li><a href="#level-23">Level 23</a></li>
+<li><a href="#level-24">Level 24</a></li>
+<li><a href="#level-25">Level 25</a></li>
+<li><a href="#level-26">Level 26</a></li>
+<li><a href="#level-27">Level 27</a></li>
+<li><a href="#level-28">Level 28</a></li>
+<li><a href="#level-29">Level 29</a></li>
+<li><a href="#level-30">Level 30</a></li>
+<li><a href="#level-31">Level 31</a></li>
+<li><a href="#level-32">Level 32</a></li>
+<li><a href="#level-33">Level 33</a></li>
+<li><a href="#level-34">Level 34</a></li>
 </ul></li>
 </ul>
 
@@ -240,7 +240,7 @@ file: Cannot open <span class="sb">`</span>ile06<span class="s1">&#39; (No such 
 </span><span class="s1">file: Cannot open `ile07&#39;</span> <span class="o">(</span>No such file or directory<span class="o">)</span>.
 file: Cannot open <span class="sb">`</span>ile08<span class="s1">&#39; (No such file or directory).
 </span><span class="s1">file: Cannot open `ile09&#39;</span> <span class="o">(</span>No such file or directory<span class="o">)</span>.</code></pre></div>
-<p>&ldquo;Wait&hellip; You said this was the smart way and it didn&rsquo;t work, that doesn&rsquo;t very smart to me.&rdquo; I know, i know just give me a chance. So the problem here is that the files begin by a <code>-</code>, and we&rsquo;ve encountered this problem before. Let&rsquo;s do as we did before by putting the filenames in a path like format, so <code>./*</code>.</p>
+<p>&ldquo;Wait&hellip; You said this was the smart way and it didn&rsquo;t work, that doesn&rsquo;t seem very smart to me.&rdquo; I know, i know just give me a chance. So the problem here is that the files begin by a <code>-</code>, and we&rsquo;ve encountered this problem before. Let&rsquo;s do as we did before by putting the filenames in a path like format, so <code>./*</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ file ./*
 ./-file00: data
 ./-file01: data
