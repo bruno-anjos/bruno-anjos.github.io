@@ -98,62 +98,62 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 <ul>
 <li><a href="#introduction">Introduction</a>
 <ul>
-<li><a href="#level-0">Level 0</a></li>
-<li><a href="#level-1">Level 1</a></li>
-<li><a href="#level-2">Level 2</a></li>
-<li><a href="#level-3">Level 3</a></li>
-<li><a href="#level-4">Level 4</a></li>
-<li><a href="#level-5">Level 5</a></li>
-<li><a href="#level-6">Level 6</a></li>
-<li><a href="#level-7">Level 7</a></li>
-<li><a href="#level-8">Level 8</a></li>
-<li><a href="#level-9">Level 9</a></li>
-<li><a href="#level-10">Level 10</a></li>
-<li><a href="#level-11">Level 11</a></li>
-<li><a href="#level-12">Level 12</a></li>
-<li><a href="#level-13">Level 13</a></li>
-<li><a href="#level-14">Level 14</a></li>
-<li><a href="#level-15">Level 15</a></li>
-<li><a href="#level-16">Level 16</a></li>
-<li><a href="#level-17">Level 17</a></li>
-<li><a href="#level-18">Level 18</a></li>
-<li><a href="#level-19">Level 19</a></li>
-<li><a href="#level-20">Level 20</a></li>
-<li><a href="#level-21">Level 21</a></li>
-<li><a href="#level-22">Level 22</a></li>
-<li><a href="#level-23">Level 23</a></li>
-<li><a href="#level-24">Level 24</a></li>
-<li><a href="#level-25">Level 25</a></li>
-<li><a href="#level-26">Level 26</a></li>
-<li><a href="#level-27">Level 27</a></li>
-<li><a href="#level-28">Level 28</a></li>
-<li><a href="#level-29">Level 29</a></li>
-<li><a href="#level-30">Level 30</a></li>
-<li><a href="#level-31">Level 31</a></li>
-<li><a href="#level-32">Level 32</a></li>
-<li><a href="#level-33">Level 33</a></li>
-<li><a href="#level-34">Level 34</a></li>
+<li><a href="#level0">Level 0</a></li>
+<li><a href="#level1">Level 1</a></li>
+<li><a href="#level2">Level 2</a></li>
+<li><a href="#level3">Level 3</a></li>
+<li><a href="#level4">Level 4</a></li>
+<li><a href="#level5">Level 5</a></li>
+<li><a href="#level6">Level 6</a></li>
+<li><a href="#level7">Level 7</a></li>
+<li><a href="#level8">Level 8</a></li>
+<li><a href="#level9">Level 9</a></li>
+<li><a href="#level10">Level 10</a></li>
+<li><a href="#level11">Level 11</a></li>
+<li><a href="#level12">Level 12</a></li>
+<li><a href="#level13">Level 13</a></li>
+<li><a href="#level14">Level 14</a></li>
+<li><a href="#level15">Level 15</a></li>
+<li><a href="#level16">Level 16</a></li>
+<li><a href="#level17">Level 17</a></li>
+<li><a href="#level18">Level 18</a></li>
+<li><a href="#level19">Level 19</a></li>
+<li><a href="#level20">Level 20</a></li>
+<li><a href="#level21">Level 21</a></li>
+<li><a href="#level22">Level 22</a></li>
+<li><a href="#level23">Level 23</a></li>
+<li><a href="#level24">Level 24</a></li>
+<li><a href="#level25">Level 25</a></li>
+<li><a href="#level26">Level 26</a></li>
+<li><a href="#level27">Level 27</a></li>
+<li><a href="#level28">Level 28</a></li>
+<li><a href="#level29">Level 29</a></li>
+<li><a href="#level30">Level 30</a></li>
+<li><a href="#level31">Level 31</a></li>
+<li><a href="#level32">Level 32</a></li>
+<li><a href="#level33">Level 33</a></li>
+<li><a href="#level34">Level 34</a></li>
 </ul>
 </li>
 </ul>
-<h2 id="a-idlevel-0a-level-0httpoverthewireorgwargamesbanditbandit0html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit0.html">Level 0</a></h2>
+<h2 id="a-idlevel0a-level-0httpoverthewireorgwargamesbanditbandit0html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit0.html">Level 0</a></h2>
 <p>So we need to login as <strong>bandit0</strong> using the password <strong>bandit0</strong> at <strong>bandit.labs.overthewire.org</strong> using SSH. It&rsquo;s also said that the connection should be done to port <strong>2220</strong>.</p>
 <p>We can use the <strong>man</strong> command followed by <strong>ssh</strong> to get information on how to use ssh. The <strong>man</strong> command is super useful, but sometimes can present you with more information then you need. A nice alternative is the <strong>tldr</strong> command which you can install through your package manager (have in mind that you won&rsquo;t be able to use it once you login through ssh since you can&rsquo;t install anything in the bandit machine). It also takes the command that you want to see more information as an argument but it shows you some examples frequently used. So by doing <code>tldr ssh</code> we get one of the lines saying</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">- Connect to a remote server using a specific port:                    
   ssh username@remote_host -p <span class="m">2222</span>
 </code></pre></div><p>which we can change with the arguments we have, resulting in <code>ssh bandit0@bandit.labs.overthewire.org -p 2220</code>. Now we know how to make a basic ssh connection with a username and a port. After we execute the command a password is asked. We insert <strong>bandit0</strong> and finally we have an open ssh connection, which we can see by the prompt <code>bandit0@bandit:~$</code>.</p>
 <p>Ok now we can go to the next level.</p>
-<h2 id="a-idlevel-1a-level-1httpoverthewireorgwargamesbanditbandit1html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit1.html">Level 1</a></h2>
-<p>We will use the connection established in <a href="#level-0">Level 0</a> to solve this level. They say that the password for the next level is stored in the file called <strong>readme</strong>. To print the content of the file we can use the <code>cat</code> command which takes the file you want to see.</p>
+<h2 id="a-idlevel1a-level-1httpoverthewireorgwargamesbanditbandit1html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit1.html">Level 1</a></h2>
+<p>We will use the connection established in <a href="#level0">Level 0</a> to solve this level. They say that the password for the next level is stored in the file called <strong>readme</strong>. To print the content of the file we can use the <code>cat</code> command which takes the file you want to see.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit0@bandit:~$ cat readme
 boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 </code></pre></div><p>So now that we have the password we can go to the next level.</p>
-<h2 id="a-idlevel-2a-level-2httpoverthewireorgwargamesbanditbandit2html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit2.html">Level 2</a></h2>
+<h2 id="a-idlevel2a-level-2httpoverthewireorgwargamesbanditbandit2html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit2.html">Level 2</a></h2>
 <p>In this level the password is in a file called <code>-</code>. The problem here is that the character <code>-</code> is used as a special character to represent stdin (<a href="https://unix.stackexchange.com/questions/16357/usage-of-dash-in-place-of-a-filename">more information on this here</a>), so in this case we should be able to see its content if we specify the filename in a path format like</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit1@bandit:~$ cat ./-
 CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
 </code></pre></div><p>The <code>.</code> means the current directory, so what we are representing is the current directory, which inside has a file named <code>-</code>.</p>
-<h2 id="a-idlevel-3a-level-3httpoverthewireorgwargamesbanditbandit3html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit3.html">Level 3</a></h2>
+<h2 id="a-idlevel3a-level-3httpoverthewireorgwargamesbanditbandit3html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit3.html">Level 3</a></h2>
 <p>So now the file that we want to see is called <code>spaces in this filename</code>. The challenge here is that if we do like before and use the command <strong>cat</strong> followed by the name we get this</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit2@bandit:~$ cat spaces in this filename 
 cat: spaces: No such file or directory
@@ -165,7 +165,7 @@ cat: filename: No such file or directory
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit2@bandit:~$ cat <span class="s2">&#34;spaces in this filename&#34;</span> 
 UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
 </code></pre></div><p>Onto the next level.</p>
-<h2 id="a-idlevel-4a-level-4httpoverthewireorgwargamesbanditbandit4html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit4.html">Level 4</a></h2>
+<h2 id="a-idlevel4a-level-4httpoverthewireorgwargamesbanditbandit4html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit4.html">Level 4</a></h2>
 <p>Now the file that contains the password is a hidden file and is in the <code>inhere</code> directory. To change directory we use the <strong>cd</strong> command.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit3@bandit:~$ <span class="nb">cd</span> inhere
 </code></pre></div><p>Now we know that we are in the <code>inhere</code> directory because the bash prompt says it <code>bandit3@bandit:~/inhere$</code>.</p>
@@ -179,7 +179,7 @@ bandit3@bandit:~/inhere$
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit3@bandit:~/inhere$ cat .hidden
 pIwrPrtPN36QITSp3EQaw936yaFoFgAB
 </code></pre></div><p>So by using <strong>cat</strong> with the filename we can then get the password for the next level.</p>
-<h2 id="a-idlevel-5a-level-5httpoverthewireorgwargamesbanditbandit5html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit5.html">Level 5</a></h2>
+<h2 id="a-idlevel5a-level-5httpoverthewireorgwargamesbanditbandit5html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit5.html">Level 5</a></h2>
 <p>So now the password is stored in the only human-readable file in the <code>inhere</code> directory. As we&rsquo;ve seen before to change directory we can use the <strong>cd</strong> command. Then we can list the files in the current directory by using ls (i use the <strong>-l</strong> flag just to display it as a vertical listing).</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ ls -l
 total <span class="m">40</span>
@@ -222,7 +222,7 @@ file: Cannot open <span class="sb">`</span>ile08<span class="s1">&#39; (No such 
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ cat ./-file07
 koReBOKuIDDepwhWk7jZC0RTdopnAYKh
 </code></pre></div><p>Done. Next level.</p>
-<h2 id="a-idlevel-6a-level-6httpoverthewireorgwargamesbanditbandit6html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit6.html">Level 6</a></h2>
+<h2 id="a-idlevel6a-level-6httpoverthewireorgwargamesbanditbandit6html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit6.html">Level 6</a></h2>
 <p>So now the password is in a file stored in the <code>inhere</code> directory and has three properties:</p>
 <ul>
 <li>human-readable</li>
@@ -260,7 +260,7 @@ drwxr-x--- <span class="m">2</span> root bandit5 <span class="m">4096</span> Oct
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit5@bandit:~/inhere$ cat ./maybehere07/.file2
 DXjZPULLxYr17uwoI01bNLQbtFemEgo7
 </code></pre></div><p>Onto the next level.</p>
-<h2 id="a-idlevel-7a-level-7httpoverthewireorgwargamesbanditbandit7html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit7.html">Level 7</a></h2>
+<h2 id="a-idlevel7a-level-7httpoverthewireorgwargamesbanditbandit7html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit7.html">Level 7</a></h2>
 <p>In this level the password is stored <strong>somewhere in the server</strong> with a few properties:</p>
 <ul>
 <li>owned by user bandit7</li>
@@ -286,7 +286,7 @@ find: ‘/boot/lost+found’: Permission denied
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit6@bandit:~$ cat <span class="k">$(</span>find / -user bandit7 -group bandit6 -size 33c 2&gt; /dev/null<span class="k">)</span>
 HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
 </code></pre></div><p>Quick note, what i did in the previous command was telling bash that <strong>cat</strong> took the result of another command (<strong>find</strong>) as an argument, we do this by surrounding it with <code>$()</code>. This tells bash that what&rsquo;s inside is not only text, it&rsquo;s actually a command. So then the resulting output of the <strong>find</strong> command <code>/var/lib/dpkg/info/bandit7.password</code> will be an argument to <strong>cat</strong>.</p>
-<h2 id="a-idlevel-8a-level-8httpoverthewireorgwargamesbanditbandit8html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit8.html">Level 8</a></h2>
+<h2 id="a-idlevel8a-level-8httpoverthewireorgwargamesbanditbandit8html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit8.html">Level 8</a></h2>
 <p>New challenge. The password is stored in the file <code>data.txt</code> next to the word <code>millionth</code>. Ok so let&rsquo;s see the content of the file.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit7@bandit:~$ cat data.txt
 humiliation<span class="s1">&#39;s   47r0YuNylaQ3k6HqGF5NsPPiGuolDCjn
@@ -302,7 +302,7 @@ millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV
 millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV
 </code></pre></div><p>What we are doing here is called pipelining commands. What it does is using the output of the first command as the input of the second one, so <strong>grep</strong> will use the standard input (which will be the output produced by <strong>cat</strong>) to search the term <code>millionth</code>.</p>
 <p>Onto the next level.</p>
-<h2 id="a-idlevel-9a-level-9httpoverthewireorgwargamesbanditbandit9html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit9.html">Level 9</a></h2>
+<h2 id="a-idlevel9a-level-9httpoverthewireorgwargamesbanditbandit9html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit9.html">Level 9</a></h2>
 <p>Now the password is still stored in <code>data.txt</code> but now they say is the only line that is unique.
 We will <strong>cat</strong> the file just to see its content</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit8@bandit:~$ cat data.txt 
@@ -329,11 +329,11 @@ SYNOPSIS
 
 DESCRIPTION
        Filter adjacent matching lines from INPUT <span class="o">(</span>or standard input<span class="o">)</span>, writing to OUTPUT <span class="o">(</span>or standard output<span class="o">)</span>.
-</code></pre></div><p>Ok then. So it only filters <strong>adjacent matching lines</strong>. So what we could do is sort the lines so that all the repeated lines be adjacent to one another. Guess what, one of the suggested commands is <strong>sort</strong>, that should do it. We look a bit into the <strong>man</strong> page to see how it works and is nothing special, <strong>sort</strong> followed by the file name. Now <strong>sort</strong> writes to the standard output so what we can do is pipelining, check <a href="#level-8">Level 8</a> for more information on this.</p>
+</code></pre></div><p>Ok then. So it only filters <strong>adjacent matching lines</strong>. So what we could do is sort the lines so that all the repeated lines be adjacent to one another. Guess what, one of the suggested commands is <strong>sort</strong>, that should do it. We look a bit into the <strong>man</strong> page to see how it works and is nothing special, <strong>sort</strong> followed by the file name. Now <strong>sort</strong> writes to the standard output so what we can do is pipelining, check <a href="#level8">Level 8</a> for more information on this.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit8@bandit:~$ sort data.txt <span class="p">|</span> uniq -u
 UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
 </code></pre></div><p>Ok there we go. We have the password, let&rsquo;s go to the next level.</p>
-<h2 id="a-idlevel-10a-level-10httpoverthewireorgwargamesbanditbandit10html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit10.html">Level 10</a></h2>
+<h2 id="a-idlevel10a-level-10httpoverthewireorgwargamesbanditbandit10html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit10.html">Level 10</a></h2>
 <p>Now the password is stored in the file <code>data.txt</code> and is one of the few human-readable strings, beginning with several <code>=</code> characters. Now we already know what a few of the suggested commands do, so we know they&rsquo;re not quite what we want. Let&rsquo;s check out <strong>strings</strong>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME
        strings - print the strings of printable characters in files.
@@ -352,7 +352,7 @@ J<span class="p">;</span><span class="nv">m</span><span class="o">=</span>
 <span class="o">==========</span> truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
 iv8!<span class="o">=</span>
 </code></pre></div><p>Ok we can assume the password is the penultimate line, minus the <code>=</code>s of course.</p>
-<h2 id="a-idlevel-11a-level-11httpoverthewireorgwargamesbanditbandit11html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit11.html">Level 11</a></h2>
+<h2 id="a-idlevel11a-level-11httpoverthewireorgwargamesbanditbandit11html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit11.html">Level 11</a></h2>
 <p>Now the password is still stored in <code>data.txt</code> but encoded with base64. There is a suggested command named <code>base64</code> that might be useful.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME
        base64 - base64 encode/decode data and print to standard output
@@ -360,7 +360,7 @@ iv8!<span class="o">=</span>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit10@bandit:~$ base64 -d data.txt 
 The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 </code></pre></div><p><em>DJ Khaled Voice:</em> Another one</p>
-<h2 id="a-idlevel-12a-level-12httpoverthewireorgwargamesbanditbandit12html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit12.html">Level 12</a></h2>
+<h2 id="a-idlevel12a-level-12httpoverthewireorgwargamesbanditbandit12html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit12.html">Level 12</a></h2>
 <p>The password is stored in the file <code>data.txt</code>, but all lowercase and uppercase letters have been rotated 13 positions. This is called ROT13 (you can google it to get some more information on this). It&rsquo;s a ceasar&rsquo;s cipher with the <strong>n</strong> equal to 13 (you can google this as well). So by checking out the suggested commands there are a few that we already know that are not suitable for this. One of the new ones is <strong>tr</strong>. Let&rsquo;s check the <strong>man</strong> page.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME
        tr - translate or delete characters
@@ -369,7 +369,7 @@ The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit11@bandit:~$ cat data.txt <span class="p">|</span> tr <span class="s1">&#39;N-ZA-Mn-za-m&#39;</span> <span class="s1">&#39;A-Za-z&#39;</span>
 The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
 </code></pre></div><p>Perfect. Next level.</p>
-<h2 id="a-idlevel-13a-level-13httpoverthewireorgwargamesbanditbandit13html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit13.html">Level 13</a></h2>
+<h2 id="a-idlevel13a-level-13httpoverthewireorgwargamesbanditbandit13html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit13.html">Level 13</a></h2>
 <p>Let&rsquo;s see the challenge description,</p>
 <blockquote>
 <p>The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)</p>
@@ -492,7 +492,7 @@ data8: ASCII text
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit12@bandit:/tmp/dirforfiles$ cat data8
 The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
 </code></pre></div><p>It&rsquo;s over. I need a break&hellip;</p>
-<h2 id="a-idlevel-14a-level-14httpoverthewireorgwargamesbanditbandit14html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit14.html">Level 14</a></h2>
+<h2 id="a-idlevel14a-level-14httpoverthewireorgwargamesbanditbandit14html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit14.html">Level 14</a></h2>
 <p>So new level, new challenge. The password is stored in a file but can only be read by the <strong>bandit14</strong> (we are <strong>bandit13</strong>). They give us a SSH key to login to next level though. If whe check the <strong>man</strong> page we learn that we can use the <code>-i</code> flag to use a private key to login. Let&rsquo;s try it.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit13@bandit:~$ ssh -i sshkey.private bandit14@localhost
 <span class="o">(</span>...connection established text...<span class="o">)</span>
@@ -501,7 +501,7 @@ bandit14@bandit:~$
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
 </code></pre></div><p>Onto the next one.</p>
-<h2 id="a-idlevel-15a-level-15httpoverthewireorgwargamesbanditbandit15html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit15.html">Level 15</a></h2>
+<h2 id="a-idlevel15a-level-15httpoverthewireorgwargamesbanditbandit15html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit15.html">Level 15</a></h2>
 <p>We can get the password for the next user if we submit the current one to port <strong>30000</strong>. We can use <strong>nc</strong> (netcat) to make simple TCP and UDP connections let&rsquo;s try it. <strong>nc</strong> takes a <strong>host</strong> and a <strong>port</strong> to connect to. Let&rsquo;s try it then.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit14@bandit:~$ nc localhost <span class="m">30000</span>
 </code></pre></div><p>Ok now we can write the password.</p>
@@ -510,7 +510,7 @@ bandit14@bandit:~$
 Correct!
 BfMYroe26WYalil77FoDi9qh59eK5xNr
 </code></pre></div><p>Next please.</p>
-<h2 id="a-idlevel-16a-level-16httpoverthewireorgwargamesbanditbandit16html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit16.html">Level 16</a></h2>
+<h2 id="a-idlevel16a-level-16httpoverthewireorgwargamesbanditbandit16html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit16.html">Level 16</a></h2>
 <p>This challenge has a few important notes so i&rsquo;ll just paste it here</p>
 <blockquote>
 <p>The password for the next level can be retrieved by submitting the password of the current level to port <strong>30001</strong> on localhost using <strong>SSL encryption</strong>.</p>
@@ -532,7 +532,7 @@ cluFn7wTiGryunymYOu4RcffSxQluehd
 
 closed
 </code></pre></div><p>Ok we got it. Next one.</p>
-<h2 id="a-idlevel-17a-level-17httpoverthewireorgwargamesbanditbandit17html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit17.html">Level 17</a></h2>
+<h2 id="a-idlevel17a-level-17httpoverthewireorgwargamesbanditbandit17html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit17.html">Level 17</a></h2>
 <p>Now they give us a range of ports to which we have to submit the current password. Let&rsquo;s not bruteforce it. We can use <strong>nmap</strong> to give us some information on the ports. Check the <strong>man</strong> page. We can use the <code>-p</code> flag to scan port ranges.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit16@bandit:~$ nmap localhost -p31000-32000
 
@@ -614,7 +614,7 @@ vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY<span class="o">=</span>
 -----END RSA PRIVATE KEY-----
 
 closed
-</code></pre></div><p>Now we have an ssh key we can copy it to our own computer to a file and use it to connect like we did in <a href="#level-14">Level 14</a>.</p>
+</code></pre></div><p>Now we have an ssh key we can copy it to our own computer to a file and use it to connect like we did in <a href="#level14">Level 14</a>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ <span class="nb">echo</span> <span class="s2">&#34;-----BEGIN RSA PRIVATE KEY-----
 </span><span class="s2">MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
 </span><span class="s2">imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
@@ -663,7 +663,7 @@ bandit17@bandit:~$
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit17@bandit:~$ cat /etc/bandit_pass/bandit17
 xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn
 </code></pre></div><p>Now we can go to the next one.</p>
-<h2 id="a-idlevel-18a-level-18httpoverthewireorgwargamesbanditbandit18html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit18.html">Level 18</a></h2>
+<h2 id="a-idlevel18a-level-18httpoverthewireorgwargamesbanditbandit18html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit18.html">Level 18</a></h2>
 <p>So now the password for the next level is the only line different between <strong>passwords.old</strong> and <strong>passwords.new</strong>. Let&rsquo;s check the <strong>diff</strong> command.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME
        diff - compare files line by line
@@ -674,7 +674,7 @@ xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn
 ---
 &gt; kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
 </code></pre></div><p>So our password should be the one on the bottom since that&rsquo;s the new one. Next one.</p>
-<h2 id="a-idlevel-19a-level-19httpoverthewireorgwargamesbanditbandit19html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit19.html">Level 19</a></h2>
+<h2 id="a-idlevel19a-level-19httpoverthewireorgwargamesbanditbandit19html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit19.html">Level 19</a></h2>
 <p>Now the problem is that once we login we are automatically kicked out</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ ssh bandit18@bandit.labs.overthewire.org -p <span class="m">2220</span>
 <span class="o">(</span>...connection established info...<span class="o">)</span>
@@ -694,7 +694,7 @@ bandit18@bandit.labs.overthewire.org<span class="err">&#39;</span>s password:
 IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
 myuser@myuser:~$ 
 </code></pre></div><p>So we got kicked out but we were still able to run the command which gave us the password. NICE! Next one.</p>
-<h2 id="a-idlevel-20a-level-20httpoverthewireorgwargamesbanditbandit20html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit20.html">Level 20</a></h2>
+<h2 id="a-idlevel20a-level-20httpoverthewireorgwargamesbanditbandit20html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit20.html">Level 20</a></h2>
 <p>Let&rsquo;s check the challenge description:</p>
 <blockquote>
 <p>To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), asetuidfter you have used the setuid binary.</p>
@@ -712,7 +712,7 @@ bandit20
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
 GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 </code></pre></div><p>So we ran <strong>cat</strong> as <strong>bandit20</strong> and gave it the file we wanted to print as an argument. This should be easy by now.</p>
-<h2 id="a-idlevel-21a-level-21httpoverthewireorgwargamesbanditbandit21html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit21.html">Level 21</a></h2>
+<h2 id="a-idlevel21a-level-21httpoverthewireorgwargamesbanditbandit21html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit21.html">Level 21</a></h2>
 <p>This challenge is really well detailed in the description so i&rsquo;ll just paste it here</p>
 <blockquote>
 <p>There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).</p>
@@ -743,7 +743,7 @@ GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
 bandit20@bandit:~$ 
 </code></pre></div><p>There we go. DONE! This was interesting! Next one.</p>
-<h2 id="a-idlevel-22a-level-22httpoverthewireorgwargamesbanditbandit22html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit22.html">Level 22</a></h2>
+<h2 id="a-idlevel22a-level-22httpoverthewireorgwargamesbanditbandit22html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit22.html">Level 22</a></h2>
 <p>A program is running periodically using <strong>cron</strong>. Let&rsquo;s look into <code>/etc/cron.d/</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit21@bandit:~$ ls -la /etc/cron.d
 total <span class="m">24</span>
@@ -767,7 +767,7 @@ cat /etc/bandit_pass/bandit22 &gt; /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit21@bandit:/etc/cron.d$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 </code></pre></div><p>We got it! Next level.</p>
-<h2 id="a-idlevel-23a-level-23httpoverthewireorgwargamesbanditbandit23html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit23.html">Level 23</a></h2>
+<h2 id="a-idlevel23a-level-23httpoverthewireorgwargamesbanditbandit23html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit23.html">Level 23</a></h2>
 <p>This one is pretty much like the previous one but it&rsquo;s a different <strong>cron</strong> job running.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit22@bandit:~$ cat /etc/cron.d/cronjob_bandit23
 @reboot bandit23 /usr/bin/cronjob_bandit23.sh  <span class="p">&amp;</span>&gt; /dev/null
@@ -789,7 +789,7 @@ cat /etc/bandit_pass/<span class="nv">$myname</span> &gt; /tmp/<span class="nv">
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit22@bandit:~$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
 jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
 </code></pre></div><p>Done. Onto the next one.</p>
-<h2 id="a-idlevel-24a-level-24httpoverthewireorgwargamesbanditbandit24html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit24.html">Level 24</a></h2>
+<h2 id="a-idlevel24a-level-24httpoverthewireorgwargamesbanditbandit24html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit24.html">Level 24</a></h2>
 <p>Let&rsquo;s see this challenge description since they have a few importante notes:</p>
 <blockquote>
 <p>A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.</p>
@@ -836,7 +836,7 @@ cat: /tmp/dirforcron/pass: No such file or directory
 bandit23@bandit:/var/spool/bandit24$ cat /tmp/dirforcron/pass
 UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
 </code></pre></div><p>Success!!! Let&rsquo;s go onto the next one.</p>
-<h2 id="a-idlevel-25a-level-25httpoverthewireorgwargamesbanditbandit25html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit25.html">Level 25</a></h2>
+<h2 id="a-idlevel25a-level-25httpoverthewireorgwargamesbanditbandit25html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit25.html">Level 25</a></h2>
 <blockquote>
 <p>A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.</p>
 </blockquote>
@@ -883,7 +883,7 @@ The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 
 Exiting.
 </code></pre></div><p>Next one.</p>
-<h2 id="a-idlevel-26a-level-26httpoverthewireorgwargamesbanditbandit26html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit26.html">Level 26</a></h2>
+<h2 id="a-idlevel26a-level-26httpoverthewireorgwargamesbanditbandit26html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit26.html">Level 26</a></h2>
 <p>So the challenge now says,</p>
 <blockquote>
 <p>Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.</p>
@@ -904,7 +904,7 @@ drwxr-xr-x <span class="m">41</span> root     root     <span class="m">4096</spa
 <span class="o">(</span>...connection established...<span class="o">)</span>
 Connection to bandit.labs.overthewire.org closed.
 myuser@myuser:~$
-</code></pre></div><p>Hmmm&hellip; So it closed the connection immediately. Let&rsquo;s try to run a command through <strong>ssh</strong> instead of establishing the connection (like in <a href="#level-19">level 19</a>), more specifically, try to understand what shell user <strong>bandit26</strong> is running. We can do this by checking the content of the <code>$SHELL</code> variable.</p>
+</code></pre></div><p>Hmmm&hellip; So it closed the connection immediately. Let&rsquo;s try to run a command through <strong>ssh</strong> instead of establishing the connection (like in <a href="#level19">level 19</a>), more specifically, try to understand what shell user <strong>bandit26</strong> is running. We can do this by checking the content of the <code>$SHELL</code> variable.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ ssh bandit26@bandit.labs.overthewire.org -p <span class="m">2220</span> -i ~/Desktop/bandit26.sshkey <span class="s1">&#39;echo $SHELL&#39;</span>
 This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
 <span class="o">(</span>...hangs...<span class="o">)</span>
@@ -951,7 +951,7 @@ So from there we can see that there is an option that opens <code>vim</code> at 
 </code></pre></div><p>And now run the <code>:shell</code> command.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ 
 </code></pre></div><p>WE GOT A SHELL!!! Next challenge then.</p>
-<h2 id="a-idlevel-27a-level-27httpoverthewireorgwargamesbanditbandit27html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit27.html">Level 27</a></h2>
+<h2 id="a-idlevel27a-level-27httpoverthewireorgwargamesbanditbandit27html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit27.html">Level 27</a></h2>
 <p>We will be using the shell established from the previous level. Let&rsquo;s check the current directory.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ ls -la
 total <span class="m">36</span>
@@ -963,11 +963,11 @@ drwxr-xr-x <span class="m">41</span> root     root     <span class="m">4096</spa
 -rw-r--r--  <span class="m">1</span> root     root      <span class="m">675</span> May <span class="m">15</span>  <span class="m">2017</span> .profile
 drwxr-xr-x  <span class="m">2</span> root     root     <span class="m">4096</span> Oct <span class="m">16</span>  <span class="m">2018</span> .ssh
 -rw-r-----  <span class="m">1</span> bandit26 bandit26  <span class="m">258</span> Oct <span class="m">16</span>  <span class="m">2018</span> text.txt
-</code></pre></div><p>This brings us back to <a href="#level-20">level 20</a> where we had a setuid binary. This is easy then, let&rsquo;s just <strong>cat</strong> the password file.</p>
+</code></pre></div><p>This brings us back to <a href="#level20">level 20</a> where we had a setuid binary. This is easy then, let&rsquo;s just <strong>cat</strong> the password file.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
 3ba3118a22e93127a4ed485be72ef5ea
 </code></pre></div><p>Good job! Next.</p>
-<h2 id="a-idlevel-28a-level-28httpoverthewireorgwargamesbanditbandit28html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit28.html">Level 28</a></h2>
+<h2 id="a-idlevel28a-level-28httpoverthewireorgwargamesbanditbandit28html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit28.html">Level 28</a></h2>
 <p>In this challenge we will have to work with <strong>git</strong> if you know nothing about it you should google it and read a few cheatsheets.</p>
 <blockquote>
 <p>There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. The password for the user bandit27-git is the same as for the user bandit27.</p>
@@ -1010,7 +1010,7 @@ drwxr-sr-x <span class="m">8</span> bandit27 root <span class="m">4096</span> Ju
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit27@bandit:/tmp/gitfolder/repo$ cat README 
 The password to the next level is: 0ef186ac70e04ea33b4c1853d2526fa2
 </code></pre></div><p>Done.</p>
-<h2 id="a-idlevel-29a-level-29httpoverthewireorgwargamesbanditbandit29html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit29.html">Level 29</a></h2>
+<h2 id="a-idlevel29a-level-29httpoverthewireorgwargamesbanditbandit29html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit29.html">Level 29</a></h2>
 <p>Once again in this challenge we will have to work with git,</p>
 <blockquote>
 <p>There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.</p>
@@ -1102,7 +1102,7 @@ Some notes <span class="k">for</span> level29 of bandit.
 - username: bandit29
 - password: bbc96594b4e001778eee9975372716b2
 </code></pre></div><p>We got the password. Good job! Onto the next one.</p>
-<h2 id="a-idlevel-30a-level-30httpoverthewireorgwargamesbanditbandit30html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit30.html">Level 30</a></h2>
+<h2 id="a-idlevel30a-level-30httpoverthewireorgwargamesbanditbandit30html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit30.html">Level 30</a></h2>
 <p>Same thing as before. We have a repo we need to clone it to a folder.</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">bandit29@bandit:~$ mkdir /tmp/gitfolder3
 bandit29@bandit:~$ cd /tmp/gitfolder3
@@ -1259,7 +1259,7 @@ Some notes <span class="k">for</span> bandit30 of bandit.
 - username: bandit30
 - password: 5b90576bedb2cc04c86a9e924ce42faf
 </code></pre></div><p>This should do it. Good job.</p>
-<h2 id="a-idlevel-31a-level-31httpoverthewireorgwargamesbanditbandit31html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit31.html">Level 31</a></h2>
+<h2 id="a-idlevel31a-level-31httpoverthewireorgwargamesbanditbandit31html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit31.html">Level 31</a></h2>
 <p>This challenge is still related to <strong>git</strong>. So we&rsquo;ll just follow the same steps as before, create the directory and clone the repo in there.</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">bandit30@bandit:~$ mkdir /tmp/gitfolder4
 bandit30@bandit:~$ cd /tmp/gitfolder4
@@ -1311,7 +1311,7 @@ secret
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit30@bandit:/tmp/gitfolder4/repo$ git show secret
 47e603bb428404d265f59c42920d81e5
 </code></pre></div><p>We got the password. Next one!</p>
-<h2 id="a-idlevel-32a-level-32httpoverthewireorgwargamesbanditbandit32html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit32.html">Level 32</a></h2>
+<h2 id="a-idlevel32a-level-32httpoverthewireorgwargamesbanditbandit32html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit32.html">Level 32</a></h2>
 <p>Once gain this challenge uses git.</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">bandit31@bandit:~$ ls -la
 total 24
@@ -1407,7 +1407,7 @@ To ssh://localhost/home/bandit31-git/repo
  ! [remote rejected] master -&gt; master (pre-receive hook declined)
 error: failed to push some refs to &#39;ssh://bandit31-git@localhost/home/bandit31-git/repo&#39;
 </code></pre></div><p>We got the password! Good job.</p>
-<h2 id="a-idlevel-33a-level-33httpoverthewireorgwargamesbanditbandit33html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit33.html">Level 33</a></h2>
+<h2 id="a-idlevel33a-level-33httpoverthewireorgwargamesbanditbandit33html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit33.html">Level 33</a></h2>
 <blockquote>
 <p>After all this git stuff its time for another escape. Good luck!</p>
 </blockquote>
@@ -1435,7 +1435,7 @@ drwxr-xr-x 41 root     root     4096 Oct 16  2018 ..
 $ cat /etc/bandit_pass/bandit33
 c9c3199ddf4121b10cf581a98d51caee
 </code></pre></div><p>Done! Next one!</p>
-<h2 id="a-idlevel-34a-level-34httpoverthewireorgwargamesbanditbandit34html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit34.html">Level 34</a></h2>
+<h2 id="a-idlevel34a-level-34httpoverthewireorgwargamesbanditbandit34html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit34.html">Level 34</a></h2>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">bandit33@bandit:~$ ls -la
 total 24
 drwxr-xr-x  2 root     root     4096 Oct 16  2018 .
