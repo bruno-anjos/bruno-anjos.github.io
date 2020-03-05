@@ -44,7 +44,7 @@
       <link href="https://bruno-anjos.github.io/index.xml" rel="feed" type="application/rss+xml" title="Bruno Anjos" />
     
 
-    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="generator" content="Hugo 0.66.0" />
   </head>
 
   <body class="">
@@ -89,17 +89,11 @@
       
     </header>
 
-    
-
-<h1 id="introduction">Introduction</h1>
-
+    <h1 id="introduction">Introduction</h1>
 <p><a href="http://overthewire.org/wargames/">Over The Wire</a> provides multiple challenges focused on different topics of computer systems.
 The one which we will solve here is Krypton. This is challenge is focused on cryptography.</p>
-
 <p>You can read more about the challenge and how it works <a href="http://overthewire.org/wargames/krypton/">here</a>.</p>
-
 <p>Levels:</p>
-
 <ul>
 <li><a href="#level0">Level 0</a></li>
 <li><a href="#level1">Level 1</a></li>
@@ -109,13 +103,10 @@ The one which we will solve here is Krypton. This is challenge is focused on cry
 <li><a href="#level5">Level 5</a></li>
 <li><a href="#level6">Level 6</a></li>
 </ul>
-
-<h2 id="level-0-http-overthewire-org-wargames-krypton-krypton0-html"><a href="http://overthewire.org/wargames/krypton/krypton0.html">Level 0</a></h2>
-
-<p><a name="level0"></a></p>
-
+<h2 id="level-0httpoverthewireorgwargameskryptonkrypton0html"><a href="http://overthewire.org/wargames/krypton/krypton0.html">Level 0</a></h2>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>The password is a base64 encoded string. We can use the <strong>base64</strong> command. Let&rsquo;s check the manual.</p>
-<div class="highlight"><pre class="chroma">NAME
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">NAME
        base64 - base64 encode/decode data and print to standard output
 
 SYNOPSIS
@@ -129,86 +120,93 @@ DESCRIPTION
        Mandatory arguments to long options are mandatory for short options too.
 
        -d, --decode
-              decode data</pre></div>
-<p>This is exactly what we want. We wneed to use the <code>-d</code> flag to decode, and we will pipeline the string with the <strong>echo</strong> command.</p>
+              decode data
+</code></pre></div><p>This is exactly what we want. We wneed to use the <code>-d</code> flag to decode, and we will pipeline the string with the <strong>echo</strong> command.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">echo</span> <span class="s2">&#34;S1JZUFRPTklTR1JFQVQ=&#34;</span> <span class="p">|</span> base64 -d                                                         KRYPTONISGREAT%
-&gt;</code></pre></div>
-<p>The <code>%</code> does not make part of the string from what i understand. This password allows us to connect to <code>krypton.labs.overthewire.org</code> as <code>krypton1</code> on port <code>2222</code>. From now on the files that we need for the challenges will be in the <code>/krypton/</code> directory.</p>
-
-<h2 id="level-1-http-overthewire-org-wargames-krypton-krypton1-html"><a href="http://overthewire.org/wargames/krypton/krypton1.html">Level 1</a></h2>
-
-<p><a name="level1"></a></p>
-
+&gt;
+</code></pre></div><p>The <code>%</code> does not make part of the string from what i understand. This password allows us to connect to <code>krypton.labs.overthewire.org</code> as <code>krypton1</code> on port <code>2222</code>. From now on the files that we need for the challenges will be in the <code>/krypton/</code> directory.</p>
+<h2 id="level-1httpoverthewireorgwargameskryptonkrypton1html"><a href="http://overthewire.org/wargames/krypton/krypton1.html">Level 1</a></h2>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>As we&rsquo;ve mentioned before all the challenges from now on will be in the <code>/krypton/</code> directory so if we go there and list the files we get this.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton1@krypton:/krypton$ ls -la
 total <span class="m">32</span>
-drwxr-xr-x  <span class="m">8</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:21 .
-drwxr-xr-x <span class="m">92</span> root root <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">14</span>:54 ..
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton1
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton2
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton3
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton4
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:20 krypton5
-drwxr-xr-x  <span class="m">3</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> <span class="m">04</span>:21 krypton6</code></pre></div>
-<p>We are currently in <a href="#level1">Level 1</a> so let&rsquo;s change to the correct folder and list its content.</p>
-<div class="highlight"><pre class="chroma">krypton1@krypton:/krypton$ cd krypton1
+drwxr-xr-x  <span class="m">8</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:21 .
+drwxr-xr-x <span class="m">92</span> root root <span class="m">4096</span> Jul  <span class="m">7</span> 14:54 ..
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton1
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton2
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton3
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton4
+drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton5
+drwxr-xr-x  <span class="m">3</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:21 krypton6
+</code></pre></div><p>We are currently in <a href="#level1">Level 1</a> so let&rsquo;s change to the correct folder and list its content.</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">krypton1@krypton:/krypton$ cd krypton1
 krypton1@krypton:/krypton/krypton1$ ls -la
 total 16
 drwxr-xr-x 2 root     root     4096 Jul  1 04:20 .
 drwxr-xr-x 8 root     root     4096 Jul  1 04:21 ..
 -rw-r----- 1 krypton1 krypton1  882 Jul  1 04:20 README
--rw-r----- 1 krypton1 krypton1   26 Jul  1 04:20 krypton2</pre></div>
-<p>We should check out the README to get more insight on this challenge.</p>
-
+-rw-r----- 1 krypton1 krypton1   26 Jul  1 04:20 krypton2
+</code></pre></div><p>We should check out the README to get more insight on this challenge.</p>
 <blockquote>
 <p>Welcome to Krypton!</p>
-
+</blockquote>
+<blockquote>
 <p>This game is intended to give hands on experience with cryptography and cryptanalysis.  The levels progress from classic ciphers, to modern, easy to harder. Although there are excellent public tools, like cryptool,to perform the simple analysis, we strongly encourage you to try and do these without them for now.  We will use them in later excercises.</p>
-
+</blockquote>
+<blockquote>
 <p>** Please try these levels without cryptool first **</p>
-
+</blockquote>
+<blockquote>
 <p>The first level is easy.  The password for level 2 is in the file &lsquo;krypton2&rsquo;.  It is &lsquo;encrypted&rsquo; using a simple rotation called ROT13. It is also in non-standard ciphertext format.  When using alpha characters for cipher text it is normal to group the letters into 5 letter clusters, regardless of word boundaries.  This helps obfuscate any patterns.</p>
-
+</blockquote>
+<blockquote>
 <p>This file has kept the plain text word boundaries and carried them to the cipher text.</p>
-
+</blockquote>
+<blockquote>
 <p>Enjoy!</p>
 </blockquote>
-
 <p>ROT13 should be easy. We&rsquo;ve messed with this previously in <a href="https://bruno-anjos.github.io/posts/bandit/">Bandit</a> using the <strong>tr</strong> command. There is a simple example in the wiki page of ROT13 with an implementation of ROT13 using the <strong>tr</strong> command.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton1@krypton:/krypton/krypton1$ cat krypton2 <span class="p">|</span> tr <span class="s1">&#39;N-ZA-Mn-za-m&#39;</span> <span class="s1">&#39;A-Za-z&#39;</span>
-LEVEL TWO PASSWORD ROTTEN</code></pre></div>
-<p>We switched the letter patterns since the example is to encode and we want to <strong>decode</strong>. We have the password for the next level, let&rsquo;s go.</p>
-
-<h2 id="level-2-http-overthewire-org-wargames-krypton-krypton2-html"><a href="http://overthewire.org/wargames/krypton/krypton2.html">Level 2</a></h2>
-
-<p><a name="level2"></a></p>
-
+LEVEL TWO PASSWORD ROTTEN
+</code></pre></div><p>We switched the letter patterns since the example is to encode and we want to <strong>decode</strong>. We have the password for the next level, let&rsquo;s go.</p>
+<h2 id="level-2httpoverthewireorgwargameskryptonkrypton2html"><a href="http://overthewire.org/wargames/krypton/krypton2.html">Level 2</a></h2>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>From now on i&rsquo;ll just change the to the challenge directory and <strong>cat</strong> the README.md without pasting it here explicitly.</p>
-
 <blockquote>
 <p>Krypton 2</p>
-
+</blockquote>
+<blockquote>
 <p>ROT13 is a simple substitution cipher.</p>
-
+</blockquote>
+<blockquote>
 <p>Substitution ciphers are a simple replacement algorithm.  In this example of a substitution cipher, we will explore a &lsquo;monoalphebetic&rsquo; cipher. Monoalphebetic means, literally, &ldquo;one alphabet&rdquo; and you will see why.</p>
-
+</blockquote>
+<blockquote>
 <p>This level contains an old form of cipher called a &lsquo;Caesar Cipher&rsquo;.A Caesar cipher shifts the alphabet by a set number.  For example:
 plain:  a b c d e f g h i j k &hellip;
 cipher: G H I J K L M N O P Q &hellip;</p>
-
+</blockquote>
+<blockquote>
 <p>In this example, the letter &lsquo;a&rsquo; in plaintext is replaced by a &lsquo;G&rsquo; in the ciphertext so, for example, the plaintext &lsquo;bad&rsquo; becomes &lsquo;HGJ&rsquo; in ciphertext.</p>
-
+</blockquote>
+<blockquote>
 <p>The password for level 3 is in the file krypton3.  It is in 5 letter group ciphertext.  It is encrypted with a Caesar Cipher.  Without any further information, this cipher text may be difficult to break.  You do not have direct access to the key, however you do have access to a program that will encrypt anything you wish to give it using the key. If you think logically, this is completely easy.</p>
-
+</blockquote>
+<blockquote>
 <p>One shot can solve it!</p>
-
+</blockquote>
+<blockquote>
 <p>Have fun.</p>
-
+</blockquote>
+<blockquote>
 <p>Additional Information:</p>
-
+</blockquote>
+<blockquote>
 <p>The <code>encrypt</code> binary will look for the keyfile in your current working directory. Therefore, it might be best to create a working direcory in /tmp and in there a link to the keyfile. As the <code>encrypt</code> binary runs setuid <code>krypton3</code>, you also need to give <code>krypton3</code> access to your working directory.</p>
-
+</blockquote>
+<blockquote>
 <p>Here is an example:</p>
+</blockquote>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@melinda:~$ mktemp -d
 /tmp/tmp.Wf2OnCpCDQ
 krypton2@melinda:~$ <span class="nb">cd</span> /tmp/tmp.Wf2OnCpCDQ
@@ -218,103 +216,83 @@ keyfile.dat
 krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ chmod <span class="m">777</span> .
 krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ /krypton/krypton2/encrypt /etc/issue
 krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ls
-ciphertext  keyfile.dat</code></pre></div></blockquote>
-
-<p>So we have to figure out what&rsquo;s the rotation in this case. We should be able to do that by just encrypting the letter <code>a</code>.</p>
+ciphertext  keyfile.dat
+</code></pre></div><p>So we have to figure out what&rsquo;s the rotation in this case. We should be able to do that by just encrypting the letter <code>a</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ ./encrypt 
 
- usage: encrypt foo  - where foo is the file containing the plaintext</code></pre></div>
-<p>We need to create a file. Let&rsquo;s create a temporary directory and a file containing just the letters <code>aA</code> then.</p>
+ usage: encrypt foo  - where foo is the file containing the plaintext
+</code></pre></div><p>We need to create a file. Let&rsquo;s create a temporary directory and a file containing just the letters <code>aA</code> then.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ mkdir /tmp/tempfolder
 krypton2@krypton:/krypton/krypton2$ vi /tmp/tempfolder/testFile
 krypton2@krypton:/krypton/krypton2$ cat /tmp/tempfolder/testFile 
-aA</code></pre></div>
-<p>We also need to link the <code>keyfile.dat</code> to our temporary directory and then give permissions so the binary can run.</p>
+aA
+</code></pre></div><p>We also need to link the <code>keyfile.dat</code> to our temporary directory and then give permissions so the binary can run.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ <span class="nb">cd</span> /tmp/tempfolder
 krypton2@krypton:/tmp/tempfolder$ ln -s /krypton/krypton2/keyfile.dat
 krypton2@krypton:/tmp/tempfolder$ chmod <span class="m">777</span> .
 krypton2@krypton:/tmp/tempfolder$ ls -la
 total <span class="m">12</span>
-drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">15</span>:30 .
-drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">15</span>:32 ..
-lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> <span class="m">15</span>:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
--rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> <span class="m">15</span>:27 testFile</code></pre></div>
-<p>Now we just need to run the binary on the file we&rsquo;ve just created.</p>
+drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> 15:30 .
+drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> 15:32 ..
+lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> 15:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
+-rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> 15:27 testFile
+</code></pre></div><p>Now we just need to run the binary on the file we&rsquo;ve just created.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ /krypton/krypton2/encrypt testFile 
 krypton2@krypton:/tmp/tempfolder$ ls -la
 total <span class="m">16</span>
-drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">15</span>:33 .
-drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> <span class="m">15</span>:33 ..
--rw-rw-r-- <span class="m">1</span> krypton3 krypton2    <span class="m">1</span> Jul  <span class="m">7</span> <span class="m">15</span>:33 ciphertext
-lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> <span class="m">15</span>:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
--rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> <span class="m">15</span>:27 testFile</code></pre></div>
-<p>Let&rsquo;s check the resulting <code>ciphertext</code>.</p>
+drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> 15:33 .
+drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> 15:33 ..
+-rw-rw-r-- <span class="m">1</span> krypton3 krypton2    <span class="m">1</span> Jul  <span class="m">7</span> 15:33 ciphertext
+lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> 15:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
+-rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> 15:27 testFile
+</code></pre></div><p>Let&rsquo;s check the resulting <code>ciphertext</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext 
-MM</code></pre></div>
-<p>So that tells us that it&rsquo;s rotating from <code>aA</code> to <code>MM</code>. So to decode we just have to do the other way around. Let&rsquo;s modify our previous <strong>tr</strong> command with the rotation we want.</p>
-
+MM
+</code></pre></div><p>So that tells us that it&rsquo;s rotating from <code>aA</code> to <code>MM</code>. So to decode we just have to do the other way around. Let&rsquo;s modify our previous <strong>tr</strong> command with the rotation we want.</p>
 <p>We had <code>tr 'N-ZA-Mn-za-m' 'A-Za-z'</code> now what we want is to rotate from <code>M</code> to <code>A</code>. You should end up with <code>tr 'M-ZA-L' 'A-Z'</code>.</p>
-
 <p>Let&rsquo;s try it on our file to see if we get our <code>AA</code> back. As we&rsquo;ve seen before the encryption rotates any letter to uppercase no matter what case it was originally.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
-AA</code></pre></div>
-<p>We got <code>AA</code> so this should be able to decrypt our initial <code>krypton3</code> file.</p>
+AA
+</code></pre></div><p>We got <code>AA</code> so this should be able to decrypt our initial <code>krypton3</code> file.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ <span class="nb">cd</span> /krypton/krypton2/
 krypton2@krypton:/krypton/krypton2$ cat krypton3 <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
-CAESARISEASY</code></pre></div>
-<p>We got it. Next one.</p>
-
-<h2 id="level-3-http-overthewire-org-wargames-krypton-krypton3-html"><a href="http://overthewire.org/wargames/krypton/krypton3.html">Level 3</a></h2>
-
-<p><a name="level3"></a></p>
-
+CAESARISEASY
+</code></pre></div><p>We got it. Next one.</p>
+<h2 id="level-3httpoverthewireorgwargameskryptonkrypton3html"><a href="http://overthewire.org/wargames/krypton/krypton3.html">Level 3</a></h2>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>As always first check the <code>README.md</code>,</p>
-
 <blockquote>
 <p>Well done.  You&rsquo;ve moved past an easy substitution cipher.</p>
-
 <p>Hopefully you just encrypted the alphabet a plaintext
 to fully expose the key in one swoop.</p>
-
 <p>The main weakness of a simple substitution cipher is
 repeated use of a simple key.  In the previous exercise
 you were able to introduce arbitrary plaintext to expose
 the key.  In this example, the cipher mechanism is not
 available to you, the attacker.</p>
-
 <p>However, you have been lucky.  You have intercepted more
 than one message.  The password to the next level is found
 in the file &lsquo;krypton4&rsquo;.  You have also found 3 other files.
 (found1, found2, found3)</p>
-
 <p>You know the following important details:</p>
-
 <ul>
 <li>The message plaintexts are in English (*** very important)</li>
 <li>They were produced from the same key (*** even better!)</li>
 </ul>
-
 <p>Enjoy.</p>
 </blockquote>
-
 <p>In this case we don&rsquo;t have access to the encryption method. I know for a fact that these types of ciphers are weak to attacks based on frequency analysis, this meaning that for example in the english language the most common letter is <code>e</code> so in the text that we have, the letter that appears the most times, SHOULD be the result of rotating <code>e</code>. And from that point we can calculate the key. Let&rsquo;s find a website that does frequency analysis of text. I found this one <a href="https://www.dcode.fr/frequency-analysis">https://www.dcode.fr/frequency-analysis</a>.</p>
-
 <p>After pasting all of the <code>found*</code> files content we get this output on the website:</p>
-
 <figure>
     <img src="/freq_analysis.png"/> 
 </figure>
 
-
 <p>So now we know that the most common letter in the text is <code>S</code> so we could assume that to decode we need to perform this rotation <code>tr 'S-ZA-R' 'E-ZA-D'</code>.</p>
-
 <p>Let&rsquo;s try it then,</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton3@krypton:/krypton/krypton3$ cat krypton4 <span class="p">|</span> tr <span class="s1">&#39;S-ZA-R&#39;</span> <span class="s1">&#39;E-ZA-D&#39;</span>
-WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE</code></pre></div>
-<p>Hmmm&hellip; Doesn&rsquo;t seem like it&rsquo;s correct.</p>
-
+WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE
+</code></pre></div><p>Hmmm&hellip; Doesn&rsquo;t seem like it&rsquo;s correct.</p>
 <p>After reading the <code>README.md</code> again i understand what i did wrong&hellip; I was assuming that this was a rotation cipher again. It&rsquo;s not it&rsquo;s substitution. So what we actually have to do is replace the most common letter in the analysis by the most common letter in the english alphabet, and so on.</p>
-
 <p>We can use a quick python script. I got this english frequency, &ldquo;EARIOTNSLCUDPMHGBFYWKVXZJQ&rdquo;, from <a href="https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language">here</a>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">real_freq</span> <span class="o">=</span> <span class="s2">&#34;EARIOTNSLCUDPMHGBFYWKVXZJQ&#34;</span>
 <span class="n">cipher_freq</span> <span class="o">=</span> <span class="s2">&#34;SQJUBNCGDZVWMYTXKELAFIOHRP&#34;</span>
@@ -327,20 +305,15 @@ WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE</code></pre></div>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">real_text</span> <span class="o">+=</span> <span class="n">real_freq</span><span class="p">[</span><span class="n">cipher_freq</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span>
 
-<span class="k">print</span> <span class="n">real_text</span></code></pre></div>
-<p>This should do it.</p>
-
+<span class="k">print</span> <span class="n">real_text</span>
+</code></pre></div><p>This should do it.</p>
 <p>Spoiler alert that doesn&rsquo;t do it. In fact the frequency analysis goes deeper than this since some letters have a wrong correspondence, so you would have to do analysis of bigrams and trigrams. I started making a more advanced script but then i found a good website that does it.</p>
-
 <p><a href="https://www.guballa.de/substitution-solver">https://www.guballa.de/substitution-solver</a></p>
-
 <figure>
     <img src="/freq_analysis_2.png"/> 
 </figure>
 
-
 <p>As you can see the text makes sense even though it&rsquo;s broken into 5 characters. This should do it as our correct decryption key. We just need to change a few things in our script.</p>
-
 <p><strong>NOTE:</strong> I worked on my own computer instead of in the normal ssh connection.</p>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">real_alphabet</span> <span class="o">=</span> <span class="s2">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span>
 <span class="n">cipher_alphabet</span> <span class="o">=</span> <span class="s2">&#34;QAZWSXEDCRFVTGBYHNUJMIKOLP&#34;</span>
@@ -353,54 +326,38 @@ WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE</code></pre></div>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">real_text</span> <span class="o">+=</span> <span class="n">real_alphabet</span><span class="p">[</span><span class="n">cipher_alphabet</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span>
 
-<span class="k">print</span> <span class="n">real_text</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&gt; python ~/Desktop/krypton3/simple_crack.py
+<span class="k">print</span> <span class="n">real_text</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&gt; python ~/Desktop/krypton3/simple_crack.py
 WELLD ONETH ELEVE LFOUR PASSW ORDIS BRUTE
-&gt;   </code></pre></div>
-<p>We got the password! This would be much harder if we hadn&rsquo;t find that online tool. Next one!</p>
-
-<h2 id="level-4-http-overthewire-org-wargames-krypton-krypton4-html"><a href="http://overthewire.org/wargames/krypton/krypton4.html">Level 4</a></h2>
-
-<p><a name="level4"></a></p>
-
+&gt;   
+</code></pre></div><p>We got the password! This would be much harder if we hadn&rsquo;t find that online tool. Next one!</p>
+<h2 id="level-4httpoverthewireorgwargameskryptonkrypton4html"><a href="http://overthewire.org/wargames/krypton/krypton4.html">Level 4</a></h2>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>So now we have a vigenere cipher. This kind of cipher is the result of adding the plaintext with a key, so now a character doesn&rsquo;t have a direct correspondence since it depends which character of the key was added. If you search online you will eventually understand that we can just apply the same logic as before but you have to use modulus.</p>
-
 <p>We can use <a href="https://www.dcode.fr/vigenere-cipher">this</a>, to decode and do the analysis for us.</p>
-
 <p>As we can see here, there are multiple possible keys, but the one that makes sense and transforms our cipher text into readable text is the first one.</p>
-
 <figure>
     <img src="/vigenere_analysis.png"/> 
 </figure>
 
-
 <p>In this case our key is <code>FREKEY</code></p>
-
 <p>So when we decrypt our encrypted text we get the following</p>
-
 <figure>
     <img src="/vigenere_analysis_2.png"/> 
 </figure>
 
-
 <p>Without the spaces of course.</p>
-
-<h2 id="level-5-http-overthewire-org-wargames-krypton-krypton5-html"><a href="http://overthewire.org/wargames/krypton/krypton5.html">Level 5</a></h2>
-
-<p><a name="level5"></a></p>
-
+<h2 id="level-5httpoverthewireorgwargameskryptonkrypton5html"><a href="http://overthewire.org/wargames/krypton/krypton5.html">Level 5</a></h2>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>Once again we can use the website previously mentioned.</p>
-
 <figure>
     <img src="/krypton5.png"/> 
 </figure>
 
-
 <p>They suggest <code>KEYZTBGTH</code> as the key. This seems random, but if we look closer there&rsquo;s <code>KEY</code> and then ends in <code>GTH</code> it seems like <code>KEYLENGTH</code> we should try to decrypt using <code>KEYLENGTH</code> as the key.</p>
-
 <figure>
     <img src="/krypton5_2.png"/> 
 </figure>
-
 
 <p>Ok we got the word <code>RANDOM</code> it can&rsquo;t be coincidence. After trying to connect, you can see that the password is right.</p>
 

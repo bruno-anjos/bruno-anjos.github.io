@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bruno Anjos</title>
@@ -6,7 +6,7 @@
     <description>Recent content on Bruno Anjos</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 04 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://bruno-anjos.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -29,8 +29,7 @@
       <description>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Krypton. This is challenge is focused on cryptography.
 You can read more about the challenge and how it works here.
 Levels:
- Level 0 Level 1 Level 2 Level 3 Level 4 Level 5 Level 6  Level 0 
-The password is a base64 encoded string. We can use the base64 command.</description>
+ Level 0 Level 1 Level 2 Level 3 Level 4 Level 5 Level 6  Level 0 The password is a base64 encoded string. We can use the base64 command.</description>
     </item>
     
     <item>
