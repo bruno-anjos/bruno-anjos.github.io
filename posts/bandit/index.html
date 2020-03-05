@@ -98,41 +98,41 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 <ul>
 <li><a href="#introduction">Introduction</a>
 <ul>
-<li><a href="#Level-0">Level 0</a></li>
-<li><a href="#Level-1">Level 1</a></li>
-<li><a href="#Level-2">Level 2</a></li>
-<li><a href="#Level-3">Level 3</a></li>
-<li><a href="#Level-4">Level 4</a></li>
-<li><a href="#Level-5">Level 5</a></li>
-<li><a href="#Level-6">Level 6</a></li>
-<li><a href="#Level-7">Level 7</a></li>
-<li><a href="#Level-8">Level 8</a></li>
-<li><a href="#Level-9">Level 9</a></li>
-<li><a href="#Level-10">Level 10</a></li>
-<li><a href="#Level-11">Level 11</a></li>
-<li><a href="#Level-12">Level 12</a></li>
-<li><a href="#Level-13">Level 13</a></li>
-<li><a href="#Level-14">Level 14</a></li>
-<li><a href="#Level-15">Level 15</a></li>
-<li><a href="#Level-16">Level 16</a></li>
-<li><a href="#Level-17">Level 17</a></li>
-<li><a href="#Level-18">Level 18</a></li>
-<li><a href="#Level-19">Level 19</a></li>
-<li><a href="#Level-20">Level 20</a></li>
-<li><a href="#Level-21">Level 21</a></li>
-<li><a href="#Level-22">Level 22</a></li>
-<li><a href="#Level-23">Level 23</a></li>
-<li><a href="#Level-24">Level 24</a></li>
-<li><a href="#Level-25">Level 25</a></li>
-<li><a href="#Level-26">Level 26</a></li>
-<li><a href="#Level-27">Level 27</a></li>
-<li><a href="#Level-28">Level 28</a></li>
-<li><a href="#Level-29">Level 29</a></li>
-<li><a href="#Level-30">Level 30</a></li>
-<li><a href="#Level-31">Level 31</a></li>
-<li><a href="#Level-32">Level 32</a></li>
-<li><a href="#Level-33">Level 33</a></li>
-<li><a href="#Level-34">Level 34</a></li>
+<li><a href="#level-0">Level 0</a></li>
+<li><a href="#level-1">Level 1</a></li>
+<li><a href="#level-2">Level 2</a></li>
+<li><a href="#level-3">Level 3</a></li>
+<li><a href="#level-4">Level 4</a></li>
+<li><a href="#level-5">Level 5</a></li>
+<li><a href="#level-6">Level 6</a></li>
+<li><a href="#level-7">Level 7</a></li>
+<li><a href="#level-8">Level 8</a></li>
+<li><a href="#level-9">Level 9</a></li>
+<li><a href="#level-10">Level 10</a></li>
+<li><a href="#level-11">Level 11</a></li>
+<li><a href="#level-12">Level 12</a></li>
+<li><a href="#level-13">Level 13</a></li>
+<li><a href="#level-14">Level 14</a></li>
+<li><a href="#level-15">Level 15</a></li>
+<li><a href="#level-16">Level 16</a></li>
+<li><a href="#level-17">Level 17</a></li>
+<li><a href="#level-18">Level 18</a></li>
+<li><a href="#level-19">Level 19</a></li>
+<li><a href="#level-20">Level 20</a></li>
+<li><a href="#level-21">Level 21</a></li>
+<li><a href="#level-22">Level 22</a></li>
+<li><a href="#level-23">Level 23</a></li>
+<li><a href="#level-24">Level 24</a></li>
+<li><a href="#level-25">Level 25</a></li>
+<li><a href="#level-26">Level 26</a></li>
+<li><a href="#level-27">Level 27</a></li>
+<li><a href="#level-28">Level 28</a></li>
+<li><a href="#level-29">Level 29</a></li>
+<li><a href="#level-30">Level 30</a></li>
+<li><a href="#level-31">Level 31</a></li>
+<li><a href="#level-32">Level 32</a></li>
+<li><a href="#level-33">Level 33</a></li>
+<li><a href="#level-34">Level 34</a></li>
 </ul>
 </li>
 </ul>
@@ -144,7 +144,7 @@ The one which we will solve here is Bandit. This is focused on SSH communication
 </code></pre></div><p>which we can change with the arguments we have, resulting in <code>ssh bandit0@bandit.labs.overthewire.org -p 2220</code>. Now we know how to make a basic ssh connection with a username and a port. After we execute the command a password is asked. We insert <strong>bandit0</strong> and finally we have an open ssh connection, which we can see by the prompt <code>bandit0@bandit:~$</code>.</p>
 <p>Ok now we can go to the next level.</p>
 <h2 id="a-idlevel-1a-level-1httpoverthewireorgwargamesbanditbandit1html"><!-- raw HTML omitted --><!-- raw HTML omitted --> <a href="http://overthewire.org/wargames/bandit/bandit1.html">Level 1</a></h2>
-<p>We will use the connection established in <a href="#Level-0">Level 0</a> to solve this level. They say that the password for the next level is stored in the file called <strong>readme</strong>. To print the content of the file we can use the <code>cat</code> command which takes the file you want to see.</p>
+<p>We will use the connection established in <a href="#level-0">Level 0</a> to solve this level. They say that the password for the next level is stored in the file called <strong>readme</strong>. To print the content of the file we can use the <code>cat</code> command which takes the file you want to see.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit0@bandit:~$ cat readme
 boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 </code></pre></div><p>So now that we have the password we can go to the next level.</p>
@@ -329,7 +329,7 @@ SYNOPSIS
 
 DESCRIPTION
        Filter adjacent matching lines from INPUT <span class="o">(</span>or standard input<span class="o">)</span>, writing to OUTPUT <span class="o">(</span>or standard output<span class="o">)</span>.
-</code></pre></div><p>Ok then. So it only filters <strong>adjacent matching lines</strong>. So what we could do is sort the lines so that all the repeated lines be adjacent to one another. Guess what, one of the suggested commands is <strong>sort</strong>, that should do it. We look a bit into the <strong>man</strong> page to see how it works and is nothing special, <strong>sort</strong> followed by the file name. Now <strong>sort</strong> writes to the standard output so what we can do is pipelining, check <a href="#Level-8">Level 8</a> for more information on this.</p>
+</code></pre></div><p>Ok then. So it only filters <strong>adjacent matching lines</strong>. So what we could do is sort the lines so that all the repeated lines be adjacent to one another. Guess what, one of the suggested commands is <strong>sort</strong>, that should do it. We look a bit into the <strong>man</strong> page to see how it works and is nothing special, <strong>sort</strong> followed by the file name. Now <strong>sort</strong> writes to the standard output so what we can do is pipelining, check <a href="#level-8">Level 8</a> for more information on this.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit8@bandit:~$ sort data.txt <span class="p">|</span> uniq -u
 UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
 </code></pre></div><p>Ok there we go. We have the password, let&rsquo;s go to the next level.</p>
@@ -614,7 +614,7 @@ vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY<span class="o">=</span>
 -----END RSA PRIVATE KEY-----
 
 closed
-</code></pre></div><p>Now we have an ssh key we can copy it to our own computer to a file and use it to connect like we did in <a href="#Level-14">Level 14</a>.</p>
+</code></pre></div><p>Now we have an ssh key we can copy it to our own computer to a file and use it to connect like we did in <a href="#level-14">Level 14</a>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ <span class="nb">echo</span> <span class="s2">&#34;-----BEGIN RSA PRIVATE KEY-----
 </span><span class="s2">MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
 </span><span class="s2">imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
@@ -904,7 +904,7 @@ drwxr-xr-x <span class="m">41</span> root     root     <span class="m">4096</spa
 <span class="o">(</span>...connection established...<span class="o">)</span>
 Connection to bandit.labs.overthewire.org closed.
 myuser@myuser:~$
-</code></pre></div><p>Hmmm&hellip; So it closed the connection immediately. Let&rsquo;s try to run a command through <strong>ssh</strong> instead of establishing the connection (like in <a href="#Level-19">level 19</a>), more specifically, try to understand what shell user <strong>bandit26</strong> is running. We can do this by checking the content of the <code>$SHELL</code> variable.</p>
+</code></pre></div><p>Hmmm&hellip; So it closed the connection immediately. Let&rsquo;s try to run a command through <strong>ssh</strong> instead of establishing the connection (like in <a href="#level-19">level 19</a>), more specifically, try to understand what shell user <strong>bandit26</strong> is running. We can do this by checking the content of the <code>$SHELL</code> variable.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">myuser@myuser:~$ ssh bandit26@bandit.labs.overthewire.org -p <span class="m">2220</span> -i ~/Desktop/bandit26.sshkey <span class="s1">&#39;echo $SHELL&#39;</span>
 This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
 <span class="o">(</span>...hangs...<span class="o">)</span>
@@ -963,7 +963,7 @@ drwxr-xr-x <span class="m">41</span> root     root     <span class="m">4096</spa
 -rw-r--r--  <span class="m">1</span> root     root      <span class="m">675</span> May <span class="m">15</span>  <span class="m">2017</span> .profile
 drwxr-xr-x  <span class="m">2</span> root     root     <span class="m">4096</span> Oct <span class="m">16</span>  <span class="m">2018</span> .ssh
 -rw-r-----  <span class="m">1</span> bandit26 bandit26  <span class="m">258</span> Oct <span class="m">16</span>  <span class="m">2018</span> text.txt
-</code></pre></div><p>This brings us back to <a href="#Level-20">level 20</a> where we had a setuid binary. This is easy then, let&rsquo;s just <strong>cat</strong> the password file.</p>
+</code></pre></div><p>This brings us back to <a href="#level-20">level 20</a> where we had a setuid binary. This is easy then, let&rsquo;s just <strong>cat</strong> the password file.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
 3ba3118a22e93127a4ed485be72ef5ea
 </code></pre></div><p>Good job! Next.</p>
