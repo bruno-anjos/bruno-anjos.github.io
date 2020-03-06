@@ -95,16 +95,15 @@ The one which we will solve here is Krypton. This is challenge is focused on cry
 <p>You can read more about the challenge and how it works <a href="http://overthewire.org/wargames/krypton/">here</a>.</p>
 <p>Levels:</p>
 <ul>
-<li><a href="#level0">Level 0</a></li>
-<li><a href="#level1">Level 1</a></li>
-<li><a href="#level2">Level 2</a></li>
-<li><a href="#level3">Level 3</a></li>
-<li><a href="#level4">Level 4</a></li>
-<li><a href="#level5">Level 5</a></li>
-<li><a href="#level6">Level 6</a></li>
+<li><a href="#level-0">Level 0</a></li>
+<li><a href="#level-1">Level 1</a></li>
+<li><a href="#level-2">Level 2</a></li>
+<li><a href="#level-3">Level 3</a></li>
+<li><a href="#level-4">Level 4</a></li>
+<li><a href="#level-5">Level 5</a></li>
+<li><a href="#level-6">Level 6</a></li>
 </ul>
-<h2 id="level-0httpoverthewireorgwargameskryptonkrypton0html"><a href="http://overthewire.org/wargames/krypton/krypton0.html">Level 0</a></h2>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="level-0">Level 0</h2>
 <p>The password is a base64 encoded string. We can use the <strong>base64</strong> command. Let&rsquo;s check the manual.</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">NAME
        base64 - base64 encode/decode data and print to standard output
@@ -125,8 +124,7 @@ DESCRIPTION
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">echo</span> <span class="s2">&#34;S1JZUFRPTklTR1JFQVQ=&#34;</span> <span class="p">|</span> base64 -d                                                         KRYPTONISGREAT%
 &gt;
 </code></pre></div><p>The <code>%</code> does not make part of the string from what i understand. This password allows us to connect to <code>krypton.labs.overthewire.org</code> as <code>krypton1</code> on port <code>2222</code>. From now on the files that we need for the challenges will be in the <code>/krypton/</code> directory.</p>
-<h2 id="level-1httpoverthewireorgwargameskryptonkrypton1html"><a href="http://overthewire.org/wargames/krypton/krypton1.html">Level 1</a></h2>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="level-1">Level 1</h2>
 <p>As we&rsquo;ve mentioned before all the challenges from now on will be in the <code>/krypton/</code> directory so if we go there and list the files we get this.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton1@krypton:/krypton$ ls -la
 total <span class="m">32</span>
@@ -138,7 +136,7 @@ drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  
 drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton4
 drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton5
 drwxr-xr-x  <span class="m">3</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:21 krypton6
-</code></pre></div><p>We are currently in <a href="#level1">Level 1</a> so let&rsquo;s change to the correct folder and list its content.</p>
+</code></pre></div><p>We are currently in <a href="#level-1">Level 1</a> so let&rsquo;s change to the correct folder and list its content.</p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">krypton1@krypton:/krypton$ cd krypton1
 krypton1@krypton:/krypton/krypton1$ ls -la
 total 16
@@ -169,8 +167,7 @@ drwxr-xr-x 8 root     root     4096 Jul  1 04:21 ..
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">krypton1@krypton:/krypton/krypton1$ cat krypton2 <span class="p">|</span> tr <span class="s1">&#39;N-ZA-Mn-za-m&#39;</span> <span class="s1">&#39;A-Za-z&#39;</span>
 LEVEL TWO PASSWORD ROTTEN
 </code></pre></div><p>We switched the letter patterns since the example is to encode and we want to <strong>decode</strong>. We have the password for the next level, let&rsquo;s go.</p>
-<h2 id="level-2httpoverthewireorgwargameskryptonkrypton2html"><a href="http://overthewire.org/wargames/krypton/krypton2.html">Level 2</a></h2>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="level-2">Level 2</h2>
 <p>From now on i&rsquo;ll just change the to the challenge directory and <strong>cat</strong> the README.md without pasting it here explicitly.</p>
 <blockquote>
 <p>Krypton 2</p>
@@ -258,8 +255,7 @@ AA
 krypton2@krypton:/krypton/krypton2$ cat krypton3 <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
 CAESARISEASY
 </code></pre></div><p>We got it. Next one.</p>
-<h2 id="level-3httpoverthewireorgwargameskryptonkrypton3html"><a href="http://overthewire.org/wargames/krypton/krypton3.html">Level 3</a></h2>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="level-3">Level 3</h2>
 <p>As always first check the <code>README.md</code>,</p>
 <blockquote>
 <p>Well done.  You&rsquo;ve moved past an easy substitution cipher.</p>
@@ -331,8 +327,7 @@ WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE
 WELLD ONETH ELEVE LFOUR PASSW ORDIS BRUTE
 &gt;   
 </code></pre></div><p>We got the password! This would be much harder if we hadn&rsquo;t find that online tool. Next one!</p>
-<h2 id="level-4httpoverthewireorgwargameskryptonkrypton4html"><a href="http://overthewire.org/wargames/krypton/krypton4.html">Level 4</a></h2>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="level-4">Level 4</h2>
 <p>So now we have a vigenere cipher. This kind of cipher is the result of adding the plaintext with a key, so now a character doesn&rsquo;t have a direct correspondence since it depends which character of the key was added. If you search online you will eventually understand that we can just apply the same logic as before but you have to use modulus.</p>
 <p>We can use <a href="https://www.dcode.fr/vigenere-cipher">this</a>, to decode and do the analysis for us.</p>
 <p>As we can see here, there are multiple possible keys, but the one that makes sense and transforms our cipher text into readable text is the first one.</p>
@@ -347,8 +342,7 @@ WELLD ONETH ELEVE LFOUR PASSW ORDIS BRUTE
 </figure>
 
 <p>Without the spaces of course.</p>
-<h2 id="level-5httpoverthewireorgwargameskryptonkrypton5html"><a href="http://overthewire.org/wargames/krypton/krypton5.html">Level 5</a></h2>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="level-5">Level 5</h2>
 <p>Once again we can use the website previously mentioned.</p>
 <figure>
     <img src="/krypton5.png"/> 
