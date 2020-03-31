@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Bruno Anjos</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 04 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://bruno-anjos.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>UTCTF - Random ECB</title>
+      <link>https://bruno-anjos.github.io/posts/utctf_random_ecb/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bruno-anjos.github.io/posts/utctf_random_ecb/</guid>
+      <description>Introduction First and foremost there is a very good explanation how AES ECB can be exploited through a chosen plaintext attack here. The problem can be visualized in these two pictures:
+    As you can see even though the image was encrypted, Tux (the penguin) is still sort of visible in the result. This is due to the fact that AES ECB works in a standard codebook fashion, where each input has a ciphertext associated.</description>
+    </item>
     
     <item>
       <title>rugenere - Vigenère Cipher tool written in Rust</title>
