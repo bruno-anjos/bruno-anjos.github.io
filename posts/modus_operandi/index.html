@@ -167,7 +167,7 @@ cipher 176
 Traceback (most recent call last):
   ( EXCEPTION INFO )
 EOFError
-</code></pre></div><p>It gave us a EOF after a while. After trying a couple of times we would understand this behaviour is recurrent.</p>
+</code></pre></div><p>It gave us an EOF after a while. After trying a couple of times we would understand this behaviour is recurrent.</p>
 <p>After fiddling a bit (a lot actually) we can get to the result by checking out the cipher modes sequence.</p>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># got this from tweaking the previous script</span>
 <span class="n">mode_seqs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ECB&#39;</span><span class="p">,</span> <span class="s1">&#39;CBC&#39;</span><span class="p">,</span> <span class="s1">&#39;CBC&#39;</span><span class="p">,</span> <span class="s1">&#39;ECB&#39;</span><span class="p">,</span> <span class="s1">&#39;ECB&#39;</span><span class="p">,</span> <span class="s1">&#39;CBC&#39;</span><span class="p">,</span> <span class="s1">&#39;CBC&#39;</span><span class="p">,</span> <span class="s1">&#39;ECB&#39;</span><span class="p">,</span> <span class="s1">&#39;ECB&#39;</span><span class="p">,</span>
