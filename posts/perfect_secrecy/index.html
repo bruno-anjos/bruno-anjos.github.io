@@ -6,27 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="author" content="Bruno Anjos">
-    <meta name="description" content="Bruno Anjos&#39;s website">
+    <meta name="description" content="https://bruno-anjos.github.io">
     <meta name="keywords" content="developer,personal,coder,hugo,blog">
     
     <meta property="og:site_name" content="Bruno Anjos">
     <meta property="og:title" content="
-  Posts - Bruno Anjos
+  CSAW 2020 - perfect_secrecy - Bruno Anjos
 ">
-    <meta property="og:description" content="Bruno Anjos&#39;s website">
+    <meta property="og:description" content="CSAW 2020 crypto challenge">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://bruno-anjos.github.io/posts/">
-    <meta property="og:image" content="https://bruno-anjos.github.ioimages/tn.png">
+    <meta property="og:url" content="https://bruno-anjos.github.io/posts/perfect_secrecy/">
+    <meta property="og:image" content="https://bruno-anjos.github.io">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://bruno-anjos.github.io/posts/">
-    <meta name="twitter:image" content="https://bruno-anjos.github.ioimages/tn.png">
+    <meta name="twitter:site" content="https://bruno-anjos.github.io/posts/perfect_secrecy/">
+    <meta name="twitter:image" content="https://bruno-anjos.github.io">
 
-    <base href="https://bruno-anjos.github.io/posts/">
+    <base href="https://bruno-anjos.github.io/posts/perfect_secrecy/">
     <title>
-  Posts - Bruno Anjos
+  CSAW 2020 - perfect_secrecy - Bruno Anjos
 </title>
 
-    <link rel="canonical" href="https://bruno-anjos.github.io/posts/">
+    <link rel="canonical" href="https://bruno-anjos.github.io/posts/perfect_secrecy/">
     
     <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
     <link rel="stylesheet" href="https://bruno-anjos.github.io/css/normalize.min.css">
@@ -80,44 +80,52 @@
 
       <div class="content">
         
-  <section class="container list">
-  <h1 class="title">Posts</h1>
-  <ul>
-    
-    <li>
-      <span>September 17, 2020</span><a href="https://bruno-anjos.github.io/posts/modus_operandi/">CSAW 2020 - modus_operandi</a>
-    </li>
-    
-    <li>
-      <span>September 17, 2020</span><a href="https://bruno-anjos.github.io/posts/perfect_secrecy/">CSAW 2020 - perfect_secrecy</a>
-    </li>
-    
-    <li>
-      <span>March 9, 2020</span><a href="https://bruno-anjos.github.io/posts/utctf_random_ecb/">UTCTF - Random ECB</a>
-    </li>
-    
-    <li>
-      <span>September 4, 2019</span><a href="https://bruno-anjos.github.io/posts/rugenere/">rugenere - Vigenère Cipher tool written in Rust</a>
-    </li>
-    
-    <li>
-      <span>July 7, 2019</span><a href="https://bruno-anjos.github.io/posts/krypton/">Over The Wire - Krypton Walkthrough</a>
-    </li>
-    
-    <li>
-      <span>July 6, 2019</span><a href="https://bruno-anjos.github.io/posts/bandit/">Over The Wire - Bandit Walkthrough</a>
-    </li>
-    
-  </ul>
+  <section class="container post">
+  <article>
+    <header>
+      <h1 class="title">CSAW 2020 - perfect_secrecy</h1>
+      <h2 class="date">September 17, 2020</h2>
+
+      
+    </header>
+
+    <p>The challenge goes as follows:</p>
+<blockquote>
+<p>Alice sent over a couple of images with sensitive information to Bob, encrypted with a pre-shared key. It is the most secure encryption scheme, theoretically&hellip;</p>
+</blockquote>
+<p>These are the two images we have access to:</p>
+<figure>
+    <img src="/image1.png"/> 
+</figure>
+
+<figure>
+    <img src="/image2.png"/> 
+</figure>
+
+<p>One of the most secure encryption techniques that is theoretically uncrackable is One Time Pad. This technique relies completely on a single use per key rule. If this rule is broken and we XOR two encrypted contents together the encryption cancels out and we get the mix between both plaintexts.</p>
+<p>For example taking C1 and C2 as the resulting ciphertexts from XOR&rsquo;ing plaintexts P1 and P2 with the same key K we get:</p>
+<blockquote>
+<p>C1 = P1 ^ K</p>
+<p>C2 = P2 ^ K</p>
+<p>C1 ^ C2 = P1 ^ K ^ P2 ^ K</p>
+</blockquote>
+<p>Since XOR is commutative and XOR&rsquo;ing a value with itself it&rsquo;s always 0, and 0 is the absorbing element, the last line is equivalent to:</p>
+<blockquote>
+<p>P1 ^ K ^ P2 ^ K = P1 ^ P2 ^ K ^ K = P1 ^ P2 ^ 0 = P1 ^ P2</p>
+</blockquote>
+<p>When we XOR one image to the other we get the resulting image:</p>
+<figure>
+    <img src="/result.png"/> 
+</figure>
+
+
+  </article>
+
+  <br/>
+
   
-
-
-
-
-
-
+  
 </section>
-
 
       </div>
       

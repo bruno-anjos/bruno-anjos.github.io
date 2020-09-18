@@ -23,6 +23,18 @@ $ nc crypto.chal.csaw.io 5001 Hello! For each plaintext you enter, find out if t
     </item>
     
     <item>
+      <title>CSAW 2020 - perfect_secrecy</title>
+      <link>https://bruno-anjos.github.io/posts/perfect_secrecy/</link>
+      <pubDate>Thu, 17 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bruno-anjos.github.io/posts/perfect_secrecy/</guid>
+      <description>The challenge goes as follows:
+ Alice sent over a couple of images with sensitive information to Bob, encrypted with a pre-shared key. It is the most secure encryption scheme, theoretically&amp;hellip;
+ These are the two images we have access to:
+    One of the most secure encryption techniques that is theoretically uncrackable is One Time Pad. This technique relies completely on a single use per key rule.</description>
+    </item>
+    
+    <item>
       <title>UTCTF - Random ECB</title>
       <link>https://bruno-anjos.github.io/posts/utctf_random_ecb/</link>
       <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
