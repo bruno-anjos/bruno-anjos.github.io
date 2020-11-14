@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>About - Category - Bruno Anjos</title>
+        <link>https://bruno-anjos.github.io/categories/about/</link>
+        <description>About - Category - Bruno Anjos</description>
+        <generator>Hugo -- gohugo.io</generator><managingEditor>bruno.vale.anjos@gmail.com (Bruno Anjos)</managingEditor>
+            <webMaster>bruno.vale.anjos@gmail.com (Bruno Anjos)</webMaster><lastBuildDate>Fri, 28 Jun 2019 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://bruno-anjos.github.io/categories/about/" rel="self" type="application/rss+xml" /><item>
+    <title>About Me</title>
+    <link>https://bruno-anjos.github.io/about/</link>
+    <pubDate>Fri, 28 Jun 2019 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/about/</guid>
+    <description><![CDATA[My name is Bruno Anjos I&rsquo;m 24 and I&rsquo;m a Computer Science student currently in my masters&rsquo; degree final year at FCT-NOVA. I&rsquo;m mostly interested in Systems Engineering, Distributed Systems, Networks and Security.
+I&rsquo;m a member of the Root Lee CTF team.
+As my non professional interests here goes a list: battle rap, videogames, comedy, music.
+Feel free to hit me up at any of the contact icons in the main page.]]></description>
+</item></channel>
+</rss>

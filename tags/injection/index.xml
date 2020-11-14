@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>injection - Tag - Bruno Anjos</title>
+        <link>https://bruno-anjos.github.io/tags/injection/</link>
+        <description>injection - Tag - Bruno Anjos</description>
+        <generator>Hugo -- gohugo.io</generator><managingEditor>bruno.vale.anjos@gmail.com (Bruno Anjos)</managingEditor>
+            <webMaster>bruno.vale.anjos@gmail.com (Bruno Anjos)</webMaster><lastBuildDate>Mon, 02 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://bruno-anjos.github.io/tags/injection/" rel="self" type="application/rss+xml" /><item>
+    <title>RumbleCTF - CSRegex</title>
+    <link>https://bruno-anjos.github.io/csregex/</link>
+    <pubDate>Mon, 02 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/csregex/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/ctfs/csregex/ctf-banner.png" referrerpolicy="no-referrer">
+            </div>We are presented with an input where we can manipulate the regex match expression. We can easily escape the regex matching pattern by having our initial input as a/g);. After this we can input any Javascript code, and finally end with // to ignore the remaining characters. This code is running in some sort of context that doesn&rsquo;t allow us to import or require libraries. Nevertheless after googleing for a while we come across an example to bind libraries using process.]]></description>
+</item></channel>
+</rss>

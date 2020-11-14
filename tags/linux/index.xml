@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>linux - Tag - Bruno Anjos</title>
+        <link>https://bruno-anjos.github.io/tags/linux/</link>
+        <description>linux - Tag - Bruno Anjos</description>
+        <generator>Hugo -- gohugo.io</generator><managingEditor>bruno.vale.anjos@gmail.com (Bruno Anjos)</managingEditor>
+            <webMaster>bruno.vale.anjos@gmail.com (Bruno Anjos)</webMaster><lastBuildDate>Sat, 06 Jul 2019 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://bruno-anjos.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>Over The Wire - Bandit Walkthrough</title>
+    <link>https://bruno-anjos.github.io/bandit/</link>
+    <pubDate>Sat, 06 Jul 2019 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/bandit/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/over-the-wire/over-the-wire.png" referrerpolicy="no-referrer">
+            </div>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
+To connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format bandit&lt;level_number&gt; (without the &lsquo;&lt;&rsquo; &lsquo;&gt;&rsquo;) so for level 0 the username would be bandit0.]]></description>
+</item></channel>
+</rss>

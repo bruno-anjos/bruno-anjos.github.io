@@ -1,109 +1,103 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Bruno Anjos</title>
-    <link>https://bruno-anjos.github.io/</link>
-    <description>Recent content on Bruno Anjos</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://bruno-anjos.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>RumbleCTF - CSRegex</title>
-      <link>https://bruno-anjos.github.io/posts/csregex/</link>
-      <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/posts/csregex/</guid>
-      <description>We are presented with an input where we can manipulate the regex match expression. We can easily escape the regex matching pattern by having our initial input as a/g);. After this we can input any Javascript code, and finally end with // to ignore the remaining characters. This code is running in some sort of context that doesn&amp;rsquo;t allow us to import or require libraries. Nevertheless after googleing for a while we come across an example to bind libraries using process.</description>
-    </item>
-    
-    <item>
-      <title>CSAW 2020 - perfect_secrecy</title>
-      <link>https://bruno-anjos.github.io/posts/perfect_secrecy/</link>
-      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/posts/perfect_secrecy/</guid>
-      <description>The challenge goes as follows:
- Alice sent over a couple of images with sensitive information to Bob, encrypted with a pre-shared key. It is the most secure encryption scheme, theoretically&amp;hellip;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Bruno Anjos</title>
+        <link>https://bruno-anjos.github.io/</link>
+        <description>Bruno Anjos Website</description>
+        <generator>Hugo -- gohugo.io</generator><managingEditor>bruno.vale.anjos@gmail.com (Bruno Anjos)</managingEditor>
+            <webMaster>bruno.vale.anjos@gmail.com (Bruno Anjos)</webMaster><lastBuildDate>Sun, 08 Nov 2020 00:00:00 &#43;0000</lastBuildDate>
+            <atom:link href="https://bruno-anjos.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>CSAW 2020 Finals - hybrid2</title>
+    <link>https://bruno-anjos.github.io/hybdrid2/</link>
+    <pubDate>Sun, 08 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/hybdrid2/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/ctfs/csaw-finals/csaw.png" referrerpolicy="no-referrer">
+            </div>In this crypto challenge we are provided with 3 files. encrypted_flag.txt, values.txt and RSA.py. This is their content respectively:
+1  gAAAAABfprGds2-Sl4iF5BMjjotnTDKFPsfL8AtJOOeeruqB4w8RGk5gNUt0JM0q2xDve9x9PNHkNkk7f9rf1LekcIBjT1MHIIrvIlnhGqunRRwX59Eo42M=   1 2 3 4 5 6 7 8 9  n1:993026244695684152720385884540934236152899333556368140632626642931977663455763577814539451675010742634734414120506873127681575400889367126382788249627522167388706763687223391964637583980012499335053836288149762800461352926871 c1:919185245450085070842500396016408106190564102841807386352380063509870500097738484099609889796995083614948316196284397915697587992595215560226954302540303441147142319086774144200044451484633098049523092465251856761343186171446 n2:2120858645090903183026514121355650736640788936981118406136042282902569410681811232597743281933258598295558440757608733371867831987066752871107340815085437033645770613051826725100320202337307710202802730187794048230226233246437 c2:1208266765754514111395360277918056208640323550343906922007564328002144299927657437792873335826000580646064707967588174785153292261822967987055788013175865915201771920259922766547552097804855479381196953971070003030552476914575 n3:13566626315514098994196793247987944584439249998535190838667639010645726083604266690794903208593054256985816076154703189151830750410096794348919817516657177422145305767806102534164484511642213686511016911921215486685198372816147 c3:1217497400118662279329845790782375666818255286641902450369699752528387025736733412718188595857511268363598010406858933873651883505914392791968214369018429930629428806698086713411413268400019005784163187283297818419415844058298 n4:3781687268076859825619936261231343132436633759923146857815563164944282031661985906371461417791140109723961921392569564055561036370381503090194581545155223783851590130524287100727964018153092190082596699871644182610730089104887 c4:1581630010861681991426638552365806430756733284791722127829411178122452158350095552531779719660231210643815340517737141369431301977856820846393801475741850207897534313201631075802421935603144591231461900365190172816004331334424 e:5   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36  import random import string from rsa_values import checkKeys, n1, n2, n3, n4, e def get_random_string(length): characters = string.]]></description>
+</item><item>
+    <title>CSAW 2020 Finals - eccentric</title>
+    <link>https://bruno-anjos.github.io/eccentric/</link>
+    <pubDate>Fri, 06 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/eccentric/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/ctfs/csaw-finals/csaw.png" referrerpolicy="no-referrer">
+            </div>This was the first challenge i solve for CSAW 2020 finals. It&rsquo;s a crypto challenge that revolves around ECC (Elliptic Curve Cryptography). This is the content of the file provided.
+1 2 3 4 5 6 7 8 9  y^2 = x^3 + 2648089252143182574153823745896834765345361977855346851913065097972752819834370636007433949219153563353347621929792473352056603689300142308595500196681484715*x + 2640636613554195662803492377273397651071872147133797068159853320493797794760382065905880626537982439844385071174905293170870708493176922431618220384167739340 FF: 4079211623412602159436576854880565404392213421245358163957062650219138441233389311290884236330989600198400158483251311640833420916559186996716661065534756331 G = (2835124931680967399292763715241068733082955010482692941778975060177550045565873252916114065386731072675933657202784918206609499173114199830285672822076666812 : 3917051964324124246182777370059493628017925319159214920394084902768106573682907256149476836382399752202209827189288072241452544996871460642902049422562450204 : 1) P = (1201673966464508597332511457607538250497935144691770661539122404983678691094166105235067949576773833297917476372671447578123390251450634078667903889944175974 : 2549728089376241701979352238534953850683927781198029880111780652469308144313884103159306596064169377751896432424056208861929610592541122265583809022865481983 : 1) P = d*G d = ?   So after googling a bit here, here and pain attention specifically here we can understand that we have a elliptic curve function in the first line with two major big numbers, the first one is the parameter a and the second one b.]]></description>
+</item><item>
+    <title>RumbleCTF - CSRegex</title>
+    <link>https://bruno-anjos.github.io/csregex/</link>
+    <pubDate>Mon, 02 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/csregex/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/ctfs/csregex/ctf-banner.png" referrerpolicy="no-referrer">
+            </div>We are presented with an input where we can manipulate the regex match expression. We can easily escape the regex matching pattern by having our initial input as a/g);. After this we can input any Javascript code, and finally end with // to ignore the remaining characters. This code is running in some sort of context that doesn&rsquo;t allow us to import or require libraries. Nevertheless after googleing for a while we come across an example to bind libraries using process.]]></description>
+</item><item>
+    <title>CSAW 2020 Qualifiers - perfect_secrecy</title>
+    <link>https://bruno-anjos.github.io/perfect_secrecy/</link>
+    <pubDate>Fri, 18 Sep 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/perfect_secrecy/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/ctfs/csaw-qualifiers/csaw.png" referrerpolicy="no-referrer">
+            </div>The challenge goes as follows:
+ Alice sent over a couple of images with sensitive information to Bob, encrypted with a pre-shared key. It is the most secure encryption scheme, theoretically&hellip;
  These are the two images we have access to:
-    One of the most secure encryption techniques that is theoretically uncrackable is One Time Pad. This technique relies completely on a single use per key rule.</description>
-    </item>
-    
-    <item>
-      <title>CSAW 2020 - modus_operandi</title>
-      <link>https://bruno-anjos.github.io/posts/modus_operandi/</link>
-      <pubDate>Thu, 17 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/posts/modus_operandi/</guid>
-      <description>This is a crypto challenge from the CSAW 2020 CTF originally worth 150 points.
+    One of the most secure encryption techniques that is theoretically uncrackable is One Time Pad. This technique relies completely on a single use per key rule.]]></description>
+</item><item>
+    <title>CSAW 2020 Qualifiers - modus_operandi</title>
+    <link>https://bruno-anjos.github.io/modus_operandi/</link>
+    <pubDate>Thu, 17 Sep 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/modus_operandi/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/ctfs/csaw-qualifiers/csaw.png" referrerpolicy="no-referrer">
+            </div>This is a crypto challenge from the CSAW 2020 CTF originally worth 150 points.
 The challenge initially tells us to connect as such:
-$ nc crypto.chal.csaw.io 5001 Hello! For each plaintext you enter, find out if the block cipher used is ECB or CBC. Enter &amp;#34;ECB&amp;#34; or &amp;#34;CBC&amp;#34; to get the flag! We need to tell if the cipher being used to encode our plaintext is ECB or CBC. The big difference is that ECB, which stands for Electronic Code Book, always produces the same ciphertext for a given block.</description>
-    </item>
-    
-    <item>
-      <title>UTCTF - Random ECB</title>
-      <link>https://bruno-anjos.github.io/posts/utctf_random_ecb/</link>
-      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/posts/utctf_random_ecb/</guid>
-      <description>Introduction First and foremost there is a very good explanation how AES ECB can be exploited through a chosen plaintext attack here. The problem can be visualized in these two pictures:
-    As you can see even though the image was encrypted, Tux (the penguin) is still sort of visible in the result. This is due to the fact that AES ECB works in a standard codebook fashion, where each input has a ciphertext associated.</description>
-    </item>
-    
-    <item>
-      <title>rugenere - Vigenère Cipher tool written in Rust</title>
-      <link>https://bruno-anjos.github.io/posts/rugenere/</link>
-      <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/posts/rugenere/</guid>
-      <description>I had extra time, and really wanted to get into rust development, so i challenged myself to start a new project. One of my friends was in the exact same position and decided to do a simple Caesar&amp;rsquo;s cipher tool. He suggested that i do one for the Vigenère cipher since both of these ciphers are used in Over The Wire challenges. In fact Krypton has challenges that use both of these ciphers, you can check my walkthrough of Krypton here.</description>
-    </item>
-    
-    <item>
-      <title>Over The Wire - Krypton Walkthrough</title>
-      <link>https://bruno-anjos.github.io/posts/krypton/</link>
-      <pubDate>Sun, 07 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/posts/krypton/</guid>
-      <description>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Krypton. This is challenge is focused on cryptography.
+1 2  $ nc crypto.chal.csaw.io 5001 Hello! For each plaintext you enter, find out if the block cipher used is ECB or CBC. Enter &#34;ECB&#34; or &#34;CBC&#34; to get the flag!   We need to tell if the cipher being used to encode our plaintext is ECB or CBC.]]></description>
+</item><item>
+    <title>UTCTF - Random ECB</title>
+    <link>https://bruno-anjos.github.io/utctf_random_ecb/</link>
+    <pubDate>Mon, 09 Mar 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/utctf_random_ecb/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/ctfs/utctf/utctf.png" referrerpolicy="no-referrer">
+            </div>Introduction First and foremost there is a very good explanation how AES ECB can be exploited through a chosen plaintext attack here. The problem can be visualized in these two pictures:
+    As you can see even though the image was encrypted, Tux (the penguin) is still sort of visible in the result. This is due to the fact that AES ECB works in a standard codebook fashion, where each input has a ciphertext associated.]]></description>
+</item><item>
+    <title>rugenere - Vigenère Cipher tool written in Rust</title>
+    <link>https://bruno-anjos.github.io/rugenere/</link>
+    <pubDate>Wed, 04 Sep 2019 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/rugenere/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/rugenere/rust-logo.jpg" referrerpolicy="no-referrer">
+            </div>I had extra time, and really wanted to get into rust development, so i challenged myself to start a new project. One of my friends was in the exact same position and decided to do a simple Caesar&rsquo;s cipher tool. He suggested that i do one for the Vigenère cipher since both of these ciphers are used in Over The Wire challenges. In fact Krypton has challenges that use both of these ciphers, you can check my walkthrough of Krypton here.]]></description>
+</item><item>
+    <title>Over The Wire - Krypton Walkthrough</title>
+    <link>https://bruno-anjos.github.io/krypton/</link>
+    <pubDate>Sun, 07 Jul 2019 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/krypton/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/over-the-wire/over-the-wire.png" referrerpolicy="no-referrer">
+            </div>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Krypton. This is challenge is focused on cryptography.
 You can read more about the challenge and how it works here.
 Levels:
- Level 0 Level 1 Level 2 Level 3 Level 4 Level 5 Level 6  Level 0 The password is a base64 encoded string. We can use the base64 command.</description>
-    </item>
-    
-    <item>
-      <title>Over The Wire - Bandit Walkthrough</title>
-      <link>https://bruno-anjos.github.io/posts/bandit/</link>
-      <pubDate>Sat, 06 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/posts/bandit/</guid>
-      <description>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
-To connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format bandit&amp;lt;level_number&amp;gt; (without the &amp;lsquo;&amp;lt;&amp;rsquo; &amp;lsquo;&amp;gt;&amp;rsquo;) so for level 0 the username would be bandit0.</description>
-    </item>
-    
-    <item>
-      <title>Contacts</title>
-      <link>https://bruno-anjos.github.io/contact/</link>
-      <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/contact/</guid>
-      <description>Email: bruno.vale.anjos@gmail.com
-Github: https://github.com/bruno-anjos
-LinkedIn: https://www.linkedin.com/in/bruno-vale-anjos</description>
-    </item>
-    
-    <item>
-      <title>Hi there</title>
-      <link>https://bruno-anjos.github.io/about/</link>
-      <pubDate>Fri, 28 Jun 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://bruno-anjos.github.io/about/</guid>
-      <description>My name is Bruno Anjos i&amp;rsquo;m 23 and i&amp;rsquo;m a Computer Science student currently in my masters&amp;rsquo; degree final year at FCTNOVA. I&amp;rsquo;m mostly interested in Computer Systems Architecture, Distributed Systems, Computer Networks and Security related with all these topics.
-Feel free to hit me up.</description>
-    </item>
-    
-  </channel>
+ Level 0 Level 1 Level 2 Level 3 Level 4 Level 5 Level 6  Level 0 The password is a base64 encoded string. We can use the base64 command.]]></description>
+</item><item>
+    <title>Over The Wire - Bandit Walkthrough</title>
+    <link>https://bruno-anjos.github.io/bandit/</link>
+    <pubDate>Sat, 06 Jul 2019 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://bruno-anjos.github.io/bandit/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/posts/over-the-wire/over-the-wire.png" referrerpolicy="no-referrer">
+            </div>Introduction Over The Wire provides multiple challenges focused on different topics of computer systems. The one which we will solve here is Bandit. This is focused on SSH communication, bash commands and some basic UNIX concepts.
+To connect to any of these levels you need 2 things: a username, and a password. Each level has a username in the format bandit&lt;level_number&gt; (without the &lsquo;&lt;&rsquo; &lsquo;&gt;&rsquo;) so for level 0 the username would be bandit0.]]></description>
+</item></channel>
 </rss>
