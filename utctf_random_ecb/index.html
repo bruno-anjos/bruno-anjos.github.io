@@ -8,9 +8,10 @@
         <title>UTCTF - Random ECB - Bruno Anjos</title><meta name="Description" content="Writeup for the UTCTF Random ECB challenge. This is an AES ECB known plaintext attack."><meta property="og:title" content="UTCTF - Random ECB" />
 <meta property="og:description" content="Writeup for the UTCTF Random ECB challenge. This is an AES ECB known plaintext attack." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bruno-anjos.github.io/utctf_random_ecb/" />
+<meta property="og:url" content="https://bruno-anjos.github.io/utctf_random_ecb/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-03-09T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-03-09T00:00:00+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="UTCTF - Random ECB"/>
 <meta name="twitter:description" content="Writeup for the UTCTF Random ECB challenge. This is an AES ECB known plaintext attack."/>
@@ -24,7 +25,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/bruno-anjos.github.io\/utctf_random_ecb\/"
-        },"genre": "posts","keywords": "ctf, crypto","wordcount":  1249 ,
+        },"genre": "posts","keywords": "ctf, crypto","wordcount":  1248 ,
         "url": "https:\/\/bruno-anjos.github.io\/utctf_random_ecb\/","datePublished": "2020-03-09T00:00:00+00:00","dateModified": "2020-03-09T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -98,7 +99,7 @@
 <main class="main">
                 <div class="container"><article class="page single"><h1 class="single-title animated flipInX">UTCTF - Random ECB</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://bruno-anjos.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Bruno Anjos</a></span>&nbsp;<span class="post-category">included in <a href="/categories/ctfs/"><i class="far fa-folder fa-fw"></i>CTFs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="09-03-2020">09-03-2020</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1249 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="09-03-2020">09-03-2020</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1248 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -109,11 +110,9 @@
         alt="/posts/ctfs/utctf/utctf.png"
         title="Writeup for the UTCTF Random ECB challenge. This is an AES ECB known plaintext attack." /></div><div class="content" id="content"><h1 id="introduction">Introduction</h1>
 <p>First and foremost there is a very good explanation how AES ECB can be exploited through a chosen plaintext attack <a href="https://zachgrace.com/posts/attacking-ecb/" target="_blank" rel="noopener noreffer">here</a>. The problem can be visualized in these two pictures:</p>
-<p><figure>
-    <img src="/tux_normal.jpg"/> 
+<p><figure><img src="/tux_normal.jpg"/>
 </figure>
- <figure>
-    <img src="/tux_ecb.jpg"/> 
+ <figure><img src="/tux_ecb.jpg"/>
 </figure>
 </p>
 <p>As you can see even though the image was encrypted, Tux (the penguin) is still sort of visible in the result. This is due to the fact that AES ECB works in a standard codebook fashion, where each input has a ciphertext associated. This meaning that if you encrypt the same block over and over, the result will be exactly the same. Knowing this we can devise a chosen plaintext attack.</p>
@@ -123,7 +122,7 @@
 <p>The challenge made available the server source code, so let&rsquo;s take a look at it.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -152,61 +151,59 @@
 </span><span class="lnt">27
 </span><span class="lnt">28
 </span><span class="lnt">29
-</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
-<span class="kn">from</span> <span class="nn">Crypto.Util.Padding</span> <span class="kn">import</span> <span class="n">pad</span>
-<span class="kn">from</span> <span class="nn">Crypto.Random</span> <span class="kn">import</span> <span class="n">get_random_bytes</span>
-<span class="kn">from</span> <span class="nn">Crypto.Random.random</span> <span class="kn">import</span> <span class="n">getrandbits</span>
-<span class="kn">from</span> <span class="nn">secret</span> <span class="kn">import</span> <span class="n">flag</span>
-
-<span class="n">KEY</span> <span class="o">=</span> <span class="n">get_random_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">aes_ecb_encrypt</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">encryption_oracle</span><span class="p">(</span><span class="n">plaintext</span><span class="p">):</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">getrandbits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">plaintext</span> <span class="o">=</span> <span class="n">pad</span><span class="p">((</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">plaintext</span> <span class="o">+</span> <span class="n">flag</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">aes_ecb_encrypt</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">KEY</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Input a string to encrypt (input &#39;q&#39; to quit):&#34;</span><span class="p">)</span>
-        <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">user_input</span> <span class="o">==</span> <span class="s1">&#39;q&#39;</span><span class="p">:</span>
-            <span class="k">break</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">encryption_oracle</span><span class="p">(</span><span class="n">user_input</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Here is your encrypted string, have a nice day :)&#34;</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">Crypto.Util.Padding</span> <span class="kn">import</span> <span class="n">pad</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">Crypto.Random</span> <span class="kn">import</span> <span class="n">get_random_bytes</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">Crypto.Random.random</span> <span class="kn">import</span> <span class="n">getrandbits</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">secret</span> <span class="kn">import</span> <span class="n">flag</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">KEY</span> <span class="o">=</span> <span class="n">get_random_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_ecb_encrypt</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encryption_oracle</span><span class="p">(</span><span class="n">plaintext</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="n">getrandbits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plaintext</span> <span class="o">=</span> <span class="n">pad</span><span class="p">((</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">plaintext</span> <span class="o">+</span> <span class="n">flag</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">aes_ecb_encrypt</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">KEY</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Input a string to encrypt (input &#39;q&#39; to quit):&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">user_input</span> <span class="o">==</span> <span class="s1">&#39;q&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span> <span class="o">=</span> <span class="n">encryption_oracle</span><span class="p">(</span><span class="n">user_input</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Here is your encrypted string, have a nice day :)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>So at first there are no easy shortcuts, like the key being in plaintext (it&rsquo;s 16 random bytes). The function <strong>aes_ecb_encrypt</strong> is responsible for doing the encryption itself, and it&rsquo;s called in <strong>encryption_oracle</strong>. The latter is more interesting, since it first calls the <strong>getrandbits</strong> function. After a google search we can confirm the function does what was expected:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Crypto.Random.random.getrandbits(N):
-  Return a random integer, at most N bits long.
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Crypto.Random.random.getrandbits(N):
+</span></span><span class="line"><span class="cl">  Return a random integer, at most N bits long.
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>So pretty much it&rsquo;s generating a number with at most 1 bit. With 1 bit it can only be either 0 or 1. Since this number is then multiplied by <strong>&lsquo;A&rsquo;</strong>, the result will be a string with length 0 or 1, so it&rsquo;s either adding one byte of padding or not adding padding at all. The string that makes the plaintext is composed first by this padding, then the plaintext that we send, and finally the flag.</p>
-<p>The way i tackled this challenge was by making a python script that was split into three main stages. First getting what was considered the correct first block. In order to do this i generated two full blocks of padding and send them. <em>&lsquo;Why two?'</em> you might be asking, well if we only sent one we would not know if a random byte was added or not, so by sending two, we can be sure that if the first block is equal to the second, no random bytes were added (remember to make your padding different than theirs, in other words don&rsquo;t use <strong>A</strong> for your padding, i made that mistake :) ). After getting a result where the first block is equal to the second we can use the first block as what determines if the result has or not a random byte. In case the first block retrieved is equal to what we just saw we can conclude that no bytes were added.</p>
+<p>The way i tackled this challenge was by making a python script that was split into three main stages. First getting what was considered the correct first block. In order to do this i generated two full blocks of padding and send them. <em>&lsquo;Why two?&rsquo;</em> you might be asking, well if we only sent one we would not know if a random byte was added or not, so by sending two, we can be sure that if the first block is equal to the second, no random bytes were added (remember to make your padding different than theirs, in other words don&rsquo;t use <strong>A</strong> for your padding, i made that mistake :) ). After getting a result where the first block is equal to the second we can use the first block as what determines if the result has or not a random byte. In case the first block retrieved is equal to what we just saw we can conclude that no bytes were added.</p>
 <p>Then we have a stage where we find the target, in other words, we send a padding block plus a block with length <strong>block_size-1</strong>, allowing a byte from the secret to fall into our block. We then get the encrypted result and store this as &ldquo;the target&rdquo;.</p>
 <p>Finally we have the last stage. This stage is where we brute force the byte that was encrypted in &ldquo;the target&rdquo;. In order to to this we send the same block sent previously with <strong>block_size-1</strong> bytes and append <strong>a</strong>. If what we get back is the same, then we know that the secret started with an <strong>a</strong>. If it&rsquo;s different we try <strong>b</strong>, and keep going through the whole alphabet and symbols until we eventually get the same encrypted block back.</p>
 <p>After we get our first byte we just have to remove a byte from our padding (that was <strong>block_size-1</strong> long) making it <strong>block_size-2</strong> long, which will let 2 bytes from the secret into our block that will be bruteforced. We already know the first, so we just need to bruteforce the second one. This is then repeated until we get the whole flag.</p>
 <p>This is the final python script:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -298,97 +295,97 @@
 </span><span class="lnt">90
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">wrap</span>
-<span class="kn">import</span> <span class="nn">string</span>
-
-<span class="n">hostname</span> <span class="o">=</span> <span class="s2">&#34;ecb.utctf.live&#34;</span>
-<span class="n">port</span> <span class="o">=</span> <span class="mi">9003</span>
-
-<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">hostname</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
-<span class="n">reader</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s1">&#39;rw&#39;</span><span class="p">)</span>
-
-<span class="n">ignore</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Input a string to encrypt (input &#39;q&#39; to quit):&#34;</span><span class="p">,</span>
-        <span class="s2">&#34;Here is your encrypted string, have a nice day :)&#34;</span><span class="p">]</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
-<span class="n">block_size</span> <span class="o">=</span> <span class="mi">16</span>
-<span class="n">final_blocks</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span><span class="o">*</span><span class="n">block_size</span><span class="o">*</span><span class="mi">2</span>
-<span class="n">alphabet</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="s2">&#34; .[]{}!,:;?=-_+&#34;</span>
-
-<span class="k">def</span> <span class="nf">encrypt_bytes</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="n">text</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
-    <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-    <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">wrap</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">block_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">find_offset</span><span class="p">():</span>
-    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">block_size</span><span class="p">):</span>
-        <span class="n">offset_try</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">block_size</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
-        <span class="n">tosend</span> <span class="o">=</span> <span class="n">offset_try</span> <span class="o">+</span> <span class="n">final_blocks</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Trying offset &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34; with input &#34;</span> <span class="o">+</span> <span class="n">tosend</span><span class="p">)</span>
-        <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">tosend</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">splitted</span><span class="p">)</span>
-    
-        <span class="k">if</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;offset = &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-            <span class="n">offset</span> <span class="o">=</span> <span class="n">i</span>
-            <span class="k">break</span>
-    <span class="k">return</span> <span class="n">offset</span>
-
-<span class="n">full_block</span> <span class="o">=</span> <span class="s2">&#34;B&#34;</span> <span class="o">*</span> <span class="n">block_size</span>
-<span class="n">block_number</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="k">def</span> <span class="nf">find_target</span><span class="p">(</span><span class="n">static</span><span class="p">):</span>
-    <span class="k">global</span> <span class="n">full_block</span>
-    <span class="k">global</span> <span class="n">block_number</span>
-
-    <span class="n">to_encrypt</span> <span class="o">=</span> <span class="n">full_block</span> <span class="o">+</span> <span class="n">full_block</span> <span class="o">+</span> <span class="n">static</span>
-    <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)</span>
-    <span class="k">while</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-        <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;New target: &#34;</span> <span class="o">+</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-
-<span class="n">global_result</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
-
-<span class="k">def</span> <span class="nf">brute_force_byte</span><span class="p">(</span><span class="n">static</span><span class="p">,</span> <span class="n">first_block</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-    <span class="k">global</span> <span class="n">alphabet</span>
-    <span class="k">global</span> <span class="n">global_result</span>
-    <span class="k">global</span> <span class="n">full_block</span>
-    <span class="k">global</span> <span class="n">block_number</span>
-
-    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">alphabet</span><span class="p">:</span>
-        <span class="n">static_with_chars</span> <span class="o">=</span> <span class="n">static</span> <span class="o">+</span> <span class="n">global_result</span> <span class="o">+</span> <span class="n">c</span>
-        <span class="n">to_encrypt</span> <span class="o">=</span> <span class="n">full_block</span> <span class="o">+</span> <span class="n">static_with_chars</span>
-        <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)</span>
-
-        <span class="k">while</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">first_block</span><span class="p">:</span>
-            <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)</span>
-
-        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Trying &#34;</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Found &#34;</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">c</span>
-
-    <span class="k">return</span> <span class="s2">&#34;ERROR&#34;</span>
-
-<span class="n">static</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span> <span class="o">*</span> <span class="n">block_size</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;B&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">block_size</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">first_block</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">find_target</span><span class="p">(</span><span class="n">static</span><span class="p">)</span>
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Sending (&#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">static</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&#34;): &#34;</span> <span class="o">+</span> <span class="n">static</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">brute_force_byte</span><span class="p">(</span><span class="n">static</span><span class="p">,</span> <span class="n">first_block</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-    <span class="n">global_result</span> <span class="o">+=</span> <span class="n">result</span>
-    <span class="n">static</span> <span class="o">=</span> <span class="n">static</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Global Result: &#34;</span> <span class="o">+</span> <span class="n">global_result</span><span class="p">)</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">find_target</span><span class="p">(</span><span class="n">static</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socket</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">wrap</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">hostname</span> <span class="o">=</span> <span class="s2">&#34;ecb.utctf.live&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">port</span> <span class="o">=</span> <span class="mi">9003</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">hostname</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">reader</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s1">&#39;rw&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ignore</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Input a string to encrypt (input &#39;q&#39; to quit):&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;Here is your encrypted string, have a nice day :)&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="n">block_size</span> <span class="o">=</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl"><span class="n">final_blocks</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span><span class="o">*</span><span class="n">block_size</span><span class="o">*</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="n">alphabet</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="s2">&#34; .[]</span><span class="si">{}</span><span class="s2">!,:;?=-_+&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encrypt_bytes</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">text</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">wrap</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">block_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">find_offset</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">block_size</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">offset_try</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">block_size</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tosend</span> <span class="o">=</span> <span class="n">offset_try</span> <span class="o">+</span> <span class="n">final_blocks</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Trying offset &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34; with input &#34;</span> <span class="o">+</span> <span class="n">tosend</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">tosend</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">splitted</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;offset = &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">offset</span> <span class="o">=</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">offset</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">full_block</span> <span class="o">=</span> <span class="s2">&#34;B&#34;</span> <span class="o">*</span> <span class="n">block_size</span>
+</span></span><span class="line"><span class="cl"><span class="n">block_number</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">find_target</span><span class="p">(</span><span class="n">static</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">full_block</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">block_number</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">to_encrypt</span> <span class="o">=</span> <span class="n">full_block</span> <span class="o">+</span> <span class="n">full_block</span> <span class="o">+</span> <span class="n">static</span>
+</span></span><span class="line"><span class="cl">    <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;New target: &#34;</span> <span class="o">+</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">global_result</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">brute_force_byte</span><span class="p">(</span><span class="n">static</span><span class="p">,</span> <span class="n">first_block</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">alphabet</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">global_result</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">full_block</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">block_number</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">alphabet</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">static_with_chars</span> <span class="o">=</span> <span class="n">static</span> <span class="o">+</span> <span class="n">global_result</span> <span class="o">+</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl">        <span class="n">to_encrypt</span> <span class="o">=</span> <span class="n">full_block</span> <span class="o">+</span> <span class="n">static_with_chars</span>
+</span></span><span class="line"><span class="cl">        <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">first_block</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">splitted</span> <span class="o">=</span> <span class="n">encrypt_bytes</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Trying &#34;</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Found &#34;</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;ERROR&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">static</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span> <span class="o">*</span> <span class="n">block_size</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;B&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">block_size</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">first_block</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">find_target</span><span class="p">(</span><span class="n">static</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Sending (&#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">static</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&#34;): &#34;</span> <span class="o">+</span> <span class="n">static</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">brute_force_byte</span><span class="p">(</span><span class="n">static</span><span class="p">,</span> <span class="n">first_block</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">global_result</span> <span class="o">+=</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">    <span class="n">static</span> <span class="o">=</span> <span class="n">static</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Global Result: &#34;</span> <span class="o">+</span> <span class="n">global_result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">find_target</span><span class="p">(</span><span class="n">static</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>I was very proud of solving this challenge, that even though was only worth 50 points, only 100 and something teams solved out of 1000. I was also proud since i had studied this subject in college and had never put into practice. After analyzing the script there are a few things that can be simplified, but i left the script as it was when i solved the challenge.</p>
 </div><div class="post-footer" id="post-footer">
@@ -419,7 +416,7 @@
 </div>
 <div id="comments"></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.74.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.97.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"></div>
         </div>
     </footer></div>

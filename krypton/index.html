@@ -8,9 +8,10 @@
         <title>Over The Wire - Krypton Walkthrough - Bruno Anjos</title><meta name="Description" content="This is a walkthrough of the Krypton challenge provided by Over The Wire."><meta property="og:title" content="Over The Wire - Krypton Walkthrough" />
 <meta property="og:description" content="This is a walkthrough of the Krypton challenge provided by Over The Wire." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bruno-anjos.github.io/krypton/" />
+<meta property="og:url" content="https://bruno-anjos.github.io/krypton/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-07-07T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-07-07T00:00:00+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Over The Wire - Krypton Walkthrough"/>
 <meta name="twitter:description" content="This is a walkthrough of the Krypton challenge provided by Over The Wire."/>
@@ -125,7 +126,7 @@ The one which we will solve here is Krypton. This is challenge is focused on cry
 <p>The password is a base64 encoded string. We can use the <strong>base64</strong> command. Let&rsquo;s check the manual.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -142,40 +143,40 @@ The one which we will solve here is Krypton. This is challenge is focused on cry
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">NAME
-       base64 - base64 encode/decode data and print to standard output
-
-SYNOPSIS
-       base64 [OPTION]... [FILE]
-
-DESCRIPTION
-       Base64 encode or decode FILE, or standard input, to standard output.
-
-       With no FILE, or when FILE is -, read standard input.
-
-       Mandatory arguments to long options are mandatory for short options too.
-
-       -d, --decode
-              decode data
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">NAME
+</span></span><span class="line"><span class="cl">       base64 - base64 encode/decode data and print to standard output
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">SYNOPSIS
+</span></span><span class="line"><span class="cl">       base64 [OPTION]... [FILE]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">DESCRIPTION
+</span></span><span class="line"><span class="cl">       Base64 encode or decode FILE, or standard input, to standard output.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       With no FILE, or when FILE is -, read standard input.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       Mandatory arguments to long options are mandatory for short options too.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       -d, --decode
+</span></span><span class="line"><span class="cl">              decode data
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>This is exactly what we want. We wneed to use the <code>-d</code> flag to decode, and we will pipeline the string with the <strong>echo</strong> command.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">echo</span> <span class="s2">&#34;S1JZUFRPTklTR1JFQVQ=&#34;</span> <span class="p">|</span> base64 -d                                                         KRYPTONISGREAT%
-&gt;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; <span class="nb">echo</span> <span class="s2">&#34;S1JZUFRPTklTR1JFQVQ=&#34;</span> <span class="p">|</span> base64 -d                                                         KRYPTONISGREAT%
+</span></span><span class="line"><span class="cl">&gt;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The <code>%</code> does not make part of the string from what i understand. This password allows us to connect to <code>krypton.labs.overthewire.org</code> as <code>krypton1</code> on port <code>2222</code>. From now on the files that we need for the challenges will be in the <code>/krypton/</code> directory.</p>
 <h2 id="level-1">Level 1</h2>
 <p>As we&rsquo;ve mentioned before all the challenges from now on will be in the <code>/krypton/</code> directory so if we go there and list the files we get this.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -187,22 +188,22 @@ DESCRIPTION
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton1@krypton:/krypton$ ls -la
-total <span class="m">32</span>
-drwxr-xr-x  <span class="m">8</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:21 .
-drwxr-xr-x <span class="m">92</span> root root <span class="m">4096</span> Jul  <span class="m">7</span> 14:54 ..
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton1
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton2
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton3
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton4
-drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton5
-drwxr-xr-x  <span class="m">3</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:21 krypton6
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton1@krypton:/krypton$ ls -la
+</span></span><span class="line"><span class="cl">total <span class="m">32</span>
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">8</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:21 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">92</span> root root <span class="m">4096</span> Jul  <span class="m">7</span> 14:54 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton1
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton2
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton3
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton4
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">2</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:20 krypton5
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root <span class="m">4096</span> Jul  <span class="m">1</span> 04:21 krypton6
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We are currently in <a href="#level-1" rel="">Level 1</a> so let&rsquo;s change to the correct folder and list its content.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -211,14 +212,14 @@ drwxr-xr-x  <span class="m">3</span> root root <span class="m">4096</span> Jul  
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">krypton1@krypton:/krypton$ cd krypton1
-krypton1@krypton:/krypton/krypton1$ ls -la
-total 16
-drwxr-xr-x 2 root     root     4096 Jul  1 04:20 .
-drwxr-xr-x 8 root     root     4096 Jul  1 04:21 ..
--rw-r----- 1 krypton1 krypton1  882 Jul  1 04:20 README
--rw-r----- 1 krypton1 krypton1   26 Jul  1 04:20 krypton2
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">krypton1@krypton:/krypton$ cd krypton1
+</span></span><span class="line"><span class="cl">krypton1@krypton:/krypton/krypton1$ ls -la
+</span></span><span class="line"><span class="cl">total 16
+</span></span><span class="line"><span class="cl">drwxr-xr-x 2 root     root     4096 Jul  1 04:20 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x 8 root     root     4096 Jul  1 04:21 ..
+</span></span><span class="line"><span class="cl">-rw-r----- 1 krypton1 krypton1  882 Jul  1 04:20 README
+</span></span><span class="line"><span class="cl">-rw-r----- 1 krypton1 krypton1   26 Jul  1 04:20 krypton2
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We should check out the README to get more insight on this challenge.</p>
 <blockquote>
@@ -231,7 +232,7 @@ drwxr-xr-x 8 root     root     4096 Jul  1 04:21 ..
 <p>** Please try these levels without cryptool first **</p>
 </blockquote>
 <blockquote>
-<p>The first level is easy.  The password for level 2 is in the file &lsquo;krypton2&rsquo;.  It is &lsquo;encrypted&rsquo; using a simple rotation called ROT13. It is also in non-standard ciphertext format.  When using alpha characters for cipher text it is normal to group the letters into 5 letter clusters, regardless of word boundaries.  This helps obfuscate any patterns.</p>
+<p>The first level is easy.  The password for level 2 is in the file &lsquo;krypton2&rsquo;.  It is &rsquo;encrypted&rsquo; using a simple rotation called ROT13. It is also in non-standard ciphertext format.  When using alpha characters for cipher text it is normal to group the letters into 5 letter clusters, regardless of word boundaries.  This helps obfuscate any patterns.</p>
 </blockquote>
 <blockquote>
 <p>This file has kept the plain text word boundaries and carried them to the cipher text.</p>
@@ -242,13 +243,13 @@ drwxr-xr-x 8 root     root     4096 Jul  1 04:21 ..
 <p>ROT13 should be easy. We&rsquo;ve messed with this previously in <a href="https://bruno-anjos.github.io/posts/bandit/" target="_blank" rel="noopener noreffer">Bandit</a> using the <strong>tr</strong> command. There is a simple example in the wiki page of ROT13 with an implementation of ROT13 using the <strong>tr</strong> command.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton1@krypton:/krypton/krypton1$ cat krypton2 <span class="p">|</span> tr <span class="s1">&#39;N-ZA-Mn-za-m&#39;</span> <span class="s1">&#39;A-Za-z&#39;</span>
-LEVEL TWO PASSWORD ROTTEN
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton1@krypton:/krypton/krypton1$ cat krypton2 <span class="p">|</span> tr <span class="s1">&#39;N-ZA-Mn-za-m&#39;</span> <span class="s1">&#39;A-Za-z&#39;</span>
+</span></span><span class="line"><span class="cl">LEVEL TWO PASSWORD ROTTEN
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We switched the letter patterns since the example is to encode and we want to <strong>decode</strong>. We have the password for the next level, let&rsquo;s go.</p>
 <h2 id="level-2">Level 2</h2>
@@ -290,7 +291,7 @@ cipher: G H I J K L M N O P Q &hellip;</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -302,50 +303,50 @@ cipher: G H I J K L M N O P Q &hellip;</p>
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@melinda:~$ mktemp -d
-/tmp/tmp.Wf2OnCpCDQ
-krypton2@melinda:~$ <span class="nb">cd</span> /tmp/tmp.Wf2OnCpCDQ
-krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ln -s /krypton/krypton2/keyfile.dat
-krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ls
-keyfile.dat
-krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ chmod <span class="m">777</span> .
-krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ /krypton/krypton2/encrypt /etc/issue
-krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ls
-ciphertext  keyfile.dat
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton2@melinda:~$ mktemp -d
+</span></span><span class="line"><span class="cl">/tmp/tmp.Wf2OnCpCDQ
+</span></span><span class="line"><span class="cl">krypton2@melinda:~$ <span class="nb">cd</span> /tmp/tmp.Wf2OnCpCDQ
+</span></span><span class="line"><span class="cl">krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ln -s /krypton/krypton2/keyfile.dat
+</span></span><span class="line"><span class="cl">krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ls
+</span></span><span class="line"><span class="cl">keyfile.dat
+</span></span><span class="line"><span class="cl">krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ chmod <span class="m">777</span> .
+</span></span><span class="line"><span class="cl">krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ /krypton/krypton2/encrypt /etc/issue
+</span></span><span class="line"><span class="cl">krypton2@melinda:/tmp/tmp.Wf2OnCpCDQ$ ls
+</span></span><span class="line"><span class="cl">ciphertext  keyfile.dat
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>So we have to figure out what&rsquo;s the rotation in this case. We should be able to do that by just encrypting the letter <code>a</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ ./encrypt 
-
- usage: encrypt foo  - where foo is the file containing the plaintext
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton2@krypton:/krypton/krypton2$ ./encrypt 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> usage: encrypt foo  - where foo is the file containing the plaintext
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We need to create a file. Let&rsquo;s create a temporary directory and a file containing just the letters <code>aA</code> then.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ mkdir /tmp/tempfolder
-krypton2@krypton:/krypton/krypton2$ vi /tmp/tempfolder/testFile
-krypton2@krypton:/krypton/krypton2$ cat /tmp/tempfolder/testFile 
-aA
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton2@krypton:/krypton/krypton2$ mkdir /tmp/tempfolder
+</span></span><span class="line"><span class="cl">krypton2@krypton:/krypton/krypton2$ vi /tmp/tempfolder/testFile
+</span></span><span class="line"><span class="cl">krypton2@krypton:/krypton/krypton2$ cat /tmp/tempfolder/testFile 
+</span></span><span class="line"><span class="cl">aA
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We also need to link the <code>keyfile.dat</code> to our temporary directory and then give permissions so the binary can run.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -356,21 +357,21 @@ aA
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/krypton/krypton2$ <span class="nb">cd</span> /tmp/tempfolder
-krypton2@krypton:/tmp/tempfolder$ ln -s /krypton/krypton2/keyfile.dat
-krypton2@krypton:/tmp/tempfolder$ chmod <span class="m">777</span> .
-krypton2@krypton:/tmp/tempfolder$ ls -la
-total <span class="m">12</span>
-drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> 15:30 .
-drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> 15:32 ..
-lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> 15:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
--rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> 15:27 testFile
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton2@krypton:/krypton/krypton2$ <span class="nb">cd</span> /tmp/tempfolder
+</span></span><span class="line"><span class="cl">krypton2@krypton:/tmp/tempfolder$ ln -s /krypton/krypton2/keyfile.dat
+</span></span><span class="line"><span class="cl">krypton2@krypton:/tmp/tempfolder$ chmod <span class="m">777</span> .
+</span></span><span class="line"><span class="cl">krypton2@krypton:/tmp/tempfolder$ ls -la
+</span></span><span class="line"><span class="cl">total <span class="m">12</span>
+</span></span><span class="line"><span class="cl">drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> 15:30 .
+</span></span><span class="line"><span class="cl">drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> 15:32 ..
+</span></span><span class="line"><span class="cl">lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> 15:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
+</span></span><span class="line"><span class="cl">-rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> 15:27 testFile
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now we just need to run the binary on the file we&rsquo;ve just created.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -380,52 +381,52 @@ lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ /krypton/krypton2/encrypt testFile 
-krypton2@krypton:/tmp/tempfolder$ ls -la
-total <span class="m">16</span>
-drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> 15:33 .
-drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> 15:33 ..
--rw-rw-r-- <span class="m">1</span> krypton3 krypton2    <span class="m">1</span> Jul  <span class="m">7</span> 15:33 ciphertext
-lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> 15:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
--rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> 15:27 testFile
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton2@krypton:/tmp/tempfolder$ /krypton/krypton2/encrypt testFile 
+</span></span><span class="line"><span class="cl">krypton2@krypton:/tmp/tempfolder$ ls -la
+</span></span><span class="line"><span class="cl">total <span class="m">16</span>
+</span></span><span class="line"><span class="cl">drwxrwxrwx <span class="m">2</span> krypton2 krypton2 <span class="m">4096</span> Jul  <span class="m">7</span> 15:33 .
+</span></span><span class="line"><span class="cl">drwxrwx-wt <span class="m">3</span> root     root     <span class="m">4096</span> Jul  <span class="m">7</span> 15:33 ..
+</span></span><span class="line"><span class="cl">-rw-rw-r-- <span class="m">1</span> krypton3 krypton2    <span class="m">1</span> Jul  <span class="m">7</span> 15:33 ciphertext
+</span></span><span class="line"><span class="cl">lrwxrwxrwx <span class="m">1</span> krypton2 krypton2   <span class="m">29</span> Jul  <span class="m">7</span> 15:30 keyfile.dat -&gt; /krypton/krypton2/keyfile.dat
+</span></span><span class="line"><span class="cl">-rw-rw-r-- <span class="m">1</span> krypton2 krypton2    <span class="m">2</span> Jul  <span class="m">7</span> 15:27 testFile
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s check the resulting <code>ciphertext</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext 
-MM
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton2@krypton:/tmp/tempfolder$ cat ciphertext 
+</span></span><span class="line"><span class="cl">MM
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>So that tells us that it&rsquo;s rotating from <code>aA</code> to <code>MM</code>. So to decode we just have to do the other way around. Let&rsquo;s modify our previous <strong>tr</strong> command with the rotation we want.</p>
 <p>We had <code>tr 'N-ZA-Mn-za-m' 'A-Za-z'</code> now what we want is to rotate from <code>M</code> to <code>A</code>. You should end up with <code>tr 'M-ZA-L' 'A-Z'</code>.</p>
 <p>Let&rsquo;s try it on our file to see if we get our <code>AA</code> back. As we&rsquo;ve seen before the encryption rotates any letter to uppercase no matter what case it was originally.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ cat ciphertext <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
-AA
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton2@krypton:/tmp/tempfolder$ cat ciphertext <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
+</span></span><span class="line"><span class="cl">AA
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We got <code>AA</code> so this should be able to decrypt our initial <code>krypton3</code> file.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton2@krypton:/tmp/tempfolder$ <span class="nb">cd</span> /krypton/krypton2/
-krypton2@krypton:/krypton/krypton2$ cat krypton3 <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
-CAESARISEASY
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton2@krypton:/tmp/tempfolder$ <span class="nb">cd</span> /krypton/krypton2/
+</span></span><span class="line"><span class="cl">krypton2@krypton:/krypton/krypton2$ cat krypton3 <span class="p">|</span> tr <span class="s1">&#39;M-ZA-L&#39;</span> <span class="s1">&#39;A-Z&#39;</span>
+</span></span><span class="line"><span class="cl">CAESARISEASY
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We got it. Next one.</p>
 <h2 id="level-3">Level 3</h2>
@@ -450,30 +451,29 @@ in the file &lsquo;krypton4&rsquo;.  You have also found 3 other files.
 </ul>
 <p>Enjoy.</p>
 </blockquote>
-<p>In this case we don&rsquo;t have access to the encryption method. I know for a fact that these types of ciphers are weak to attacks based on frequency analysis, this meaning that for example in the english language the most common letter is <code>e</code> so in the text that we have, the letter that appears the most times, SHOULD be the result of rotating <code>e</code>. And from that point we can calculate the key. Let&rsquo;s find a website that does frequency analysis of text. I found this one <a href="https://www.dcode.fr/frequency-analysis">https://www.dcode.fr/frequency-analysis</a>.</p>
+<p>In this case we don&rsquo;t have access to the encryption method. I know for a fact that these types of ciphers are weak to attacks based on frequency analysis, this meaning that for example in the english language the most common letter is <code>e</code> so in the text that we have, the letter that appears the most times, SHOULD be the result of rotating <code>e</code>. And from that point we can calculate the key. Let&rsquo;s find a website that does frequency analysis of text. I found this one <a href="https://www.dcode.fr/frequency-analysis" target="_blank" rel="noopener noreffer">https://www.dcode.fr/frequency-analysis</a>.</p>
 <p>After pasting all of the <code>found*</code> files content we get this output on the website:</p>
-<figure>
-    <img src="/freq_analysis.png"/> 
+<figure><img src="/freq_analysis.png"/>
 </figure>
 
 <p>So now we know that the most common letter in the text is <code>S</code> so we could assume that to decode we need to perform this rotation <code>tr 'S-ZA-R' 'E-ZA-D'</code>.</p>
 <p>Let&rsquo;s try it then,</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">krypton3@krypton:/krypton/krypton3$ cat krypton4 <span class="p">|</span> tr <span class="s1">&#39;S-ZA-R&#39;</span> <span class="s1">&#39;E-ZA-D&#39;</span>
-WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">krypton3@krypton:/krypton/krypton3$ cat krypton4 <span class="p">|</span> tr <span class="s1">&#39;S-ZA-R&#39;</span> <span class="s1">&#39;E-ZA-D&#39;</span>
+</span></span><span class="line"><span class="cl">WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Hmmm&hellip; Doesn&rsquo;t seem like it&rsquo;s correct.</p>
 <p>After reading the <code>README.md</code> again i understand what i did wrong&hellip; I was assuming that this was a rotation cipher again. It&rsquo;s not it&rsquo;s substitution. So what we actually have to do is replace the most common letter in the analysis by the most common letter in the english alphabet, and so on.</p>
 <p>We can use a quick python script. I got this english frequency, &ldquo;EARIOTNSLCUDPMHGBFYWKVXZJQ&rdquo;, from <a href="https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language" target="_blank" rel="noopener noreffer">here</a>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -487,32 +487,31 @@ WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">real_freq</span> <span class="o">=</span> <span class="s2">&#34;EARIOTNSLCUDPMHGBFYWKVXZJQ&#34;</span>
-<span class="n">cipher_freq</span> <span class="o">=</span> <span class="s2">&#34;SQJUBNCGDZVWMYTXKELAFIOHRP&#34;</span>
-<span class="n">cipher_text</span> <span class="o">=</span> <span class="s2">&#34;KSVVW BGSJD SVSIS VXBMN YQUUK BNWCU ANMJS&#34;</span>
-<span class="n">real_text</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
-
-<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">cipher_text</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">real_freq</span><span class="p">:</span>
-        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">letter</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">real_freq</span><span class="p">[</span><span class="n">cipher_freq</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span>
-
-<span class="k">print</span> <span class="n">real_text</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">real_freq</span> <span class="o">=</span> <span class="s2">&#34;EARIOTNSLCUDPMHGBFYWKVXZJQ&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cipher_freq</span> <span class="o">=</span> <span class="s2">&#34;SQJUBNCGDZVWMYTXKELAFIOHRP&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cipher_text</span> <span class="o">=</span> <span class="s2">&#34;KSVVW BGSJD SVSIS VXBMN YQUUK BNWCU ANMJS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">real_text</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">cipher_text</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">real_freq</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">letter</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">real_freq</span><span class="p">[</span><span class="n">cipher_freq</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="n">real_text</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>This should do it.</p>
 <p>Spoiler alert that doesn&rsquo;t do it. In fact the frequency analysis goes deeper than this since some letters have a wrong correspondence, so you would have to do analysis of bigrams and trigrams. I started making a more advanced script but then i found a good website that does it.</p>
-<p><a href="https://www.guballa.de/substitution-solver">https://www.guballa.de/substitution-solver</a></p>
-<figure>
-    <img src="/freq_analysis_2.png"/> 
+<p><a href="https://www.guballa.de/substitution-solver" target="_blank" rel="noopener noreffer">https://www.guballa.de/substitution-solver</a></p>
+<figure><img src="/freq_analysis_2.png"/>
 </figure>
 
 <p>As you can see the text makes sense even though it&rsquo;s broken into 5 characters. This should do it as our correct decryption key. We just need to change a few things in our script.</p>
 <p><strong>NOTE:</strong> I worked on my own computer instead of in the normal ssh connection.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -526,57 +525,53 @@ WEHHI NSEVP EHEUE HJNYZ KCGGW NZIOG MZYVE
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">real_alphabet</span> <span class="o">=</span> <span class="s2">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span>
-<span class="n">cipher_alphabet</span> <span class="o">=</span> <span class="s2">&#34;QAZWSXEDCRFVTGBYHNUJMIKOLP&#34;</span>
-<span class="n">cipher_text</span> <span class="o">=</span> <span class="s2">&#34;KSVVW BGSJD SVSIS VXBMN YQUUK BNWCU ANMJS&#34;</span>
-<span class="n">real_text</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
-
-<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">cipher_text</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">real_alphabet</span><span class="p">:</span>
-        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">letter</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">real_alphabet</span><span class="p">[</span><span class="n">cipher_alphabet</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span>
-
-<span class="k">print</span> <span class="n">real_text</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">real_alphabet</span> <span class="o">=</span> <span class="s2">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cipher_alphabet</span> <span class="o">=</span> <span class="s2">&#34;QAZWSXEDCRFVTGBYHNUJMIKOLP&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cipher_text</span> <span class="o">=</span> <span class="s2">&#34;KSVVW BGSJD SVSIS VXBMN YQUUK BNWCU ANMJS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">real_text</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">cipher_text</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">real_alphabet</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">letter</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">real_text</span> <span class="o">+=</span> <span class="n">real_alphabet</span><span class="p">[</span><span class="n">cipher_alphabet</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="n">real_text</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">&gt; python ~/Desktop/krypton3/simple_crack.py
-WELLD ONETH ELEVE LFOUR PASSW ORDIS BRUTE
-&gt;   
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; python ~/Desktop/krypton3/simple_crack.py
+</span></span><span class="line"><span class="cl">WELLD ONETH ELEVE LFOUR PASSW ORDIS BRUTE
+</span></span><span class="line"><span class="cl">&gt;   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We got the password! This would be much harder if we hadn&rsquo;t find that online tool. Next one!</p>
 <h2 id="level-4">Level 4</h2>
 <p>So now we have a vigenere cipher. This kind of cipher is the result of adding the plaintext with a key, so now a character doesn&rsquo;t have a direct correspondence since it depends which character of the key was added. If you search online you will eventually understand that we can just apply the same logic as before but you have to use modulus.</p>
 <p>We can use <a href="https://www.dcode.fr/vigenere-cipher" target="_blank" rel="noopener noreffer">this</a>, to decode and do the analysis for us.</p>
 <p>As we can see here, there are multiple possible keys, but the one that makes sense and transforms our cipher text into readable text is the first one.</p>
-<figure>
-    <img src="/vigenere_analysis.png"/> 
+<figure><img src="/vigenere_analysis.png"/>
 </figure>
 
 <p>In this case our key is <code>FREKEY</code></p>
 <p>So when we decrypt our encrypted text we get the following</p>
-<figure>
-    <img src="/vigenere_analysis_2.png"/> 
+<figure><img src="/vigenere_analysis_2.png"/>
 </figure>
 
 <p>Without the spaces of course.</p>
 <h2 id="level-5">Level 5</h2>
 <p>Once again we can use the website previously mentioned.</p>
-<figure>
-    <img src="/krypton5.png"/> 
+<figure><img src="/krypton5.png"/>
 </figure>
 
 <p>They suggest <code>KEYZTBGTH</code> as the key. This seems random, but if we look closer there&rsquo;s <code>KEY</code> and then ends in <code>GTH</code> it seems like <code>KEYLENGTH</code> we should try to decrypt using <code>KEYLENGTH</code> as the key.</p>
-<figure>
-    <img src="/krypton5_2.png"/> 
+<figure><img src="/krypton5_2.png"/>
 </figure>
 
 <p>Ok we got the word <code>RANDOM</code> it can&rsquo;t be coincidence. After trying to connect, you can see that the password is right.</p>
@@ -608,7 +603,7 @@ WELLD ONETH ELEVE LFOUR PASSW ORDIS BRUTE
 </div>
 <div id="comments"></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.74.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.97.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"></div>
         </div>
     </footer></div>

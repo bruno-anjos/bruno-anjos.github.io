@@ -8,9 +8,10 @@
         <title>CSAW 2020 Finals - eccentric - Bruno Anjos</title><meta name="Description" content="CSAW 2020 Finals crypto challenge"><meta property="og:title" content="CSAW 2020 Finals - eccentric" />
 <meta property="og:description" content="CSAW 2020 Finals crypto challenge" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bruno-anjos.github.io/eccentric/" />
+<meta property="og:url" content="https://bruno-anjos.github.io/eccentric/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-11-06T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-11-06T00:00:00+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CSAW 2020 Finals - eccentric"/>
 <meta name="twitter:description" content="CSAW 2020 Finals crypto challenge"/>
@@ -112,7 +113,7 @@ challenge that revolves around ECC (Elliptic Curve Cryptography). This is
 the content of the file provided.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -123,22 +124,22 @@ the content of the file provided.</p>
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">y^2 = x^3 + 2648089252143182574153823745896834765345361977855346851913065097972752819834370636007433949219153563353347621929792473352056603689300142308595500196681484715*x + 2640636613554195662803492377273397651071872147133797068159853320493797794760382065905880626537982439844385071174905293170870708493176922431618220384167739340
-
-FF: 4079211623412602159436576854880565404392213421245358163957062650219138441233389311290884236330989600198400158483251311640833420916559186996716661065534756331
-
-G = (2835124931680967399292763715241068733082955010482692941778975060177550045565873252916114065386731072675933657202784918206609499173114199830285672822076666812 : 3917051964324124246182777370059493628017925319159214920394084902768106573682907256149476836382399752202209827189288072241452544996871460642902049422562450204 : 1)
-P = (1201673966464508597332511457607538250497935144691770661539122404983678691094166105235067949576773833297917476372671447578123390251450634078667903889944175974 : 2549728089376241701979352238534953850683927781198029880111780652469308144313884103159306596064169377751896432424056208861929610592541122265583809022865481983 : 1)
-
-P = d*G
-d = ?
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">y^2 = x^3 + 2648089252143182574153823745896834765345361977855346851913065097972752819834370636007433949219153563353347621929792473352056603689300142308595500196681484715*x + 2640636613554195662803492377273397651071872147133797068159853320493797794760382065905880626537982439844385071174905293170870708493176922431618220384167739340
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">FF: 4079211623412602159436576854880565404392213421245358163957062650219138441233389311290884236330989600198400158483251311640833420916559186996716661065534756331
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">G = (2835124931680967399292763715241068733082955010482692941778975060177550045565873252916114065386731072675933657202784918206609499173114199830285672822076666812 : 3917051964324124246182777370059493628017925319159214920394084902768106573682907256149476836382399752202209827189288072241452544996871460642902049422562450204 : 1)
+</span></span><span class="line"><span class="cl">P = (1201673966464508597332511457607538250497935144691770661539122404983678691094166105235067949576773833297917476372671447578123390251450634078667903889944175974 : 2549728089376241701979352238534953850683927781198029880111780652469308144313884103159306596064169377751896432424056208861929610592541122265583809022865481983 : 1)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">P = d*G
+</span></span><span class="line"><span class="cl">d = ?
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>So after googling a bit <a href="https://en.wikipedia.org/wiki/Elliptic-curve_cryptography" target="_blank" rel="noopener noreffer">here</a>, <a href="https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%e2%80%93Hellman" target="_blank" rel="noopener noreffer">here</a> and pain attention specifically <a href="https://en.wikipedia.org/wiki/Elliptic-curve_cryptography#Domain_parameters" target="_blank" rel="noopener noreffer">here</a> we can understand that we have a elliptic curve function in the first line with two major big numbers, the first one is the parameter <code>a</code> and the second one <code>b</code>. The next big number is what describes the Finite Field (hence <code>FF</code>). <code>G</code> is the generator coordinates, <code>P</code> is the public key coordinates which by definition is equal to <code>d</code> (the secret) times <code>G</code>. I googled more about elliptic curve attacks and found ones on small primes (which is not the case). After fiddling a bit with sage and these numbers i noticed that the order of the Elliptic Curve function and the Finite Field are the same. I searched to see if this was a problem and stumbled upon what&rsquo;s called <a href="https://www.hpl.hp.com/techreports/97/HPL-97-128.ps" target="_blank" rel="noopener noreffer">Smart&rsquo;s Attack</a>. After reading a bit on how it works (a lot of math to be honest), i found a solution online that solved the discrete logarithm for curves and fields in this specific situation.
 I tuned the parameters to my challenge and this is the resulting script. In the script the generator <code>G</code> is in fact <code>P</code> whereas the public key is <code>Q</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -178,45 +179,45 @@ I tuned the parameters to my challenge and this is the resulting script. In the 
 </span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span> <span class="o">=</span> <span class="mi">4079211623412602159436576854880565404392213421245358163957062650219138441233389311290884236330989600198400158483251311640833420916559186996716661065534756331</span>
-<span class="n">A</span> <span class="o">=</span> <span class="mi">2648089252143182574153823745896834765345361977855346851913065097972752819834370636007433949219153563353347621929792473352056603689300142308595500196681484715</span>
-<span class="n">B</span> <span class="o">=</span> <span class="mi">2640636613554195662803492377273397651071872147133797068159853320493797794760382065905880626537982439844385071174905293170870708493176922431618220384167739340</span>
-<span class="n">xP</span> <span class="o">=</span> <span class="mi">2835124931680967399292763715241068733082955010482692941778975060177550045565873252916114065386731072675933657202784918206609499173114199830285672822076666812</span>
-<span class="n">yP</span> <span class="o">=</span> <span class="mi">3917051964324124246182777370059493628017925319159214920394084902768106573682907256149476836382399752202209827189288072241452544996871460642902049422562450204</span>
-<span class="n">xQ</span> <span class="o">=</span> <span class="mi">1201673966464508597332511457607538250497935144691770661539122404983678691094166105235067949576773833297917476372671447578123390251450634078667903889944175974</span>
-<span class="n">yQ</span> <span class="o">=</span> <span class="mi">2549728089376241701979352238534953850683927781198029880111780652469308144313884103159306596064169377751896432424056208861929610592541122265583809022865481983</span>
-
-<span class="n">E</span> <span class="o">=</span> <span class="n">EllipticCurve</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">])</span>
-<span class="k">assert</span> <span class="n">E</span><span class="o">.</span><span class="n">order</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span>
-
-<span class="n">Qp</span> <span class="o">=</span> <span class="n">Qp</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">Ep</span> <span class="o">=</span> <span class="n">EllipticCurve</span><span class="p">(</span><span class="n">Qp</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">])</span>
-
-<span class="n">yPp</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">Qp</span><span class="p">(</span><span class="n">xP</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">Qp</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">*</span> <span class="n">Qp</span><span class="p">(</span><span class="n">xP</span><span class="p">)</span> <span class="o">+</span> <span class="n">Qp</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
-<span class="n">Pp</span> <span class="o">=</span> <span class="n">Ep</span><span class="p">(</span><span class="n">Qp</span><span class="p">(</span><span class="n">xP</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">yPp</span><span class="p">,</span> <span class="n">yPp</span><span class="p">)[</span><span class="n">yPp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">yP</span><span class="p">])</span>
-
-<span class="n">yQp</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">Qp</span><span class="p">(</span><span class="n">xQ</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">Qp</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">*</span> <span class="n">Qp</span><span class="p">(</span><span class="n">xQ</span><span class="p">)</span> <span class="o">+</span> <span class="n">Qp</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
-<span class="n">Qp</span> <span class="o">=</span> <span class="n">Ep</span><span class="p">(</span><span class="n">Qp</span><span class="p">(</span><span class="n">xQ</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">yQp</span><span class="p">,</span> <span class="n">yQp</span><span class="p">)[</span><span class="n">yQp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">yQ</span><span class="p">])</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Pp = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Pp</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Qp = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Qp</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
-
-<span class="n">lQ</span> <span class="o">=</span> <span class="n">Ep</span><span class="o">.</span><span class="n">formal_group</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="p">()(</span><span class="o">-</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Qp</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Qp</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">p</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;log(Q) = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lQ</span><span class="p">))</span>
-<span class="n">lP</span> <span class="o">=</span> <span class="n">Ep</span><span class="o">.</span><span class="n">formal_group</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="p">()(</span><span class="o">-</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Pp</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Pp</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">p</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;log(P) = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lP</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
-
-<span class="n">e</span> <span class="o">=</span> <span class="n">lQ</span> <span class="o">/</span> <span class="n">lP</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;e = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-
-<span class="k">assert</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">E</span><span class="p">(</span><span class="n">xP</span><span class="p">,</span> <span class="n">yP</span><span class="p">)</span> <span class="o">==</span> <span class="n">E</span><span class="p">(</span><span class="n">xQ</span><span class="p">,</span> <span class="n">yQ</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">--&gt; FLAG: {:d}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-
-<span class="mi">3861630529751007946125725817429448910343014844234314632147321534461941961750782142919269219206320480006113471293020487377758051318748395159429681468344962189</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="mi">4079211623412602159436576854880565404392213421245358163957062650219138441233389311290884236330989600198400158483251311640833420916559186996716661065534756331</span>
+</span></span><span class="line"><span class="cl"><span class="n">A</span> <span class="o">=</span> <span class="mi">2648089252143182574153823745896834765345361977855346851913065097972752819834370636007433949219153563353347621929792473352056603689300142308595500196681484715</span>
+</span></span><span class="line"><span class="cl"><span class="n">B</span> <span class="o">=</span> <span class="mi">2640636613554195662803492377273397651071872147133797068159853320493797794760382065905880626537982439844385071174905293170870708493176922431618220384167739340</span>
+</span></span><span class="line"><span class="cl"><span class="n">xP</span> <span class="o">=</span> <span class="mi">2835124931680967399292763715241068733082955010482692941778975060177550045565873252916114065386731072675933657202784918206609499173114199830285672822076666812</span>
+</span></span><span class="line"><span class="cl"><span class="n">yP</span> <span class="o">=</span> <span class="mi">3917051964324124246182777370059493628017925319159214920394084902768106573682907256149476836382399752202209827189288072241452544996871460642902049422562450204</span>
+</span></span><span class="line"><span class="cl"><span class="n">xQ</span> <span class="o">=</span> <span class="mi">1201673966464508597332511457607538250497935144691770661539122404983678691094166105235067949576773833297917476372671447578123390251450634078667903889944175974</span>
+</span></span><span class="line"><span class="cl"><span class="n">yQ</span> <span class="o">=</span> <span class="mi">2549728089376241701979352238534953850683927781198029880111780652469308144313884103159306596064169377751896432424056208861929610592541122265583809022865481983</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">E</span> <span class="o">=</span> <span class="n">EllipticCurve</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">E</span><span class="o">.</span><span class="n">order</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Qp</span> <span class="o">=</span> <span class="n">Qp</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Ep</span> <span class="o">=</span> <span class="n">EllipticCurve</span><span class="p">(</span><span class="n">Qp</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">yPp</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">Qp</span><span class="p">(</span><span class="n">xP</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">Qp</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">*</span> <span class="n">Qp</span><span class="p">(</span><span class="n">xP</span><span class="p">)</span> <span class="o">+</span> <span class="n">Qp</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">Pp</span> <span class="o">=</span> <span class="n">Ep</span><span class="p">(</span><span class="n">Qp</span><span class="p">(</span><span class="n">xP</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">yPp</span><span class="p">,</span> <span class="n">yPp</span><span class="p">)[</span><span class="n">yPp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">yP</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">yQp</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">Qp</span><span class="p">(</span><span class="n">xQ</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">Qp</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">*</span> <span class="n">Qp</span><span class="p">(</span><span class="n">xQ</span><span class="p">)</span> <span class="o">+</span> <span class="n">Qp</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">Qp</span> <span class="o">=</span> <span class="n">Ep</span><span class="p">(</span><span class="n">Qp</span><span class="p">(</span><span class="n">xQ</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">yQp</span><span class="p">,</span> <span class="n">yQp</span><span class="p">)[</span><span class="n">yQp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">yQ</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pp = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Pp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Qp = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Qp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">lQ</span> <span class="o">=</span> <span class="n">Ep</span><span class="o">.</span><span class="n">formal_group</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="p">()(</span><span class="o">-</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Qp</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Qp</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">p</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;log(Q) = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lQ</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">lP</span> <span class="o">=</span> <span class="n">Ep</span><span class="o">.</span><span class="n">formal_group</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="p">()(</span><span class="o">-</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Pp</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Pp</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">p</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;log(P) = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lP</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">e</span> <span class="o">=</span> <span class="n">lQ</span> <span class="o">/</span> <span class="n">lP</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;e = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">E</span><span class="p">(</span><span class="n">xP</span><span class="p">,</span> <span class="n">yP</span><span class="p">)</span> <span class="o">==</span> <span class="n">E</span><span class="p">(</span><span class="n">xQ</span><span class="p">,</span> <span class="n">yQ</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">--&gt; FLAG: </span><span class="si">{:d}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mi">3861630529751007946125725817429448910343014844234314632147321534461941961750782142919269219206320480006113471293020487377758051318748395159429681468344962189</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>After running this i got a number, submitted and got the flag back. Done! 🙂</p>
 </div><div class="post-footer" id="post-footer">
@@ -247,7 +248,7 @@ I tuned the parameters to my challenge and this is the resulting script. In the 
 </div>
 <div id="comments"></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.74.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.97.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"></div>
         </div>
     </footer></div>

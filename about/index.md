@@ -1,9 +1,16 @@
 # About Me
 
 
-My name is Bruno Anjos I'm 24 and I'm a Computer Science student currently in my masters' degree final year at FCT-NOVA.
-I'm mostly interested in Systems Engineering, Distributed Systems,
-Networks and Security.
+My name is Bruno Anjos I am 25 and I am a Software Engineer. I mostly
+work on Backend systems.
+
+Favourite lanaguages and random topics of interest:
+- Go
+- Rust
+- Distributed systems
+- Computer networks
+- Systems engineering
+- Cyber security
 
 I'm a member of the [Root Lee](https://ctftime.org/team/112556) CTF team.
 

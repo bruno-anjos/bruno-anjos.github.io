@@ -35,7 +35,7 @@
             </div>The challenge goes as follows:
  Alice sent over a couple of images with sensitive information to Bob, encrypted with a pre-shared key. It is the most secure encryption scheme, theoretically&hellip;
  These are the two images we have access to:
-    One of the most secure encryption techniques that is theoretically uncrackable is One Time Pad. This technique relies completely on a single use per key rule.]]></description>
+  One of the most secure encryption techniques that is theoretically uncrackable is One Time Pad. This technique relies completely on a single use per key rule. If this rule is broken and we XOR two encrypted contents together the encryption cancels out and we get the mix between both plaintexts.]]></description>
 </item><item>
     <title>CSAW 2020 Qualifiers - modus_operandi</title>
     <link>https://bruno-anjos.github.io/modus_operandi/</link>
@@ -56,7 +56,7 @@ The challenge initially tells us to connect as such:
     <description><![CDATA[<div class="featured-image">
                 <img src="/posts/ctfs/utctf/utctf.png" referrerpolicy="no-referrer">
             </div>Introduction First and foremost there is a very good explanation how AES ECB can be exploited through a chosen plaintext attack here. The problem can be visualized in these two pictures:
-    As you can see even though the image was encrypted, Tux (the penguin) is still sort of visible in the result. This is due to the fact that AES ECB works in a standard codebook fashion, where each input has a ciphertext associated.]]></description>
+  As you can see even though the image was encrypted, Tux (the penguin) is still sort of visible in the result. This is due to the fact that AES ECB works in a standard codebook fashion, where each input has a ciphertext associated.]]></description>
 </item><item>
     <title>rugenere - Vigenère Cipher tool written in Rust</title>
     <link>https://bruno-anjos.github.io/rugenere/</link>
